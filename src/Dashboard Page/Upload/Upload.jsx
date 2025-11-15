@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import DashboardHeader from "../Header and Sidebar/Header/DashboardHeader";
 import DashboardSidebar from "../Header and Sidebar/Sidebar/DasboardSidebar";
 import UploadForm from "./Uploadform";
+import AnalysisAndFeedback from "../Analysis and Feedback/AnalysisAndFeedback";
+import ATSResumeOptimizer from "../ATSResumeOptimizer";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 function Upload() {
   const [firstName, setFirstName] = useState("Bro");
+  const [analysisData, setAnalysisData] = useState(null);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/me", {
+        const URL = `${API_URL}/api/v1/auth/me`;
+        const response = await fetch(URL, {
           credentials: "include",
         });
 
@@ -18,7 +26,7 @@ function Upload() {
           const data = await response.json();
           setFirstName(data.name);
         } else {
-          console.warn("Not logged in");
+          navigate("/");
         }
       } catch (error) {
         console.error("Failed to fetch user:", error);
@@ -27,6 +35,15 @@ function Upload() {
 
     fetchUser();
   }, []);
+
+  if (analysisData) {
+    return (
+      <ATSResumeOptimizer
+        analysisData={analysisData}
+        setAnalysisData={setAnalysisData}
+      />
+    );
+  }
 
   return (
     <main>
@@ -91,8 +108,7 @@ function Upload() {
                 Select the Job you are applying for and upload yourt Resume
               </h3>
 
-              <UploadForm />
-              
+              <UploadForm setAnalysisData={setAnalysisData} setOpen={setOpen} />
 
               <button
                 onClick={() => setOpen(false)}
@@ -104,6 +120,7 @@ function Upload() {
             </div>
           </div>
         )}
+        {/* {analysisData && <AnalysisAndFeedback analysisData={analysisData} />} */}
       </section>
     </main>
   );

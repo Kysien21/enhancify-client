@@ -1,100 +1,193 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Eye } from "lucide-react";
+import DashboardHeader from "../Header and Sidebar/Header/DashboardHeader";
+import DashboardSidebar from "../Header and Sidebar/Sidebar/DasboardSidebar";
+import useGetHistory from "./useGetHistory";
+import HistoryDetail from "./HistoryDetail";
+const MOCK_HISTORY = [
+  {
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    enhancedResume: {
+      contact: {
+        name: "Joana Mae Gallardo",
+      },
+    },
+    atsScore: {
+      original: 42,
+      enhanced: 88,
+    },
+  },
+  {
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    enhancedResume: {
+      contact: {
+        name: "John Smith",
+      },
+    },
+    atsScore: {
+      original: 55,
+      enhanced: 92,
+    },
+  },
+  {
+    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    enhancedResume: {
+      contact: {
+        name: "Maria Garcia",
+      },
+    },
+    atsScore: {
+      original: 38,
+      enhanced: 81,
+    },
+  },
+  {
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    enhancedResume: {
+      contact: {
+        name: "David Chen",
+      },
+    },
+    atsScore: {
+      original: 61,
+      enhanced: 89,
+    },
+  },
+  {
+    createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    enhancedResume: {
+      contact: {
+        name: "Sarah Johnson",
+      },
+    },
+    atsScore: {
+      original: 45,
+      enhanced: 85,
+    },
+  },
+  {
+    createdAt: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(),
+    enhancedResume: {
+      contact: {
+        name: "Michael Brown",
+      },
+    },
+    atsScore: {
+      original: 52,
+      enhanced: 87,
+    },
+  },
+];
 
 function History() {
-  const [historyData, setHistoryData] = useState([]);
+  const { isLoading, historyData } = useGetHistory();
+  const [selectedHistory, setSelectedHistory] = useState(null);
+  // const [historyData, setHistoryData] = useState([]);
 
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("history")) || [];
-    setHistoryData(stored.reverse());
-  }, []);
-
-  const radius = 115;
-  const center = 165;
-  const weight = 40;
-  const fullCircle = 2 * Math.PI * radius;
+  // useEffect(() => {
+  //   const stored = JSON.parse(localStorage.getItem("history")) || [];
+  //   // Use stored data if available, otherwise use mock data
+  //   const data = stored.length > 0 ? stored : MOCK_HISTORY;
+  //   setHistoryData(data.reverse());
+  // }, []);
 
   return (
     <>
       <DashboardHeader />
       <DashboardSidebar />
-      <section className="ml-[22%] mr-8 mb-4">
-        <h2 className="text-[#133970] text-xl font-semibold mb-6">Your Analysis History</h2>
+      {selectedHistory ? (
+        <HistoryDetail
+          historyData={selectedHistory}
+          setHistoryData={setSelectedHistory}
+        />
+      ) : (
+        <section className="ml-[22%] mr-8 mb-4  bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg ">
+          <div className="max-w-6xl mt-[50px]">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                Optimization History
+              </h1>
+              <p className="text-gray-600">
+                View all your previous resume optimization records
+              </p>
+            </div>
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-          {historyData.length === 0 ? (
-            <p className="text-gray-500">No previous analyses found.</p>
-          ) : (
-            historyData.map((entry, index) => {
-              const bluePercent = entry.overallScore;
-              const redPercent = 100 - bluePercent;
-              const showRed = redPercent > 0;
-              const blueOffset = (1 - bluePercent / 100) * fullCircle;
-              const redOffset = (1 - (bluePercent + redPercent) / 100) * fullCircle;
+            {isLoading && (
+              <div className="flex justify-center items-center h-32">
+                <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+              </div>
+            )}
 
-              return (
-                <div
-                  key={index}
-                  className="bg-white border border-gray-300 rounded-xl p-4 shadow-md"
-                >
-                  <div className="flex justify-center items-center relative">
-                    <svg
-                      viewBox="-20 -8 350 345"
-                      className="w-[220px] h-auto rotate-[-90deg]"
+            {historyData.length === 0 && !isLoading && (
+              <div className="bg-white rounded-lg shadow-lg p-12 text-center">
+                <p className="text-gray-500 text-lg">
+                  No previous analyses found. Start optimizing your resume!
+                </p>
+              </div>
+            )}
+            {historyData.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(90vh-150px)] overflow-y-auto pr-4">
+                {historyData.map((entry, index) => {
+                  const originalScore = entry.atsScore?.original || 0;
+                  const enhancedScore = entry.atsScore?.enhanced || 0;
+                  const improvement = enhancedScore - originalScore;
+
+                  return (
+                    <div
+                      key={index}
+                      className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden"
                     >
-                      <circle
-                        stroke="#ddd"
-                        strokeWidth={weight}
-                        fill="transparent"
-                        r={radius}
-                        cx={center}
-                        cy={center}
-                      />
-                      {showRed && (
-                        <circle
-                          stroke="#e74c3c"
-                          strokeWidth={weight}
-                          fill="transparent"
-                          r={radius}
-                          cx={center}
-                          cy={center}
-                          strokeDasharray={fullCircle}
-                          strokeDashoffset={redOffset}
-                        />
-                      )}
-                      <circle
-                        stroke="#3b7ce9"
-                        strokeWidth={weight}
-                        fill="transparent"
-                        r={radius}
-                        cx={center}
-                        cy={center}
-                        strokeDasharray={fullCircle}
-                        strokeDashoffset={blueOffset}
-                      />
-                    </svg>
-                    <div className="absolute top-[45%] text-center text-[#133970] text-sm">
-                      <p>
-                        <span className="font-bold">{bluePercent}%</span> fit
-                      </p>
-                    </div>
-                  </div>
+                      <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 p-4 text-white">
+                        <h3 className="font-semibold text-lg truncate">
+                          {new Date(entry.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            }
+                          )}
+                        </h3>
+                      </div>
 
-                  <div className="mt-4 text-sm text-[#333]">
-                    <p className="font-semibold mb-1">Job Description:</p>
-                    <p className="italic text-xs max-h-[100px] overflow-auto">
-                      {entry.jobDescription}
-                    </p>
-                    <p className="mt-2 text-gray-400 text-[11px]">
-                      Submitted on:{" "}
-                      {new Date(entry.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              );
-            })
-          )}
-        </div>
-      </section>
+                      <div className="p-4 space-y-4">
+                        <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3">
+                          <div className="text-red-600 font-semibold text-sm mb-1">
+                            Original ATS Score
+                          </div>
+                          <div className="text-2xl font-bold text-red-700">
+                            {originalScore}%
+                          </div>
+                        </div>
+
+                        <div className="bg-green-50 border-2 border-green-200 rounded-lg p-3">
+                          <div className="text-green-600 font-semibold text-sm mb-1">
+                            Enhanced ATS Score
+                          </div>
+                          <div className="text-2xl font-bold text-green-700">
+                            {enhancedScore}%
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            console.log("Selected entry:", entry);
+                            setSelectedHistory(entry);
+                          }}
+                          className="w-full mt-3 flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition font-medium"
+                        >
+                          <Eye size={18} />
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
     </>
   );
 }

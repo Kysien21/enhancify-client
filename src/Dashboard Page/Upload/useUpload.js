@@ -7,7 +7,7 @@ export function useUpload() {
   const [jobDescription, setJobDescription] = useState("");
   const [category, setCategory] = useState("");
   const [plainText, setPlainText] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -68,6 +68,7 @@ export function useUpload() {
     formData.append("category", category);
 
     try {
+      setIsLoading(true);
       // 🟢 Step 1: Upload file
       const { data: uploadData } = await axios.post(
         "http://localhost:3000/api/upload",
@@ -88,7 +89,7 @@ export function useUpload() {
       // 🟢 Step 2: Analyze resume
       const { data: analysis } = await axios.post(
         "http://localhost:3000/api/analyze",
-        { resumeText, jobDescription },
+        { resumeText, jobDescription, category },
         { withCredentials: true }
       );
 
@@ -107,8 +108,10 @@ export function useUpload() {
       history.push(newEntry);
       localStorage.setItem("history", JSON.stringify(history));
 
-      alert("Upload & AI analysis successful");
-      navigate("/analysis");
+      // alert("Upload & AI analysis successful");
+      // navigate("/analysis");
+      // return analysis;
+      return analysis.analysis;
     } catch (error) {
       console.error("❌ Upload Failed:", error);
       if (error.response && error.response.data) {
@@ -117,6 +120,9 @@ export function useUpload() {
       } else {
         alert("Upload Failed, Server Error");
       }
+      return null;
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -132,5 +138,6 @@ export function useUpload() {
     submitResumeUpload,
     fileInputRef,
     plainText,
+    isLoading,
   };
 }

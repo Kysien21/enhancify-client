@@ -1,6 +1,6 @@
 import { useUpload } from "./useUpload";
 
-function UploadForm({ isAnalysisPage = false }) {
+function UploadForm({ setAnalysisData, setOpen }) {
   const {
     resumeFile,
     jobDescription,
@@ -11,6 +11,7 @@ function UploadForm({ isAnalysisPage = false }) {
     resumeFileUpload,
     submitResumeUpload,
     fileInputRef,
+    isLoading,
   } = useUpload();
 
   // ✅ Handler for category selection
@@ -24,9 +25,21 @@ function UploadForm({ isAnalysisPage = false }) {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await submitResumeUpload(e);
+
+      setAnalysisData(result);
+      setOpen(false);
+    } catch (error) {
+      console.error("Error submitting:", error);
+    }
+  };
+
   return (
     <>
-      <form onSubmit={submitResumeUpload}>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center justify-center relative my-[25px] bottom-[20px]">
           <h5>Select your job Category</h5>
 
@@ -80,11 +93,10 @@ function UploadForm({ isAnalysisPage = false }) {
 
           <button
             type="submit"
-            className="xl:px-[2.5rem] py-[5px] text-[7px] xl:text-[13px] font-semibold text-white
-                       bg-[#133970] cursor-pointer rounded-[8px]
-                       transition-all duration-500 ease-in-out mt-4"
+            disabled={isLoading}
+            className="xl:px-[2.5rem] py-[5px] text-[7px] xl:text-[13px] font-semibold text-white bg-[#133970] cursor-pointer rounded-[8px] transition-all duration-500 ease-in-out mt-4"
           >
-            Start
+            {isLoading ? "Uploading" : "Upload"}
           </button>
         </div>
       </form>
