@@ -1,8 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+import axiosInstance from "../utils/axios"; // ✅ Use configured instance
 
 export function useLogIn() {
   const [email, setEmail] = useState("");
@@ -25,16 +23,11 @@ export function useLogIn() {
     }
 
     try {
-      const response = await axios.post(
-        `${API_URL}/api/v1/auth/signin`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true, // ✅ ALLOW cookies (for session)
-        }
-      );
+      const response = await axiosInstance.post("/api/v1/auth/signin", {
+        email,
+        password,
+      });
+      
       const { success, message } = response.data;
 
       if (success || message === "Login successful") {
