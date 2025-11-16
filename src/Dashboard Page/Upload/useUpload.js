@@ -11,6 +11,9 @@ export function useUpload() {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
+  // ✅ Use environment variable
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
   // ✅ Handle resume file selection
   const resumeFileSelection = (e) => {
     const file = e.target && e.target.files ? e.target.files[0] : null;
@@ -69,9 +72,9 @@ export function useUpload() {
 
     try {
       setIsLoading(true);
-      // 🟢 Step 1: Upload file
+      // 🟢 Step 1: Upload file - NOW USING API_URL
       const { data: uploadData } = await axios.post(
-        "http://localhost:3000/api/upload",
+        `${API_URL}/api/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -86,9 +89,9 @@ export function useUpload() {
         return;
       }
 
-      // 🟢 Step 2: Analyze resume
+      // 🟢 Step 2: Analyze resume - NOW USING API_URL
       const { data: analysis } = await axios.post(
-        "http://localhost:3000/api/analyze",
+        `${API_URL}/api/analyze`,
         { resumeText, jobDescription, category },
         { withCredentials: true }
       );
@@ -108,9 +111,6 @@ export function useUpload() {
       history.push(newEntry);
       localStorage.setItem("history", JSON.stringify(history));
 
-      // alert("Upload & AI analysis successful");
-      // navigate("/analysis");
-      // return analysis;
       return analysis.analysis;
     } catch (error) {
       console.error("❌ Upload Failed:", error);
