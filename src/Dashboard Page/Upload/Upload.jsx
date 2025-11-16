@@ -109,14 +109,6 @@ function Upload() {
               </h3>
 
               <UploadForm setAnalysisData={setAnalysisData} setOpen={setOpen} />
-
-              <button
-                onClick={() => setOpen(false)}
-                className="absolute top-4 right-5 bg-red-500 hover:bg-red-600 text-white 
-                           text-sm xl:text-base font-bold px-3 py-1 rounded-full shadow-md"
-              >
-                ✕
-              </button>
             </div>
           </div>
         )}

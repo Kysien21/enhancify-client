@@ -1,4 +1,5 @@
 import { useUpload } from "./useUpload";
+import Button from "./Button"; // ✅ Import your custom Button
 
 function UploadForm({ setAnalysisData, setOpen }) {
   const {
@@ -91,13 +92,17 @@ function UploadForm({ setAnalysisData, setOpen }) {
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="xl:px-[2.5rem] py-[5px] text-[7px] xl:text-[13px] font-semibold text-white bg-[#133970] cursor-pointer rounded-[8px] transition-all duration-500 ease-in-out mt-4"
-          >
-            {isLoading ? "Uploading" : "Upload"}
-          </button>
+          {/* ✅ Replace default button with your custom Button */}
+          <Button
+            disabled={isLoading || !resumeFile || !jobDescription || !category}
+            onConfirmAction={async () => {
+              const result = await submitResumeUpload();
+              if (result) {
+                setAnalysisData(result);
+                setOpen(false);
+              }
+            }}
+          />
         </div>
       </form>
     </>
@@ -105,3 +110,4 @@ function UploadForm({ setAnalysisData, setOpen }) {
 }
 
 export default UploadForm;
+  
