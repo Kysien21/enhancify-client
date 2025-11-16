@@ -110,4 +110,3 @@ function UploadForm({ setAnalysisData, setOpen }) {
 }
 
 export default UploadForm;
-  
