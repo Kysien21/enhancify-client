@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../utils/axios"; // ✅ Use configured instance
+import axiosInstance from "../../../utils/axios"; // ✅ Use configured instance
 
 export function useLogIn() {
   const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ export function useLogIn() {
         email,
         password,
       });
-      
+
       const { success, message } = response.data;
 
       if (success || message === "Login successful") {
