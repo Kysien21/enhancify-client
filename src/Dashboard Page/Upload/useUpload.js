@@ -11,10 +11,8 @@ export function useUpload() {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
-  // ✅ Use environment variable
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  // ✅ Handle resume file selection
   const resumeFileSelection = (e) => {
     const file = e.target && e.target.files ? e.target.files[0] : null;
     if (!file) return;
@@ -41,12 +39,10 @@ export function useUpload() {
     e.target.value = null;
   };
 
-  // ✅ Trigger file picker
   const resumeFileUpload = () => {
     fileInputRef.current?.click();
   };
 
-  // ✅ Handle form submit
   const submitResumeUpload = async (e) => {
     e.preventDefault();
 
