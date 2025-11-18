@@ -9,6 +9,8 @@ import UserManagement from "./Admin Page/UserManagement";
 import ReportAndAnalytics from "./Admin Page/ReportAndAnalytics";
 import SystemManagement from "./Admin Page/SystemManagement";
 
+import { AdminRoute } from "./Admin Page/components/ProtectedRoute";  // ✅ Fixed
+
 function App() {
   return (
     <>
@@ -21,11 +23,12 @@ function App() {
           <Route path="/analysis" element={<AnalysisAndFeedback />} />
           <Route path="/history" element={<History />} />
 
-          <Route path="/home" element={<HomeOverview />} />
-          <Route path="/user" element={<UserManagement />} />
-          <Route path="/report" element={<ReportAndAnalytics />} />
-          <Route path="/system" element={<SystemManagement />} />
-        </Routes>
+          {/* Protected Admin Routes */}
+        <Route path="/home" element={<AdminRoute><HomeOverview /></AdminRoute>} />
+        <Route path="/user" element={<AdminRoute><UserManagement /></AdminRoute>} />
+        <Route path="/report" element={<AdminRoute><ReportAndAnalytics /></AdminRoute>} />
+        <Route path="/system" element={<AdminRoute><SystemManagement /></AdminRoute>} />
+      </Routes>
       </Router>
     </>
   );

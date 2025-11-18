@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../utils/axios"; // ✅ Use configured instance
+import axiosInstance from "../../../utils/axios";
 
 export function useLogIn() {
   const [email, setEmail] = useState("");
@@ -28,10 +28,16 @@ export function useLogIn() {
         password,
       });
 
-      const { success, message } = response.data;
+      // ✅ Extract user from response
+      const { success, message, user } = response.data;
 
       if (success || message === "Login successful") {
-        navigate("/upload");
+        // ✅ Check user role and route accordingly
+        if (user && user.role === 'admin') {
+          navigate("/home"); // Admin dashboard
+        } else {
+          navigate("/upload"); // User dashboard
+        }
       } else {
         alert(message || "Login failed");
       }

@@ -1,23 +1,58 @@
 import { useState } from "react";
+import axios from "axios";
 
 function ChangeAdminPass() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleUpdate = () => {
+  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+
+  const handleUpdate = async () => {
+    // Validation
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      alert("Please fill in all fields!");
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       alert("New passwords do not match!");
       return;
     }
-    if (newPassword.length < 0) {
+
+    if (newPassword.length < 8) {
       alert("Password must be at least 8 characters long!");
       return;
     }
-    alert("Password updated successfully!");
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
+
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        `${API_BASE}/admin/change-password`,
+        {
+          currentPassword,
+          newPassword
+        },
+        { withCredentials: true }
+      );
+
+      if (response.data.success) {
+        alert(response.data.message || "Password updated successfully!");
+        // Clear form
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+      } else {
+        alert(response.data.message || "Failed to update password");
+      }
+    } catch (error) {
+      console.error("Error changing password:", error);
+      alert(error.response?.data?.message || "Failed to update password");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -42,7 +77,8 @@ function ChangeAdminPass() {
             placeholder="Current Password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
-            className="w-full px-4 py-3 bg-[#E0E1E4] border-0 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            disabled={loading}
+            className="w-full px-4 py-3 bg-[#E0E1E4] border-0 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition disabled:opacity-50"
           />
         </div>
 
@@ -55,7 +91,8 @@ function ChangeAdminPass() {
             placeholder="New Password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full px-4 py-3 bg-[#E0E1E4] border-0 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            disabled={loading}
+            className="w-full px-4 py-3 bg-[#E0E1E4] border-0 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition disabled:opacity-50"
           />
         </div>
 
@@ -68,20 +105,23 @@ function ChangeAdminPass() {
             placeholder="Confirm New Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full px-4 py-3 bg-[#E0E1E4] border-0 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            disabled={loading}
+            className="w-full px-4 py-3 bg-[#E0E1E4] border-0 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition disabled:opacity-50"
           />
         </div>
 
         <div className="flex gap-4 pt-2 justify-evenly">
           <button
             onClick={handleUpdate}
-            className=" bg-blue-700 hover:bg-blue-800  text-white py-2 px-16 text-sm rounded-lg transition duration-200"
+            disabled={loading}
+            className="bg-blue-700 hover:bg-blue-800 text-white py-2 px-16 text-sm rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Update Password
+            {loading ? "Updating..." : "Update Password"}
           </button>
           <button
             onClick={handleCancel}
-            className=" bg-red-500 hover:bg-red-600 text-white py-2 px-16 text-sm rounded-lg transition duration-200"
+            disabled={loading}
+            className="bg-red-500 hover:bg-red-600 text-white py-2 px-16 text-sm rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel
           </button>
