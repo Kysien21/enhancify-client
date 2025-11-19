@@ -8,7 +8,7 @@ function UserManagement() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
     fetchUsers();
@@ -19,9 +19,12 @@ function UserManagement() {
       setLoading(true);
       setError(null);
       
-      const response = await axios.get(`${API_BASE}/admin/users`, {
-        withCredentials: true
-      });
+      const response = await axios.get(
+        `${API_BASE}/api/v1/admin/users`, 
+        {
+          withCredentials: true,
+        }
+      );
 
       console.log('Users response:', response.data);
 
@@ -38,43 +41,44 @@ function UserManagement() {
   };
 
   const handleBlock = async (userId) => {
-    if (!confirm("Are you sure you want to block/unblock this user?")) return;
+  if (!confirm("Are you sure you want to block/unblock this user?")) return;
 
-    try {
-      const response = await axios.patch(
-        `${API_BASE}/admin/users/${userId}/toggle-status`,
-        {},
-        { withCredentials: true }
-      );
+  try {
+    const response = await axios.patch(
+      `${API_BASE}/api/v1/admin/users/${userId}/toggle-status`,
+      {},
+      { withCredentials: true }
+    );
 
-      if (response.data.success) {
-        alert(response.data.message);
-        fetchUsers(); // Refresh the list
-      }
-    } catch (err) {
-      console.error("Error toggling user status:", err);
-      alert(err.response?.data?.message || "Failed to update user status");
+    if (response.data.success) {
+      alert(response.data.message);
+      fetchUsers();
     }
-  };
+  } catch (err) {
+    console.error("Error toggling user status:", err);
+    alert(err.response?.data?.message || "Failed to update user status");
+  }
+};
 
-  const handleDelete = async (userId) => {
-    if (!confirm("Are you sure you want to delete this user? This action cannot be undone!")) return;
 
-    try {
-      const response = await axios.delete(
-        `${API_BASE}/admin/users/${userId}`,
-        { withCredentials: true }
-      );
+const handleDelete = async (userId) => {
+  if (!confirm("Are you sure you want to delete this user? This action cannot be undone!")) return;
 
-      if (response.data.success) {
-        alert(response.data.message);
-        fetchUsers(); // Refresh the list
-      }
-    } catch (err) {
-      console.error("Error deleting user:", err);
-      alert(err.response?.data?.message || "Failed to delete user");
+  try {
+    const response = await axios.delete(
+      `${API_BASE}/api/v1/admin/users/${userId}`,
+      { withCredentials: true }
+    );
+
+    if (response.data.success) {
+      alert(response.data.message);
+      fetchUsers();
     }
-  };
+  } catch (err) {
+    console.error("Error deleting user:", err);
+    alert(err.response?.data?.message || "Failed to delete user");
+  }
+};
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
