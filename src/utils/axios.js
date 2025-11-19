@@ -36,11 +36,9 @@ axiosInstance.interceptors.response.use(
       url: error.config?.url
     });
 
-    if (error.response?.status === 401) {
-      // Clear any local state and redirect to login
-      console.log('🔒 Unauthorized - Redirecting to login');
-      window.location.href = "/login";
-    }
+    // ❌ REMOVED auto-redirect - let components handle it
+    // Components should handle 401 errors themselves
+    
     return Promise.reject(error);
   }
 );

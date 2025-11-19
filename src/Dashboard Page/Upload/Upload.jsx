@@ -5,8 +5,7 @@ import DashboardSidebar from "../Header and Sidebar/Sidebar/DasboardSidebar";
 import UploadForm from "./Uploadform";
 import AnalysisAndFeedback from "../Analysis and Feedback/AnalysisAndFeedback";
 import ATSResumeOptimizer from "../ATSResumeOptimizer";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+import axiosInstance from "../../utils/axios"; // ✅ Import your axios instance
 
 function Upload() {
   const [firstName, setFirstName] = useState("Bro");
@@ -17,24 +16,23 @@ function Upload() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const URL = `${API_URL}/api/v1/auth/me`;
-        const response = await fetch(URL, {
-          credentials: "include",
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setFirstName(data.name);
-        } else {
-          navigate("/");
+        // ✅ Use axiosInstance instead of fetch
+        const response = await axiosInstance.get("/api/v1/auth/me");
+        
+        if (response.data) {
+          setFirstName(response.data.name);
         }
       } catch (error) {
         console.error("Failed to fetch user:", error);
+        // Only redirect on 401 (unauthorized)
+        if (error.response?.status === 401) {
+          navigate("/");
+        }
       }
     };
 
     fetchUser();
-  }, []);
+  }, [navigate]);
 
   if (analysisData) {
     return (
@@ -105,14 +103,13 @@ function Upload() {
               </h1>
 
               <h3 className="text-[21px] font-light italic text-center tracking-wide">
-                Select the Job you are applying for and upload yourt Resume
+                Select the Job you are applying for and upload your Resume
               </h3>
 
               <UploadForm setAnalysisData={setAnalysisData} setOpen={setOpen} />
             </div>
           </div>
         )}
-        {/* {analysisData && <AnalysisAndFeedback analysisData={analysisData} />} */}
       </section>
     </main>
   );
