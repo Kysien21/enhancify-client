@@ -39,16 +39,19 @@ function HomeOverview() {
 
       // Fetch system activity graph
       const graphRes = await axios.get(
-        `${API_BASE}/admin/system-activity-graph`,
+        `${API_BASE}/api/v1/admin/system-activity-graph`,
         {
           withCredentials: true,
         }
       );
 
       // Fetch recent analyses
-      const analysesRes = await axios.get(`${API_BASE}/admin/recent-analyses`, {
-        withCredentials: true,
-      });
+      const analysesRes = await axios.get(
+        `${API_BASE}/api/v1/admin/recent-analyses`, 
+       {
+          withCredentials: true,
+        }
+      );
 
       console.log("Stats:", statsRes.data);
       console.log("Graph:", graphRes.data);
