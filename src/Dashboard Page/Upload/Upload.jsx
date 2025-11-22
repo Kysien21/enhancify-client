@@ -8,7 +8,7 @@ import ATSResumeOptimizer from "../ATSResumeOptimizer";
 import axiosInstance from "../../utils/axios"; // ✅ Import your axios instance
 
 function Upload() {
-  const [firstName, setFirstName] = useState("Bro");
+  const [firstName, setFirstName] = useState();
   const [analysisData, setAnalysisData] = useState(null);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function Upload() {
       try {
         // ✅ Use axiosInstance instead of fetch
         const response = await axiosInstance.get("/api/v1/auth/me");
-        
+
         if (response.data) {
           setFirstName(response.data.name);
         }
@@ -57,7 +57,7 @@ function Upload() {
                      transition-all duration-500 ease-in-out"
         >
           <h1 className="text-[#133970] text-[12px] xl:text-[50px] font-semibold">
-            Welcome, {firstName}!
+            Welcome, {firstName}.
           </h1>
 
           <h1 className="text-[#133970] text-[12px] xl:text-[50px] font-semibold">

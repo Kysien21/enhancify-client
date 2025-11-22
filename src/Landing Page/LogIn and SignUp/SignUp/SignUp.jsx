@@ -1,4 +1,3 @@
-import LogoIcon from "../../../assets/Logo.png";
 import { useSignUp } from "./useSignUp";
 
 function SignUp() {
@@ -22,22 +21,20 @@ function SignUp() {
     <main>
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex w-[410px] h-[485px] rounded-[10px] bg-[#fff]/40 backdrop-blur-md overflow-hidden">
-          <div className="w-[50px] bg-[#133970]/90 backdrop-blur-md" />
 
-          <div className="flex flex-col flex-1 items-center justify-start pt-1">
-            <div className="flex items-center justify-center relative bottom-[15px]">
-              <img src={LogoIcon} alt="Logo" className="w-[110px]" />
-              <div className="flex flex-col items-center relative right-[19px] top-[5px]">
-                <h1 className="text-[16px] text-[#133970] font-[600] leading-tight mb-1 text-center">
+          <div className="flex flex-col flex-1 items-center justify-center">
+            <div className="flex items-center justify-center relative">
+              <div className="flex items-center relative">
+                <h1 className="text-[20px] text-[#133970] font-[600] leading-tight mb-1 text-center">
                   We're excited to have you
                   <br />
-                  on board!
+                  on Board!
                 </h1>
               </div>
             </div>
 
             <form
-              className="relative flex flex-col items-start bottom-[30px]"
+              className="relative flex flex-col"
               onSubmit={handleSignup}
             >
               <label className="flex flex-col w-[230px]">
@@ -48,7 +45,7 @@ function SignUp() {
                   type="text"
                   value={firstname}
                   onChange={(e) => setFirstname(e.target.value)}
-                  className="h-[27px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
+                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
                 />
               </label>
 
@@ -60,7 +57,7 @@ function SignUp() {
                   type="text"
                   value={lastname}
                   onChange={(e) => setLastname(e.target.value)}
-                  className="h-[27px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
+                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
                 />
               </label>
 
@@ -72,7 +69,7 @@ function SignUp() {
                   type="text"
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
-                  className="h-[27px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
+                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
                 />
               </label>
 
@@ -84,7 +81,7 @@ function SignUp() {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-[27px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
+                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
                 />
               </label>
 
@@ -96,7 +93,7 @@ function SignUp() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-[27px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
+                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
                 />
               </label>
 
@@ -108,7 +105,7 @@ function SignUp() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="h-[27px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
+                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] rounded-[8px] bg-[#fbf5f5]/30 backdrop-blur-md shadow"
                 />
               </label>
 
@@ -120,7 +117,7 @@ function SignUp() {
 
               <button
                 type="submit"
-                className="w-[230px] h-[27px] mt-2 text-[16px] text-white bg-[#133970] rounded-[8px] hover:bg-[#102c5d] transition"
+                className="w-[230px] h-[30px] text-[16px] text-white bg-[#133970] rounded-[8px] hover:bg-[#102c5d] transition"
               >
                 Confirm
               </button>

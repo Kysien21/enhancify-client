@@ -1,30 +1,17 @@
 import { useUpload } from "./useUpload";
-import Button from "./Button"; // ✅ Import your custom Button
+import Button from "./Button";
 
 function UploadForm({ setAnalysisData, setOpen }) {
   const {
     resumeFile,
     jobDescription,
     setJobDescription,
-    category,
-    setCategory,
     resumeFileSelection,
     resumeFileUpload,
     submitResumeUpload,
     fileInputRef,
     isLoading,
   } = useUpload();
-
-  // ✅ Handler for category selection
-  const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
-    setCategory(selectedCategory);
-
-    // Automatically open file explorer after selecting a category
-    if (selectedCategory) {
-      resumeFileUpload();
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,42 +29,34 @@ function UploadForm({ setAnalysisData, setOpen }) {
     <>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center justify-center relative my-[25px] bottom-[20px]">
-          <h5>Select your job Category</h5>
+          
+          <h5 className="mt-4 md:mt-5 lg:mt-9 mb-1 md:mb-1 lg:mb-2 text-[10px] sm:text-[15px] font-semibold">
+            Upload your Resume
+          </h5>
 
-          <select
-            className="appearance-none p-[5px] xl:w-[26rem] xl:h-[4rem] xl:text-[10px]
-                       rounded-[10px] bg-[#DCDCDC] text-[#1e3a8a] focus:border-[#3b7ce9] outline-none"
-            value={category}
-            onChange={handleCategoryChange} // ✅ use handler
+          {/* File Upload Box */}
+          <div
+            className="w-[15rem] sm:w-[20rem] lg:w-[26rem] h-[3rem] sm:h-[4rem] flex items-center justify-center 
+                   border border-dashed border-[#868484]
+                   rounded-[10px] bg-white cursor-pointer
+                   transition-all duration-500 ease-in-out"
+            onClick={resumeFileUpload}
           >
-            <option value="" disabled hidden>
-              Select your job
-            </option>
-            <option value="it">Information Technology</option>
-            <option value="education">Education</option>
-            <option value="finance">Finance</option>
-            <option value="engineering">Engineering</option>
-            <option value="hospitality">Hospitality</option>
-          </select>
-
-          {/* Hidden file input */}
-          <input
-            ref={fileInputRef}
-            type="file"
-            className="hidden"
-            accept=".pdf,.doc,.docx"
-            onChange={resumeFileSelection}
-          />
-
-          {/* Show selected file name */}
-          {resumeFile && (
-            <p className="mt-2 text-sm text-green-600 font-medium">
-              📎 {resumeFile.name}
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              ref={fileInputRef}
+              hidden
+              onChange={resumeFileSelection}
+            />
+            <p className="text-[10px] sm:text-[14px] lg:text-[15px] italic text-[#999]">
+              {resumeFile ? resumeFile.name : "Drag and Drop your Resume file"}
             </p>
-          )}
+          </div>
 
           <h5 className="mt-4">Attach Job Description</h5>
 
+          {/* Job Description Box */}
           <div
             className="w-40 xl:w-[26rem] h-9 xl:h-[4rem] border border-[#868484] rounded-[10px] bg-white 
                        transition-all duration-500 ease-in-out"
@@ -92,9 +71,9 @@ function UploadForm({ setAnalysisData, setOpen }) {
             />
           </div>
 
-          {/* ✅ Replace default button with your custom Button */}
+          {/* Submit Button */}
           <Button
-            disabled={isLoading || !resumeFile || !jobDescription || !category}
+            disabled={isLoading || !resumeFile || !jobDescription}
             onConfirmAction={async () => {
               const result = await submitResumeUpload();
               if (result) {

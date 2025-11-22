@@ -1,50 +1,92 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function AdminSidebar() {
-  return (
-    <aside>
-      <div className="fixed xl:w-60 xl:h-full bg-[#3B7CE9] justify-center flex xl:pt-30">
-        <nav>
-          <ul
-            className="flex flex-col xl:gap-10 text-[15px]
-                         transition-all duration-400 ease-in-out"
-          >
-            <li>
-              <Link to="/home" className="">
-                <span className="xl:text-[16px] text-white tracking-wide cursor-pointer">
-                  Home/Overview
-                </span>
-              </Link>
-            </li>
+  const [isOpen, setIsOpen] = useState(false);
 
-            <li>
-              <Link
-                to="/User"
-                className="xl:text-[16px] text-white tracking-wide cursor-pointer"
-              >
-                <span>User Management</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/report"
-                className="xl:text-[16px] text-white tracking-wide cursor-pointer"
-              >
-                <span>Reports and Analytics</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/system"
-                className="xl:text-[16px] text-white tracking-wide cursor-pointer"
-              >
-                <span>System Management</span>
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </aside>
+  return (
+    <>
+      {/* Hamburger Button (mobile only) */}
+      <button
+        className="md:hidden fixed top-15 left-4 z-[200] bg-[#3b7ce9] p-2 rounded text-white"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {/* Hamburger Icon */}
+        <div className="space-y-1">
+          <span className="block w-6 h-0.5 bg-white"></span>
+          <span className="block w-6 h-0.5 bg-white"></span>
+          <span className="block w-6 h-0.5 bg-white"></span>
+        </div>
+      </button>
+
+      <aside>
+        <div
+          className={`fixed z-[150]
+                      bg-[#3b7ce9] text-white h-full
+                      pt-[6.5rem]
+                      transition-all duration-500 ease-in-out
+                      w-40 lg:w-40 xl:w-60
+
+                      ${isOpen ? "left-0" : "-left-40"}
+                      md:left-0
+                    `}
+        >
+          <nav>
+            <ul
+              className="flex flex-col gap-5 xl:gap-4 px-9 text-[15px]
+                         transition-all duration-400 ease-in-out"
+            >
+              <li>
+                <Link
+                  to="/home"
+                  className="flex gap-2 items-center hover:opacity-80"
+                >
+                  
+Home/Overview
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/user"
+                  className="flex gap-2 items-center hover:opacity-80"
+                >
+                  User Management
+                </Link>
+              </li>
+
+                            <li>
+                <Link
+                  to="/report"
+                  className="flex gap-2 items-center hover:opacity-80"
+                >
+                  Reports and Analytics
+                </Link>
+              </li>
+
+                            <li>
+                <Link
+                  to="/system"
+                  className="flex gap-2 items-center hover:opacity-80"
+                >
+                  System Management
+                </Link>
+                
+              </li>
+                                          <li>
+                <Link
+                  to="/"
+                  className="flex gap-2 items-center hover:opacity-80"
+                >
+                  logout
+                </Link>
+                
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+    </>
   );
 }
 

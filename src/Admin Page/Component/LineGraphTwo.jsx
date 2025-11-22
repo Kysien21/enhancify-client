@@ -1,31 +1,18 @@
-import { useEffect, useRef } from "react";
-import Chart from "chart.js/auto";
+import { useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
 
-function LineGraph({
+function LineGraphTwo({
   title = "System Activity Graph",
-  labels = [
-    "JAN",
-    "FEB",
-    "MAR",
-    "APRIL",
-    "MAY",
-    "JUN",
-    "JUL",
-    "AUG",
-    "SEPT",
-    "OCT",
-    "NOV",
-    "DEC",
-  ],
+  labels = ["JAN", "FEB", "MAR", "APRIL", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"],
   data = [20, 80, 140, 180, 200, 240, 220, 240, 270, 330, 310, 170],
   borderColor = "#4a4a4a",
-  width = 90,
-  height = 20,
 }) {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
   useEffect(() => {
+    if (!chartRef.current) return;
+
     const ctx = chartRef.current.getContext("2d");
 
     if (chartInstance.current) {
@@ -51,7 +38,8 @@ function LineGraph({
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+        resizeDelay: 0,
         plugins: {
           legend: { display: false },
           tooltip: { enabled: false },
@@ -63,7 +51,7 @@ function LineGraph({
             ticks: {
               stepSize: 100,
               color: "#4a4a4a",
-              font: { size: 11 },
+              font: { size: window.innerWidth < 640 ? 9 : 11 },
             },
             grid: {
               color: "#9a9a9a",
@@ -74,22 +62,34 @@ function LineGraph({
           x: {
             ticks: {
               color: "#4a4a4a",
-              font: { size: 10 },
+              font: { size: window.innerWidth < 640 ? 8 : 10 },
+              maxRotation: 45,
+              minRotation: 0,
             },
             grid: { display: false },
             border: { display: false },
           },
         },
-      },
+      }
     });
+
+    return () => {
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
+    };
   }, [labels, data, borderColor]);
 
   return (
-    <div className="bg-[#DCDCDC] p-7 rounded-lg">
-      <h2 className="text-[#5b7fa6] mb-5 text-lg font-normal">{title}</h2>
-      <canvas ref={chartRef} width={width} height={height}></canvas>
+    <div className="bg-[#DCDCDC] p-3 sm:p-4 md:p-6 rounded-lg w-full">
+      <h2 className="text-[#5b7fa6] mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg lg:text-xl font-normal">
+        {title}
+      </h2>
+      <div className="relative w-full h-50 sm:h-52">
+        <canvas ref={chartRef}></canvas>
+      </div>
     </div>
   );
 }
 
-export default LineGraph;
+export default LineGraphTwo;

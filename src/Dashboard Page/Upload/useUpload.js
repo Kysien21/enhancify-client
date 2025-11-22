@@ -1,15 +1,13 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export function useUpload() {
   const [resumeFile, setResumeFile] = useState(null);
   const [jobDescription, setJobDescription] = useState("");
-  const [category, setCategory] = useState("");
   const [plainText, setPlainText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
-  const navigate = useNavigate();
+
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -56,19 +54,14 @@ export function useUpload() {
       return;
     }
 
-    if (!category) {
-      alert("Please select a job category.");
-      return;
-    }
-
     const formData = new FormData();
     formData.append("resume", resumeFile);
     formData.append("jobDescription", jobDescription);
-    formData.append("category", category);
 
     try {
       setIsLoading(true);
-      // 🟢 Step 1: Upload file - NOW USING API_URL
+
+      // Step 1: Upload resume
       const { data: uploadData } = await axios.post(
         `${API_URL}/api/upload`,
         formData,
@@ -85,20 +78,19 @@ export function useUpload() {
         return;
       }
 
-      // 🟢 Step 2: Analyze resume - NOW USING API_URL
+      // Step 2: Analyze resume
       const { data: analysis } = await axios.post(
         `${API_URL}/api/analyze`,
-        { resumeText, jobDescription, category },
+        { resumeText, jobDescription },
         { withCredentials: true }
       );
 
       setPlainText(resumeText);
 
-      // 🟢 Step 3: Save history
+      // Step 3: Save history
       const newEntry = {
         resumeText,
         jobDescription,
-        category,
         overallScore: analysis.overallScore || 0,
         createdAt: new Date().toISOString(),
       };
@@ -110,25 +102,23 @@ export function useUpload() {
       return analysis.analysis;
     } catch (error) {
       console.error("❌ Upload Failed:", error);
-      if (error.response && error.response.data) {
-        console.error("❗ Server Response:", error.response.data);
+
+      if (error.response?.data) {
         alert(error.response.data.message || "Upload Failed, Server Error");
       } else {
         alert("Upload Failed, Server Error");
       }
+
       return null;
     } finally {
       setIsLoading(false);
     }
   };
 
-  // ✅ Return all state + functions
   return {
     resumeFile,
     jobDescription,
     setJobDescription,
-    category,
-    setCategory,
     resumeFileSelection,
     resumeFileUpload,
     submitResumeUpload,

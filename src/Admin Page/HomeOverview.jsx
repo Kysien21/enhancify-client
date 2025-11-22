@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import LineGraph from "./Component/LineGraph";
 import Table from "./Component/Table";
+import LineGraphOne from "./Component/LineGraphOne";
+import StatCard from "./Component/StatCard";
 import AdminHeader from "./Header and Sidebar/AdminHeader";
 import AdminSidebar from "./Header and Sidebar/AdminSidebar";
 
@@ -47,8 +48,8 @@ function HomeOverview() {
 
       // Fetch recent analyses
       const analysesRes = await axios.get(
-        `${API_BASE}/api/v1/admin/recent-analyses`, 
-       {
+        `${API_BASE}/api/v1/admin/recent-analyses`,
+        {
           withCredentials: true,
         }
       );
@@ -138,61 +139,65 @@ function HomeOverview() {
   const defaultData = Array(12).fill(0);
 
   return (
-    <main>
-      <AdminHeader />
-      <AdminSidebar />
-      <section>
-        <div className="fixed xl:w-[79%] xl:h-150 xl:top-25 xl:left-70 bg-[#EEF3FB] rounded-[20px] px-13 py-3 justify-between flex">
-          <div className="relative w-70 h-full">
-            <h1 className="text-2xl mb-3 text-[#1E3A8A] font-semibold">
-              Overview
-            </h1>
+      <main>
+        <AdminHeader />
+        <AdminSidebar />
+        <section>
+          <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
+            <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="bg-[#EEF3FB] rounded-lg p-4 sm:p-6 lg:p-12">
+                {/* Responsive Layout */}
+                <div className="flex flex-col xl:flex-row gap-4 sm:gap-6 lg:gap-8 xl:gap-18">
+                  {/* LEFT COLUMN - STAT CARDS */}
+                  <div className="w-full xl:w-60 flex-shrink-0">
+                    <h1 className="text-[#133970] text-2xl mb-2 font-semibold">
+                      Overview
+                    </h1>
 
-            <div className="xl:w-60 mb-10 relative">
-              <div className="xl:h-35 bg-[#7AD7F0] flex flex-col items-center justify-center pt-6 rounded-t-lg">
-                <h1 className="text-3xl mb-2">
-                  {stats.totalUsers.toLocaleString() || 0}
-                </h1>
-                <h2 className="text-lg">Total Users</h2>
-              </div>
-              <div className="absolute bottom-0 left-0 w-full h-3 bg-[#1E3A8A] rounded-b-lg"></div>
-            </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-10">
+                      <StatCard
+                        value={stats.totalUsers}
+                        label="Total Users"
+                        storageKey="totalUsers"
+                      />
 
-            <div className="xl:w-60 mb-10 relative">
-              <div className="xl:h-35 bg-[#7AD7F0] flex flex-col items-center justify-center pt-6 rounded-t-lg">
-                <h1 className="text-3xl mb-2">
-                  {stats.totalResumes.toLocaleString() || 0}
-                </h1>
-                <h2 className="text-lg">Total Resumes</h2>
-              </div>
-              <div className="absolute bottom-0 left-0 w-full h-3 bg-[#1E3A8A] rounded-b-lg"></div>
-            </div>
+                      <StatCard
+                        value={stats.totalResumes}
+                        label="Total Resumes"
+                        storageKey="totalResumes"
+                      />
 
-            <div className="xl:w-60 mb-10 relative">
-              <div className="xl:h-35 bg-[#7AD7F0] flex flex-col items-center justify-center pt-6 rounded-t-lg">
-                <h1 className="text-3xl mb-2">
-                  {stats.averageMatchScore || 0}%
-                </h1>
-                <h2 className="text-lg">Average Match Score</h2>
+                      <StatCard
+                        value={stats.averageMatchScore}
+                        label="Average Match Score"
+                        storageKey="averageMatchScore"
+                      />
+                    </div>
+                  </div>
+
+                  {/* RIGHT COLUMN */}
+                  <div className="flex-1 flex flex-col space-y-6">
+                    {/* Graph */}
+                    <LineGraphOne
+                      title="System Activity Graph"
+                      labels={defaultLabels}
+                      data={graphData.length > 0 ? graphData : defaultData}
+                    />
+
+                    {/* Recent Analyses */}
+                    <div>
+                      <h1 className="text-lg text-[#1E3A8A] mb-2 font-medium">
+                        Recent Analyses Summary
+                      </h1>
+                      <Table data={recentAnalyses} />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="absolute bottom-0 left-0 w-full h-3 bg-[#1E3A8A] rounded-b-lg"></div>
             </div>
           </div>
-
-          <div className="w-190 h-full flex-col pt-7">
-            <LineGraph
-              title="System Activity Graph"
-              labels={defaultLabels}
-              data={graphData.length > 0 ? graphData : defaultData}
-            />
-            <h1 className="text-lg my-3 text-[#1E3A8A]">
-              Recent Analyses Summary
-            </h1>
-            <Table data={recentAnalyses || []} />
-          </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
   );
 }
 
