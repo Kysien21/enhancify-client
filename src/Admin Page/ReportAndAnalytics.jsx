@@ -12,7 +12,7 @@ function ReportAndAnalytics() {
 
       <section>
         <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
-          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 pt-1">
             <div className="bg-[#EEF3FB] rounded-lg p-4 sm:p-6 lg:p-5">
               
               <h1 className="text-2xl sm:text-3xl md:text-4xl text-[#1E3A8A] font-semibold underline mb-6 md:mb-8 lg:mb-12 text-center">

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import AdminHeader from "./Header and Sidebar/AdminHeader";
 import AdminSidebar from "./Header and Sidebar/AdminSidebar";
+import DeleteButton from "./Component/DeleteButton";
 
 function UserManagement() {
   const [users, setUsers] = useState([]);
@@ -58,24 +59,22 @@ function UserManagement() {
   };
 
   const handleDelete = async (userId) => {
-    if (!confirm("Are you sure you want to delete this user? This action cannot be undone!"))
-      return;
-
-    try {
-      const response = await axios.delete(
-        `${API_BASE}/api/v1/admin/users/${userId}`,
+  try {
+    const response = await axios.delete(
+      `${API_BASE}/api/v1/admin/users/${userId}`,
       { withCredentials: true }
-      );
+    );
 
-      if (response.data.success) {
-        alert(response.data.message);
-        fetchUsers();
-      }
-    } catch (err) {
-      console.error("Error deleting user:", err);
-      alert(err.response?.data?.message || "Failed to delete user");
+    if (response.data.success) {
+      alert(response.data.message);
+      fetchUsers();
     }
-  };
+  } catch (err) {
+    console.error("Error deleting user:", err);
+    alert(err.response?.data?.message || "Failed to delete user");
+  }
+};
+
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -92,15 +91,15 @@ function UserManagement() {
       <AdminHeader />
       <AdminSidebar />
       <section>
-        <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen px-4 py-6">
-          <div className="w-full max-w-7xl mx-auto">
+        <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
+          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
 
             {/* Loading UI */}
             {loading && (
-              <div className="flex items-center justify-center h-full">
+              <div className="flex items-center justify-center h-150">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700 mx-auto mb-4"></div>
-                  <p className="text-lg text-[#1E3A8A]">Loading users...</p>
+                  <p className="text-lg text-[#1E3A8A]">Loading dashboard...</p>
                 </div>
               </div>
             )}
@@ -126,7 +125,7 @@ function UserManagement() {
             {!loading && !error && (
               <>
                 {/* DESKTOP TABLE */}
-                <div className="hidden lg:block bg-[#EEF3FB] rounded-lg overflow-hidden">
+                <div className="hidden lg:block bg-[#EEF3FB] rounded-lg overflow-hidden max-h-[calc(103vh-150px)] overflow-y-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="bg-gray-300">
@@ -194,12 +193,8 @@ function UserManagement() {
                                   {user.isActive ? "Block" : "Unblock"}
                                 </button>
 
-                                <button
-                                  onClick={() => handleDelete(user._id)}
-                                  className="bg-red-400 text-white px-4 py-2 rounded text-xs font-medium hover:bg-red-500"
-                                >
-                                  Delete
-                                </button>
+                                <DeleteButton onDelete={() => handleDelete(user._id)} />
+
                               </div>
                             </td>
                           </tr>
@@ -258,12 +253,8 @@ function UserManagement() {
                             {user.isActive ? "Block" : "Unblock"}
                           </button>
 
-                          <button
-                            onClick={() => handleDelete(user._id)}
-                            className="flex-1 bg-red-500 text-white px-4 py-2 rounded text-sm font-medium hover:bg-red-600"
-                          >
-                            Delete
-                          </button>
+<DeleteButton onDelete={() => handleDelete(user._id)} />
+
                         </div>
                       </div>
                     ))

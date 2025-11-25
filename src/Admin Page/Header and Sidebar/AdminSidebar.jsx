@@ -8,7 +8,7 @@ function AdminSidebar() {
     <>
       {/* Hamburger Button (mobile only) */}
       <button
-        className="md:hidden fixed top-15 left-4 z-[200] bg-[#3b7ce9] p-2 rounded text-white"
+        className="md:hidden fixed top-15 left-4 z-20 bg-[#3b7ce9] p-2 rounded text-white"
         onClick={() => setIsOpen(!isOpen)}
       >
         {/* Hamburger Icon */}
@@ -21,9 +21,9 @@ function AdminSidebar() {
 
       <aside>
         <div
-          className={`fixed z-[150]
+          className={`fixed z-15
                       bg-[#3b7ce9] text-white h-full
-                      pt-[6.5rem]
+                      pt-35
                       transition-all duration-500 ease-in-out
                       w-40 lg:w-40 xl:w-60
 

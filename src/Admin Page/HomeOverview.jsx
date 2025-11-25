@@ -78,49 +78,6 @@ function HomeOverview() {
     }
   };
 
-  if (loading) {
-    return (
-      <main>
-        <AdminHeader />
-        <AdminSidebar />
-        <section>
-          <div className="fixed xl:w-[79%] xl:h-150 xl:top-25 xl:left-70 bg-[#EEF3FB] rounded-[20px] px-13 py-3 flex items-center justify-center">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700 mx-auto mb-4"></div>
-              <p className="text-lg text-[#1E3A8A]">Loading dashboard...</p>
-            </div>
-          </div>
-        </section>
-      </main>
-    );
-  }
-
-  if (error) {
-    return (
-      <main>
-        <AdminHeader />
-        <AdminSidebar />
-        <section>
-          <div className="fixed xl:w-[79%] xl:h-150 xl:top-25 xl:left-70 bg-[#EEF3FB] rounded-[20px] px-13 py-3 flex items-center justify-center">
-            <div className="text-center">
-              <div className="text-red-500 text-6xl mb-4">⚠️</div>
-              <h2 className="text-2xl text-red-600 mb-2">
-                Error Loading Dashboard
-              </h2>
-              <p className="text-gray-600 mb-4">{error}</p>
-              <button
-                onClick={fetchAllData}
-                className="bg-blue-700 hover:bg-blue-800 text-white py-2 px-6 rounded-lg transition duration-200"
-              >
-                Retry
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-    );
-  }
-
   // ✅ Default labels/data if backend returns empty
   const defaultLabels = [
     "JAN",
@@ -140,38 +97,46 @@ function HomeOverview() {
 
   return (
       <main>
-        <AdminHeader />
-        <AdminSidebar />
-        <section>
-          <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
-            <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-[#EEF3FB] rounded-lg p-4 sm:p-6 lg:p-12">
-                {/* Responsive Layout */}
-                <div className="flex flex-col xl:flex-row gap-4 sm:gap-6 lg:gap-8 xl:gap-18">
+      {/* Always render header and sidebar */}
+      <AdminHeader />
+      <AdminSidebar />
+
+      <section>
+        <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
+          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className=" p-4 sm:p-6 lg:p-12 flex justify-center items-center min-h-[60vh]">
+              
+              {/* Conditional Rendering */}
+              {loading ? (
+              <div className="flex items-center justify-center h-123">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700 mx-auto mb-4"></div>
+                  <p className="text-lg text-[#1E3A8A]">Loading dashboard...</p>
+                </div>
+              </div>
+              ) : error ? (
+                <div className="flex items-center justify-center h-123">
+                <div className="text-center">
+                  <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                  <h2 className="text-2xl text-red-600 mb-2">Error Loading Dashboard</h2>
+                  <p className="text-gray-600 mb-4">{error}</p>
+                  <button
+                    onClick={fetchAllData}
+                    className="bg-blue-700 hover:bg-blue-800 text-white py-2 px-6 rounded-lg transition duration-200"
+                  >
+                    Retry
+                  </button>
+                </div>
+                </div>
+              ) : (
+                <div className="flex flex-col xl:flex-row gap-4 sm:gap-6 lg:gap-8 xl:gap-18 w-full">
                   {/* LEFT COLUMN - STAT CARDS */}
-                  <div className="w-full xl:w-60 flex-shrink-0">
-                    <h1 className="text-[#133970] text-2xl mb-2 font-semibold">
-                      Overview
-                    </h1>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-10">
-                      <StatCard
-                        value={stats.totalUsers}
-                        label="Total Users"
-                        storageKey="totalUsers"
-                      />
-
-                      <StatCard
-                        value={stats.totalResumes}
-                        label="Total Resumes"
-                        storageKey="totalResumes"
-                      />
-
-                      <StatCard
-                        value={stats.averageMatchScore}
-                        label="Average Match Score"
-                        storageKey="averageMatchScore"
-                      />
+                  <div className="w-full xl:w-60">
+                    <h1 className="text-[#133970] text-2xl mb-2 font-semibold">Overview</h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-10 px-10 sm:px-0">
+                      <StatCard value={stats.totalUsers} label="Total Users" storageKey="totalUsers" />
+                      <StatCard value={stats.totalResumes} label="Total Resumes" storageKey="totalResumes" />
+                      <StatCard value={stats.averageMatchScore} label="Average Match Score" storageKey="averageMatchScore" />
                     </div>
                   </div>
 
@@ -186,18 +151,18 @@ function HomeOverview() {
 
                     {/* Recent Analyses */}
                     <div>
-                      <h1 className="text-lg text-[#1E3A8A] mb-2 font-medium">
-                        Recent Analyses Summary
-                      </h1>
+                      <h1 className="text-lg text-[#1E3A8A] mb-2 font-medium">Recent Analyses Summary</h1>
                       <Table data={recentAnalyses} />
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+    </main>
   );
 }
 

@@ -1,19 +1,18 @@
 import { useState } from "react";
+import UploadIcon from "../../assets/Upload.png";
+import ResultIcon from "../../assets/Result.png";
 import { Link } from "react-router-dom";
-import UploadIcon from "../../../assets/Upload.png";
-import ResultIcon from "../../../assets/Result.png";
 
-function DashboardSidebar() {
+
+function DasboardSidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      {/* Hamburger Button (mobile only) */}
       <button
-        className="md:hidden fixed top-15 left-4 z-[200] bg-[#3b7ce9] p-2 rounded text-white"
+        className="md:hidden fixed top-15 left-4 z-20 bg-[#3b7ce9] p-2 rounded text-white"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {/* Hamburger Icon */}
         <div className="space-y-1">
           <span className="block w-6 h-0.5 bg-white"></span>
           <span className="block w-6 h-0.5 bg-white"></span>
@@ -23,9 +22,9 @@ function DashboardSidebar() {
 
       <aside>
         <div
-          className={`fixed z-[150]
+          className={`fixed z-15
                       bg-[#3b7ce9] text-white h-full
-                      pt-[6.5rem]
+                      pt-24
                       transition-all duration-500 ease-in-out
                       w-40 lg:w-40 xl:w-60
 
@@ -72,4 +71,4 @@ function DashboardSidebar() {
   );
 }
 
-export default DashboardSidebar;
+export default DasboardSidebar;

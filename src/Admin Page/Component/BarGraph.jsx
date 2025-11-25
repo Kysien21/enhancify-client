@@ -67,7 +67,7 @@ const BarGraph = () => {
   }, []);
 
   return (
-    <div className="bg-[#DCDCDC] p-8 rounded-lg w-[500px] h-[300px]">
+    <div className="bg-[#DCDCDC] p-8 rounded-lg w-full h-[300px]">
       <canvas ref={chartRef}></canvas>
     </div>
   );

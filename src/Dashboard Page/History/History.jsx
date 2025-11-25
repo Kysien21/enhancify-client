@@ -1,108 +1,26 @@
 import { useState } from "react";
 import { Eye } from "lucide-react";
-import DashboardHeader from "../Header and Sidebar/Header/DashboardHeader";
-import DashboardSidebar from "../Header and Sidebar/Sidebar/DasboardSidebar";
 import useGetHistory from "./useGetHistory";
 import HistoryDetail from "./HistoryDetail";
-const MOCK_HISTORY = [
-  {
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    enhancedResume: {
-      contact: {
-        name: "Joana Mae Gallardo",
-      },
-    },
-    atsScore: {
-      original: 42,
-      enhanced: 88,
-    },
-  },
-  {
-    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    enhancedResume: {
-      contact: {
-        name: "John Smith",
-      },
-    },
-    atsScore: {
-      original: 55,
-      enhanced: 92,
-    },
-  },
-  {
-    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    enhancedResume: {
-      contact: {
-        name: "Maria Garcia",
-      },
-    },
-    atsScore: {
-      original: 38,
-      enhanced: 81,
-    },
-  },
-  {
-    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    enhancedResume: {
-      contact: {
-        name: "David Chen",
-      },
-    },
-    atsScore: {
-      original: 61,
-      enhanced: 89,
-    },
-  },
-  {
-    createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    enhancedResume: {
-      contact: {
-        name: "Sarah Johnson",
-      },
-    },
-    atsScore: {
-      original: 45,
-      enhanced: 85,
-    },
-  },
-  {
-    createdAt: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(),
-    enhancedResume: {
-      contact: {
-        name: "Michael Brown",
-      },
-    },
-    atsScore: {
-      original: 52,
-      enhanced: 87,
-    },
-  },
-];
+import DashboardHeader from "../Header and Sidebar/DashboardHeader";
+import DasboardSidebar from "../Header and Sidebar/DasboardSidebar";
 
 function History() {
   const { isLoading, historyData } = useGetHistory();
   const [selectedHistory, setSelectedHistory] = useState(null);
-  // const [historyData, setHistoryData] = useState([]);
-
-  // useEffect(() => {
-  //   const stored = JSON.parse(localStorage.getItem("history")) || [];
-  //   // Use stored data if available, otherwise use mock data
-  //   const data = stored.length > 0 ? stored : MOCK_HISTORY;
-  //   setHistoryData(data.reverse());
-  // }, []);
-
   return (
     <>
-      <DashboardHeader />
-      <DashboardSidebar />
+    <DashboardHeader />
+    <DasboardSidebar />
       {selectedHistory ? (
         <HistoryDetail
           historyData={selectedHistory}
           setHistoryData={setSelectedHistory}
         />
       ) : (
-        <section className="ml-[22%] mr-8 mb-4  bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg ">
-          <div className="max-w-6xl mt-[50px]">
+        <section>
+          <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
+          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-gray-800 mb-2">
                 Optimization History
@@ -119,14 +37,14 @@ function History() {
             )}
 
             {historyData.length === 0 && !isLoading && (
-              <div className="bg-white rounded-lg shadow-lg p-12 text-center">
-                <p className="text-gray-500 text-lg">
+              <div className="rounded-lg shadow-lg p-12 text-center bg-[#3b7ce9]">
+                <p className="text-white text-lg">
                   No previous analyses found. Start optimizing your resume!
                 </p>
               </div>
             )}
             {historyData.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(90vh-150px)] overflow-y-auto pr-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(93vh-150px)] overflow-y-auto pr-2">
                 {historyData.map((entry, index) => {
                   const originalScore = entry.atsScore?.original || 0;
                   const enhancedScore = entry.atsScore?.enhanced || 0;
@@ -135,9 +53,9 @@ function History() {
                   return (
                     <div
                       key={index}
-                      className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden"
+                      className="bg-white rounded-lg overflow-hidden"
                     >
-                      <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 p-4 text-white">
+                      <div className="bg-[#3b7ce9] p-3 text-white">
                         <h3 className="font-semibold text-lg truncate">
                           {new Date(entry.createdAt).toLocaleDateString(
                             "en-US",
@@ -185,6 +103,7 @@ function History() {
                 })}
               </div>
             )}
+          </div>
           </div>
         </section>
       )}

@@ -29,7 +29,11 @@ export function useWebsiteHeader() {
       handledRedirect.current = true;
       setLogin(true);
       setSignup(false);
-      navigate(location.pathname, { replace: true, state: {} });
+
+      navigate(location.pathname, {
+        replace: true,
+        state: {},
+      });
     }
   }, [location, navigate]);
 

@@ -8,9 +8,11 @@ export function useLogIn() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
+  const [loggingIn, setLoggingIn] = useState(false);
 
-  const handleLogin = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    setLoggingIn(true);
 
     if (!email || !password) {
       alert("Please enter email and password.");
@@ -28,15 +30,13 @@ export function useLogIn() {
         password,
       });
 
-      // ✅ Extract user from response
       const { success, message, user } = response.data;
 
       if (success || message === "Login successful") {
-        // ✅ Check user role and route accordingly
-        if (user && user.role === 'admin') {
-          navigate("/home"); // Admin dashboard
+        if (user && user.role === "admin") {
+          navigate("/home");
         } else {
-          navigate("/upload"); // User dashboard
+          navigate("/upload");
         }
       } else {
         alert(message || "Login failed");
@@ -54,6 +54,7 @@ export function useLogIn() {
     setPassword,
     emailRef,
     passwordRef,
-    handleLogin,
+    onSubmit,
+    loggingIn,
   };
 }

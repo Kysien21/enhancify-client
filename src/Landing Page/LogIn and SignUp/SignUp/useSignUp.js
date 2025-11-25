@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export function useSignUp() {
@@ -11,6 +12,7 @@ export function useSignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const firstnameRef = useRef();
   const lastnameRef = useRef();
   const mobileRef = useRef();
   const emailRef = useRef();
@@ -22,36 +24,22 @@ export function useSignUp() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    if (
-      !firstname ||
-      !lastname ||
-      !mobile ||
-      !email ||
-      !password ||
-      !confirmPassword
-    ) {
+    if (!firstname || !lastname || !mobile || !email || !password || !confirmPassword) {
       alert("Please fill in all fields.");
       return;
     }
 
-    // Check if mobile contains only digits and is 10–15 characters long
-    if (
-      !mobile ||
-      mobile.length < 11 ||
-      mobile.length > 15 ||
-      !/^\d+$/.test(mobile)
-    ) {
-      alert("Mobile number must be 11 to 15 digits and contain only numbers.");
+    if (!mobile || mobile.length < 11 || !/^\d+$/.test(mobile)) {
+      alert("Mobile number must be 11 digits and contain only numbers.");
       return;
     }
 
-    // Check if email ends with "@gmail.com" and has at least one character before it
     if (!email.includes("@gmail.com") || email.indexOf("@gmail.com") === 0) {
       alert("Please enter a valid Gmail address.");
       return;
     }
 
-    if (password.length < 6) {
+    if (password.length < 10) {
       alert("Password must be at least 6 characters long.");
       return;
     }
@@ -63,6 +51,7 @@ export function useSignUp() {
 
     try {
       const URL = `${API_URL}/api/v1/auth/signup`;
+
       const response = await axios.post(URL, {
         First_name: firstname,
         Last_name: lastname,
@@ -97,6 +86,7 @@ export function useSignUp() {
     setPassword,
     confirmPassword,
     setConfirmPassword,
+    firstnameRef,
     lastnameRef,
     mobileRef,
     emailRef,

@@ -1,7 +1,7 @@
 function StatCard({ value, label }) {
   return (
     <div className="w-full relative">
-      <div className="h-30 sm:h-35 lg:h-40 xl:h-30 bg-[#7AD7F0] flex flex-col items-center justify-center pt-4 sm:pt-0">
+      <div className="h-30 sm:h-35 lg:h-40 xl:h-30 bg-[#7AD7F0] flex flex-col items-center justify-center pt-4 sm:pt-0 rounded-t-xl">
         <h1 className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl xl:text-3xl mb-1 sm:mb-2 font-semibold">
           {value}
         </h1>

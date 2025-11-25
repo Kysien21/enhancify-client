@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Download,
   CheckCircle,
-  AlertCircle,
   TrendingUp,
   ArrowLeft,
 } from "lucide-react";
@@ -12,7 +11,6 @@ import {
   Paragraph,
   TextRun,
   AlignmentType,
-  UnderlineType,
   convertInchesToTwip,
 } from "docx";
 
@@ -22,145 +20,6 @@ const HistoryDetail = ({ historyData, setHistoryData }) => {
   const enhancedResume = historyData.enhancedResume;
   const improvements = historyData.improvements;
   const atsScore = historyData.atsScore;
-
-  //   const enhancedResume = {
-  //     contact: {
-  //       name: "JOANA MAE GALLARDO",
-  //       phone: "+63 945 834 5865",
-  //       email: "gallardojoanamae77@gmail.com",
-  //       location: "Jabonga, Agusan Del Norte, Philippines",
-  //       linkedin: "[Add LinkedIn Profile]",
-  //     },
-  //     summary:
-  //       "Results-driven Bachelor of Science in Forestry graduate with hands-on experience in environmental management, forest conservation, and data administration. Demonstrates strong analytical skills, attention to detail, and proficiency in office management systems. Proven ability to collaborate with forestry professionals, manage documentation workflows, and support sustainable resource management initiatives. Seeking entry-level positions in forestry, environmental science, customer service, or administrative roles where I can apply technical knowledge and interpersonal skills.",
-  //     experience: [
-  //       {
-  //         position: "Forestry Intern",
-  //         company:
-  //           "Community Environment and Natural Resources Office (CENRO) - Tubay",
-  //         period: "June 2024 - July 2024",
-  //         responsibilities: [
-  //           "Collaborated with professional foresters on environmental conservation projects and forest resource assessments",
-  //           "Managed data entry, encoding, and documentation for forest inventory systems with 100% accuracy",
-  //           "Coordinated printing and distribution of forestry reports, permits, and environmental compliance documents",
-  //           "Maintained inventory tracking systems for equipment, supplies, and forestry documentation",
-  //           "Supported field operations and contributed to sustainable forest management practices",
-  //         ],
-  //       },
-  //     ],
-  //     education: [
-  //       {
-  //         degree: "Bachelor of Science in Forestry",
-  //         institution: "Magdagooc National High School",
-  //         period: "2015-2021",
-  //         relevant:
-  //           "Relevant Coursework: Environmental Science, Forest Ecology, Natural Resource Management, GIS Mapping",
-  //       },
-  //       {
-  //         degree: "Elementary Education",
-  //         institution: "Juan L. Subrastas Elementary School",
-  //         period: "2007-2015",
-  //       },
-  //     ],
-  //     skills: {
-  //       technical: [
-  //         "Data Entry & Management",
-  //         "Microsoft Office Suite (Word, Excel, PowerPoint)",
-  //         "Inventory Management Systems",
-  //         "Document Processing & Filing",
-  //         "Forest Inventory Techniques",
-  //         "Environmental Assessment",
-  //         "Record Keeping & Documentation",
-  //       ],
-  //       soft: [
-  //         "Customer Service Excellence",
-  //         "Team Leadership & Collaboration",
-  //         "Critical Thinking & Problem Solving",
-  //         "Verbal & Written Communication",
-  //         "Adaptability & Quick Learning",
-  //         "Time Management & Organization",
-  //         "Attention to Detail",
-  //       ],
-  //     },
-  //     languages: ["English (Fluent)", "Filipino (Native)"],
-  //     certifications:
-  //       "[Add: On-the-Job Training Certificate, Seminars, or Relevant Certifications]",
-  //   };
-
-  //   const improvements = [
-  //     {
-  //       category: "Contact Information",
-  //       changes: [
-  //         "Formatted phone number with country code",
-  //         "Streamlined address for better readability",
-  //         "Added LinkedIn profile placeholder (recommended)",
-  //       ],
-  //       impact: "high",
-  //     },
-  //     {
-  //       category: "Professional Summary",
-  //       changes: [
-  //         "Expanded from 64 to 85 words with industry keywords",
-  //         "Added specific skills: 'data administration', 'forest conservation', 'environmental management'",
-  //         "Included quantifiable qualities and career objectives",
-  //         "Fixed grammatical issues",
-  //       ],
-  //       impact: "high",
-  //     },
-  //     {
-  //       category: "Work Experience",
-  //       changes: [
-  //         "Changed title from 'Intern' to 'Forestry Intern' for clarity",
-  //         "Expanded CENRO acronym for ATS recognition",
-  //         "Transformed 2 basic bullets into 5 detailed accomplishment statements",
-  //         "Added action verbs: 'Collaborated', 'Managed', 'Coordinated', 'Maintained', 'Supported'",
-  //         "Included quantifiable metric (100% accuracy)",
-  //         "Added relevant forestry terminology",
-  //       ],
-  //       impact: "critical",
-  //     },
-  //     {
-  //       category: "Education",
-  //       changes: [
-  //         "Added 'Bachelor of Science in Forestry' degree title",
-  //         "Included relevant coursework for ATS keyword matching",
-  //         "Properly formatted school names",
-  //       ],
-  //       impact: "high",
-  //     },
-  //     {
-  //       category: "Skills Section",
-  //       changes: [
-  //         "Reorganized into 'Technical' and 'Soft Skills' categories",
-  //         "Expanded from 3 to 14 skills with specific competencies",
-  //         "Added industry-specific keywords: GIS, Environmental Assessment, Forest Inventory",
-  //         "Included computer skills (Microsoft Office Suite)",
-  //         "Used full phrases instead of single words",
-  //       ],
-  //       impact: "critical",
-  //     },
-  //     {
-  //       category: "ATS Keywords Added",
-  //       changes: [
-  //         "Forestry-specific: forest conservation, resource management, environmental science",
-  //         "Technical: data entry, inventory management, documentation, MS Office",
-  //         "Soft skills: collaboration, problem-solving, communication",
-  //         "Action verbs throughout for better parsing",
-  //       ],
-  //       impact: "critical",
-  //     },
-  //   ];
-
-  //   const atsScore = {
-  //     original: 42,
-  //     enhanced: 88,
-  //     categories: [
-  //       { name: "Keywords", original: 35, enhanced: 90 },
-  //       { name: "Formatting", original: 60, enhanced: 95 },
-  //       { name: "Content Quality", original: 40, enhanced: 85 },
-  //       { name: "Completeness", original: 30, enhanced: 80 },
-  //     ],
-  //   };
 
   const downloadOptimzeResume = async () => {
     const sections = [];
@@ -252,29 +111,7 @@ const HistoryDetail = ({ historyData, setHistoryData }) => {
     );
 
     enhancedResume.experience.forEach((exp) => {
-      // Job title with period on the right
-      // sections.push(
-      //   new Paragraph({
-      //     children: [
-      //       new TextRun({
-      //         text: exp.position,
-      //         bold: true,
-      //       }),
-      //       new TextRun({
-      //         text: "",
-      //       }),
-      //     ],
-      //     spacing: { after: 0 },
-      //     tabStops: [
-      //       {
-      //         type: "right",
-      //         position: convertInchesToTwip(5.5),
-      //       },
-      //     ],
-      //   })
-      // );
-
-      // Create a table-like layout for position and date using tabs
+     
       sections.push(
         new Paragraph({
           children: [
@@ -525,10 +362,10 @@ const HistoryDetail = ({ historyData, setHistoryData }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6 flex flex-col ml-[22%] mr-8 mb-4 mt-">
-      <div className="max-w-6xl mt-[50px]">
+    <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <div className="bg-[#f3f8ff] rounded-lg p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
               <button
@@ -599,7 +436,7 @@ const HistoryDetail = ({ historyData, setHistoryData }) => {
         </div>
 
         {/* Tabs */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="rounded-lg overflow-hidden bg-[#f3f8ff]">
           <div className="flex border-b">
             <button
               onClick={() => setActiveTab("enhanced")}
@@ -796,7 +633,7 @@ const HistoryDetail = ({ historyData, setHistoryData }) => {
                       {improvement.changes.map((change, i) => (
                         <li key={i} className="flex items-start">
                           <CheckCircle
-                            className="text-green-600 mr-2 mt-0.5 flex-shrink-0"
+                            className="text-green-600 mr-2 mt-0.5"
                             size={16}
                           />
                           <span className="text-sm">{change}</span>
@@ -805,80 +642,8 @@ const HistoryDetail = ({ historyData, setHistoryData }) => {
                     </ul>
                   </div>
                 ))}
-
-                <div className="bg-indigo-50 border-2 border-indigo-200 rounded-lg p-6 mt-6">
-                  <h3 className="font-bold text-indigo-900 mb-3 text-lg">
-                    📋 Next Steps for Maximum ATS Success
-                  </h3>
-                  <ul className="space-y-2 text-indigo-800">
-                    <li className="flex items-start">
-                      <span className="font-bold mr-2">1.</span>
-                      <span>
-                        Add your LinkedIn profile URL to increase professional
-                        visibility
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="font-bold mr-2">2.</span>
-                      <span>
-                        Include any certifications (OJT completion, forestry
-                        seminars, safety training)
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="font-bold mr-2">3.</span>
-                      <span>
-                        Tailor keywords for each specific job posting you apply
-                        to
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="font-bold mr-2">4.</span>
-                      <span>
-                        Save as .docx or PDF format (check job posting for
-                        preferred format)
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="font-bold mr-2">5.</span>
-                      <span>
-                        Use standard fonts (Arial, Calibri, Times New Roman) at
-                        10-12pt size
-                      </span>
-                    </li>
-                  </ul>
-                </div>
               </div>
             )}
-          </div>
-        </div>
-
-        {/* Footer Tips */}
-        <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
-          <h3 className="font-bold text-gray-800 mb-3">
-            💡 ATS Optimization Tips
-          </h3>
-          <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
-            <div>
-              <h4 className="font-semibold text-indigo-600 mb-2">✓ DO</h4>
-              <ul className="space-y-1">
-                <li>• Use standard section headings</li>
-                <li>• Include specific job-related keywords</li>
-                <li>• Use action verbs (Managed, Coordinated, Developed)</li>
-                <li>• List skills that match job descriptions</li>
-                <li>• Keep formatting simple and clean</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-red-600 mb-2">✗ DON'T</h4>
-              <ul className="space-y-1">
-                <li>• Use headers/footers or text boxes</li>
-                <li>• Include images, graphics, or tables</li>
-                <li>• Use unusual fonts or excessive formatting</li>
-                <li>• Stuff keywords unnaturally</li>
-                <li>• Exceed 2 pages for entry-level positions</li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
