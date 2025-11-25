@@ -8,6 +8,7 @@ import ReportAndAnalytics from "./Admin Page/ReportAndAnalytics";
 import SystemManagement from "./Admin Page/SystemManagement";
 
 import { AdminRoute } from "./Admin Page/Component/ProtectedRoute";
+import { UserProtectedRoute } from "./Dashboard Page/UserProtectedRoute";
 
 function App() {
   return (
@@ -17,8 +18,22 @@ function App() {
           <Route index element={<Website />} />
           <Route path="/website" element={<Website />} />
           
-          <Route path="/upload" element={<Upload />} />
-          <Route path="/history" element={<History />} />
+          <Route 
+            path="/upload" 
+            element={
+              <UserProtectedRoute>
+                <Upload />
+              </UserProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/history" 
+            element={
+              <UserProtectedRoute>
+                <History />
+              </UserProtectedRoute>
+            } 
+          />
 
 
         <Route path="/home" element={<AdminRoute><HomeOverview /></AdminRoute>} />
