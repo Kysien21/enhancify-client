@@ -3,9 +3,8 @@ import axios from "axios";
 
 export function useUpload() {
   const [resumeFile, setResumeFile] = useState(null);
-  const [jobDescription, setJobDescription] = useState("");
+  const [jobDescription, setJobDescription] = useState(""); // ✅ This is for the textarea value
   const [isLoading, setIsLoading] = useState(false);
-  const [useJobDescription, setUseJobDescription] = useState("");
 
   const fileInputRef = useRef(null);
 
@@ -47,17 +46,11 @@ export function useUpload() {
       return null;
     }
 
-    // Only require job description if the toggle is on
-    if (useJobDescription && !jobDescription.trim()) {
-      alert("Please provide a job description");
-      return null;
-    }
-
     const formData = new FormData();
     formData.append("resume", resumeFile);
     
-    // Only append job description if provided
-    if (useJobDescription && jobDescription.trim()) {
+    // ✅ Only append job description if it has content
+    if (jobDescription.trim()) {
       formData.append("jobDescription", jobDescription);
     }
 
@@ -80,9 +73,9 @@ export function useUpload() {
         return null;
       }
 
-      // Only analyze if job description exists
+      // ✅ Only analyze with job description if provided
       const analysisPayload = { resumeText };
-      if (useJobDescription && jobDescription.trim()) {
+      if (jobDescription.trim()) {
         analysisPayload.jobDescription = jobDescription;
       }
 
@@ -94,7 +87,7 @@ export function useUpload() {
 
       const newEntry = {
         resumeText,
-        jobDescription: useJobDescription ? jobDescription : null,
+        jobDescription: jobDescription.trim() || null,
         overallScore: analysis.overallScore || 0,
         createdAt: new Date().toISOString(),
       };
@@ -123,8 +116,6 @@ export function useUpload() {
     resumeFile,
     jobDescription,
     setJobDescription,
-    useJobDescription,
-    setUseJobDescription,
     resumeFileSelection,
     resumeFileUpload,
     submitResumeUpload,
