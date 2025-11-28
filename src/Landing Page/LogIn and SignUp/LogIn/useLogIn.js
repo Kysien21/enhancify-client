@@ -12,8 +12,8 @@ export function useLogIn() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setLoggingIn(true);
 
+    // ✅ VALIDATION FIRST (do NOT set loggingIn yet)
     if (!email || !password) {
       alert("Please enter email and password.");
       return;
@@ -23,6 +23,9 @@ export function useLogIn() {
       alert("Only @gmail.com emails are allowed.");
       return;
     }
+
+    // ✅ Only set loading TRUE after validation success
+    setLoggingIn(true);
 
     try {
       const response = await axiosInstance.post("/api/v1/auth/signin", {
@@ -44,6 +47,9 @@ export function useLogIn() {
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed.");
+    } finally {
+      // ✅ ALWAYS reset the loading state
+      setLoggingIn(false);
     }
   };
 

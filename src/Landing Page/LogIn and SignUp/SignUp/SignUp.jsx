@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSignUp } from "./useSignUp";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, X } from "lucide-react";
 
-function SignUp() {
+function SignUp({ handleModalClose }) {
   const {
     firstname,
     setFirstname,
@@ -30,22 +30,34 @@ function SignUp() {
 
   return (
     <main>
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex w-[390px] h-[485px] rounded-[10px] bg-[#fbf5f5]/30 backdrop-blur-md">
+      <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8">
+        
+        {/* Make container relative so the X button can be positioned */}
+        <div className="relative w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl rounded-xl p-7 sm:p-0 sm:px-8 md:py-6 md:px-10 lg:py-7 lg:px-15 bg-[#fbf5f5]/30 backdrop-blur-md transition-all duration-500 ease-in-out">
+
+          {/* ❌ X CLOSE BUTTON */}
+          <button
+            type="button"
+            onClick={ handleModalClose }
+            className="absolute top-3 right-3 text-[#133970] hover:text-[#102c5d] transition cursor-pointer"
+          >
+            <X size={20} />
+          </button>
+
           <div className="flex flex-col flex-1 items-center justify-center">
-            <div className="flex items-center justify-center relative">
-              <div className="flex items-center relative">
-                <h1 className="text-[20px] text-[#133970] leading-tight mb-1 text-center">
-                  We're excited to have you
-                  <br />
-                  on Board!
-                </h1>
-              </div>
+
+            <div className="text-center mb-6 sm:mb-5">
+              <h1 className="text-2xl text-[#133970] leading-tight font-medium text-center">
+                We're excited to have you
+                <br />
+                on Board!
+              </h1>
             </div>
 
             <form className="relative flex flex-col" onSubmit={handleSignup}>
-              <label className="flex flex-col w-[230px]">
-                <h2 className="text-[12.5px] text-[#133970] mb-1 ml-1">Firstname:</h2>
+
+              <label className="flex flex-col w-full">
+                <h2 className="text-sm text-[#133970] mb-1 ml-1">Firstname:</h2>
                 <input
                   type="text"
                   ref={firstnameRef}
@@ -55,13 +67,12 @@ function SignUp() {
                     e.key === "Enter" &&
                     (e.preventDefault(), lastnameRef.current?.focus())
                   }
-                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow
-                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </label>
 
-              <label className="flex flex-col w-[230px]">
-                <h2 className="text-[13px] text-[#133970] mb-1 ml-1">Lastname:</h2>
+              <label className="flex flex-col w-full">
+                <h2 className="text-sm text-[#133970] mb-1 ml-1">Lastname:</h2>
                 <input
                   type="text"
                   ref={lastnameRef}
@@ -71,13 +82,12 @@ function SignUp() {
                     e.key === "Enter" &&
                     (e.preventDefault(), mobileRef.current?.focus())
                   }
-                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow
-                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </label>
 
-              <label className="flex flex-col w-[230px]">
-                <h2 className="text-[13px] text-[#133970] mb-1 ml-1">Mobile No:</h2>
+              <label className="flex flex-col w-full">
+                <h2 className="text-sm text-[#133970] mb-1 ml-1">Mobile No:</h2>
                 <input
                   type="text"
                   ref={mobileRef}
@@ -87,13 +97,12 @@ function SignUp() {
                     e.key === "Enter" &&
                     (e.preventDefault(), emailRef.current?.focus())
                   }
-                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow
-                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </label>
 
-              <label className="flex flex-col w-[230px]">
-                <h2 className="text-[13px] text-[#133970] mb-1 ml-1">Email Address:</h2>
+              <label className="flex flex-col w-full">
+                <h2 className="text-sm text-[#133970] mb-1 ml-1">Email Address:</h2>
                 <input
                   type="text"
                   ref={emailRef}
@@ -103,13 +112,12 @@ function SignUp() {
                     e.key === "Enter" &&
                     (e.preventDefault(), passwordRef.current?.focus())
                   }
-                  className="h-[30px] px-4 py-1 mb-1 border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow
-                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </label>
 
-              <label className="flex flex-col w-[230px]">
-                <h2 className="text-[13px] text-[#133970] mb-1 ml-1">Password:</h2>
+              <label className="flex flex-col w-full">
+                <h2 className="text-sm text-[#133970] mb-1 ml-1">Password:</h2>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -120,25 +128,21 @@ function SignUp() {
                       e.key === "Enter" &&
                       (e.preventDefault(), confirmPasswordRef.current?.focus())
                     }
-                    className="h-[30px] w-full px-4 py-1 mb-1 border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow
-                               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
+
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2 top-[7px] text-[#133970] hover:text-[#102c5d] transition"
+                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-[#133970] hover:text-[#102c5d] transition"
                   >
-                    {showPassword ? (
-                      <EyeOff size={14} />
-                    ) : (
-                      <Eye size={14} />
-                    )}
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
               </label>
 
-              <label className="flex flex-col w-[230px]">
-                <h2 className="text-[13px] text-[#133970] mb-1 ml-1">Confirm Password:</h2>
+              <label className="flex flex-col w-full">
+                <h2 className="text-sm text-[#133970] mb-1 ml-1">Confirm Password:</h2>
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
@@ -146,19 +150,15 @@ function SignUp() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSignup(e)}
-                    className="h-[30px] w-full px-4 py-1 mb-1 border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow
-                               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
+
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-2 top-[7px] text-[#133970] hover:text-[#102c5d] transition"
+                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-[#133970] hover:text-[#102c5d] transition"
                   >
-                    {showConfirmPassword ? (
-                      <EyeOff size={14} />
-                    ) : (
-                      <Eye size={14} />
-                    )}
+                    {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
               </label>
@@ -171,10 +171,11 @@ function SignUp() {
 
               <button
                 type="submit"
-                className="w-[230px] h-[30px] text-[16px] text-white bg-[#133970] hover:bg-[#102c5d] transition"
+                className="min-w-65 py-1 mt-4 text-[14px] text-white bg-[#133970] hover:bg-[#102c5d] transition cursor-pointer"
               >
                 Confirm
               </button>
+
             </form>
           </div>
         </div>

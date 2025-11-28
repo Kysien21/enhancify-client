@@ -5,6 +5,7 @@ export function useUpload() {
   const [resumeFile, setResumeFile] = useState(null);
   const [jobDescription, setJobDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [useJobDescription, setUseJobDescription] = useState("");
 
   const fileInputRef = useRef(null);
 
@@ -42,16 +43,23 @@ export function useUpload() {
 
   const submitResumeUpload = async () => {
     if (!resumeFile) {
+      alert("Please select a resume file");
       return null;
     }
 
-    if (!jobDescription.trim()) {
+    // Only require job description if the toggle is on
+    if (useJobDescription && !jobDescription.trim()) {
+      alert("Please provide a job description");
       return null;
     }
 
     const formData = new FormData();
     formData.append("resume", resumeFile);
-    formData.append("jobDescription", jobDescription);
+    
+    // Only append job description if provided
+    if (useJobDescription && jobDescription.trim()) {
+      formData.append("jobDescription", jobDescription);
+    }
 
     try {
       setIsLoading(true);
@@ -72,15 +80,21 @@ export function useUpload() {
         return null;
       }
 
+      // Only analyze if job description exists
+      const analysisPayload = { resumeText };
+      if (useJobDescription && jobDescription.trim()) {
+        analysisPayload.jobDescription = jobDescription;
+      }
+
       const { data: analysis } = await axios.post(
         `${API_URL}/api/analyze`,
-        { resumeText, jobDescription },
+        analysisPayload,
         { withCredentials: true }
       );
 
       const newEntry = {
         resumeText,
-        jobDescription,
+        jobDescription: useJobDescription ? jobDescription : null,
         overallScore: analysis.overallScore || 0,
         createdAt: new Date().toISOString(),
       };
@@ -109,6 +123,8 @@ export function useUpload() {
     resumeFile,
     jobDescription,
     setJobDescription,
+    useJobDescription,
+    setUseJobDescription,
     resumeFileSelection,
     resumeFileUpload,
     submitResumeUpload,

@@ -5,7 +5,8 @@ function UploadForm({ setAnalysisData, setOpen }) {
   const {
     resumeFile,
     jobDescription,
-    setJobDescription,
+    useJobDescription,
+    setUseJobDescription,
     resumeFileSelection,
     resumeFileUpload,
     submitResumeUpload,
@@ -33,26 +34,30 @@ function UploadForm({ setAnalysisData, setOpen }) {
           hidden
           onChange={resumeFileSelection}
         />
-        <p className=" text-xs sm:text-sm italic text-[#999]">
+        <p className="text-xs sm:text-sm italic text-[#999]">
           {resumeFile ? resumeFile.name : "Drag and Drop your Resume file"}
         </p>
       </div>
+      <>
+  <h5 className="text-[#133970] mt-5 md:mt-5 lg:mt-9 mb-1 text-xs sm:text-sm font-bold">
+    Attach your Job Description
+  </h5>
 
-      <h5 className="text-[#133970] mt-5 md:mt-5 lg:mt-9 mb-1 text-xs sm:text-sm font-bold">
-        Attach your Job Description
-      </h5>
-
-      <div className="w-40 lg:w-98 h-9 xl:h-16 border border-[#868484] rounded-[10px] bg-white">
-        <textarea
-          value={jobDescription}
-          onChange={(e) => setJobDescription(e.target.value)}
-          placeholder="Copy and paste your desired job description here"
-          className="w-full h-full text-center resize-none focus:outline-none text-[8px] xl:text-[15px] placeholder:italic placeholder:text-[#999] pt-5"
-        />
-      </div>
-
-      <UploadButton
-        disabled={isLoading || !resumeFile || !jobDescription}
+  <div className="w-40 lg:w-98 h-9 xl:h-16 border border-[#868484] rounded-[10px] bg-white">
+    <textarea
+      value={useJobDescription}
+      onChange={(e) => setUseJobDescription(e.target.value)}
+      className="w-full h-full text-center resize-none focus:outline-none text-[8px] xl:text-[15px] placeholder:italic placeholder:text-[#999] pt-5"
+      placeholder="Paste job description here (Optional)"
+    />
+  </div>
+</>
+            <UploadButton
+        disabled={
+          isLoading || 
+          !resumeFile || 
+          (useJobDescription && !jobDescription.trim())
+        }
         onConfirmAction={async () => {
           const result = await submitResumeUpload();
           if (result) {
