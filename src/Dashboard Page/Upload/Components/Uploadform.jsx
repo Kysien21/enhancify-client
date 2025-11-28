@@ -5,7 +5,7 @@ function UploadForm({ setAnalysisData, setOpen }) {
   const {
     resumeFile,
     jobDescription,
-    setJobDescription, // ✅ Use this to update the textarea
+    setJobDescription,
     resumeFileSelection,
     resumeFileUpload,
     submitResumeUpload,
@@ -39,20 +39,20 @@ function UploadForm({ setAnalysisData, setOpen }) {
       </div>
 
       <h5 className="text-[#133970] mt-5 md:mt-5 lg:mt-9 mb-1 text-xs sm:text-sm font-bold">
-        Attach your Job Description (Optional)
+        Attach your Job Description
       </h5>
 
       <div className="w-40 lg:w-98 h-9 xl:h-16 border border-[#868484] rounded-[10px] bg-white">
         <textarea
-          value={jobDescription} // ✅ Fixed: Use jobDescription, not useJobDescription
-          onChange={(e) => setJobDescription(e.target.value)} // ✅ Fixed: Use setJobDescription
+          value={jobDescription}
+          onChange={(e) => setJobDescription(e.target.value)}
           className="w-full h-full text-center resize-none focus:outline-none text-[8px] xl:text-[15px] placeholder:italic placeholder:text-[#999] pt-5"
           placeholder="Paste job description here (Optional)"
         />
       </div>
 
       <UploadButton
-        disabled={isLoading || !resumeFile} // ✅ Only require resume file
+        disabled={isLoading || !resumeFile}
         onConfirmAction={async () => {
           const result = await submitResumeUpload();
           if (result) {

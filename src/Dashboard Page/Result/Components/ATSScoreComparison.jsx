@@ -2,7 +2,7 @@ import { Download, ArrowLeft, TrendingUp } from "lucide-react";
 
 const ATSScoreComparison = ({ atsScore, onBack, onDownload }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg/10 p-6 mb-6">
+    <div className="bg-white rounded-lg shadow-lg/20 p-6 mb-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
           <button
