@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eye, EyeOff, X } from "lucide-react";
+import { Eye, EyeOff, } from "lucide-react";
 
 function NewPassword({ email }) {
   const [newPassword, setNewPassword] = useState("");

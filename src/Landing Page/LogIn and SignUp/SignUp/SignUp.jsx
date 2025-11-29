@@ -14,11 +14,14 @@ function SignUp({ handleModalClose }) {
     setPassword,
     confirmPassword,
     setConfirmPassword,
+    category,
+    setCategory,
     firstnameRef,
     lastnameRef,
     emailRef,
     passwordRef,
     confirmPasswordRef,
+    categoryRef,
     handleSignup,
   } = useSignUp();
 
@@ -28,21 +31,19 @@ function SignUp({ handleModalClose }) {
   return (
     <main>
       <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8">
-        
-        {/* Make container relative so the X button can be positioned */}
-        <div className="relative w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl rounded-xl p-7 sm:p-0 sm:px-8 md:py-6 md:px-10 lg:py-7 lg:px-15 bg-[#fbf5f5]/30 backdrop-blur-md transition-all duration-500 ease-in-out">
+        <div className="relative w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl rounded-xl p-7 sm:p-0 sm:px-8 md:py-6 md:px-10 lg:py-7 lg:px-15 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
 
           {/* ❌ X CLOSE BUTTON */}
           <button
             type="button"
-            onClick={ handleModalClose }
+            onClick={handleModalClose}
             className="absolute top-3 right-3 text-[#133970] hover:text-[#102c5d] transition cursor-pointer"
           >
             <X size={20} />
           </button>
 
           <div className="flex flex-col flex-1 items-center justify-center">
-
+            {/* Heading */}
             <div className="text-center mb-6 sm:mb-5">
               <h1 className="text-2xl text-[#133970] leading-tight font-medium text-center">
                 We're excited to have you
@@ -51,112 +52,150 @@ function SignUp({ handleModalClose }) {
               </h1>
             </div>
 
-            <form className="relative flex flex-col" onSubmit={handleSignup}>
+            <form className="relative flex flex-col gap-3" onSubmit={handleSignup}>
 
-              <label className="flex flex-col w-full">
-                <h2 className="text-sm text-[#133970] mb-1 ml-1">Firstname:</h2>
-                <input
-                  type="text"
-                  ref={firstnameRef}
-                  value={firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" &&
-                    (e.preventDefault(), lastnameRef.current?.focus())
-                  }
-                  className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
+              {/* Firstname + Lastname */}
+              <div className="flex flex-col sm:flex-row gap-3 w-full">
+                <label className="flex flex-col flex-1">
+                  <h2 className="text-sm text-[#133970] mb-1 ml-1">Firstname:</h2>
+                  <input
+                    type="text"
+                    ref={firstnameRef}
+                    value={firstname}
+                    onChange={(e) => setFirstname(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        lastnameRef.current?.focus();
+                      }
+                    }}
+                    className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </label>
+
+                <label className="flex flex-col flex-1">
+                  <h2 className="text-sm text-[#133970] mb-1 ml-1">Lastname:</h2>
+                  <input
+                    type="text"
+                    ref={lastnameRef}
+                    value={lastname}
+                    onChange={(e) => setLastname(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        categoryRef.current?.focus();
+                      }
+                    }}
+                    className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </label>
+              </div>
+
+              {/* Category */}
+              <label className="flex flex-col w-full relative">
+                <h2 className="text-sm text-[#133970] mb-1 ml-1">Category:</h2>
+                <div className="relative w-full">
+                  <select
+                    ref={categoryRef}
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        emailRef.current?.focus();
+                      }
+                    }}
+                    className="w-full h-10 pl-4 pr-10 text-sm sm:text-base border border-[#3b7ce9] bg-white/80 backdrop-blur-md shadow-md rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 appearance-none cursor-pointer hover:bg-blue-50"
+                  >
+                    <option value="" disabled>Select category</option>
+                    <option value="technology">Technology</option>
+                    <option value="health">Health</option>
+                    <option value="finance">Finance</option>
+                    <option value="education">Education</option>
+                  </select>
+                </div>
               </label>
 
-              <label className="flex flex-col w-full">
-                <h2 className="text-sm text-[#133970] mb-1 ml-1">Lastname:</h2>
-                <input
-                  type="text"
-                  ref={lastnameRef}
-                  value={lastname}
-                  onChange={(e) => setLastname(e.target.value)}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" &&
-                    (e.preventDefault(), mobileRef.current?.focus())
-                  }
-                  className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </label>
-
+              {/* Email */}
               <label className="flex flex-col w-full">
                 <h2 className="text-sm text-[#133970] mb-1 ml-1">Email Address:</h2>
                 <input
-                  type="text"
+                  type="email"
                   ref={emailRef}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" &&
-                    (e.preventDefault(), passwordRef.current?.focus())
-                  }
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      passwordRef.current?.focus();
+                    }
+                  }}
                   className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </label>
 
-              <label className="flex flex-col w-full">
-                <h2 className="text-sm text-[#133970] mb-1 ml-1">Password:</h2>
-                <div className="relative">
+              {/* Password + Confirm Password */}
+              <div className="flex flex-col sm:flex-row gap-3 w-full">
+                {/* Password */}
+                <label className="flex flex-col flex-1 relative">
+                  <h2 className="text-sm text-[#133970] mb-1 ml-1">Password:</h2>
                   <input
                     type={showPassword ? "text" : "password"}
                     ref={passwordRef}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    onKeyDown={(e) =>
-                      e.key === "Enter" &&
-                      (e.preventDefault(), confirmPasswordRef.current?.focus())
-                    }
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        confirmPasswordRef.current?.focus();
+                      }
+                    }}
                     className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
-
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-[#133970] hover:text-[#102c5d] transition"
+                    className="absolute right-3 sm:right-3 top-8 text-[#133970] hover:text-[#102c5d] transition"
                   >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
-                </div>
-              </label>
+                </label>
 
-              <label className="flex flex-col w-full">
-                <h2 className="text-sm text-[#133970] mb-1 ml-1">Confirm Password:</h2>
-                <div className="relative">
+                {/* Confirm Password */}
+                <label className="flex flex-col flex-1 relative">
+                  <h2 className="text-sm text-[#133970] mb-1 ml-1">Confirm Password:</h2>
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     ref={confirmPasswordRef}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSignup(e)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleSignup(e);
+                      }
+                    }}
                     className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
-
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-[#133970] hover:text-[#102c5d] transition"
+                    className="absolute right-3 sm:right-3 top-8 text-[#133970] hover:text-[#102c5d] transition"
                   >
-                    {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
-                </div>
-              </label>
-
-              <div className="flex justify-center w-full my-1">
-                <span className="inline text-[9px] text-[#133970]">
-                  I agree to the Terms of Service and Privacy Policy
-                </span>
+                </label>
               </div>
 
-              <button
-                type="submit"
-                className="min-w-65 py-1 mt-4 text-[14px] text-white bg-[#133970] hover:bg-[#102c5d] transition cursor-pointer"
-              >
-                Confirm
-              </button>
+              {/* Submit Button */}
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="w-30 rounded-lg py-2 mt-4 text-md text-white bg-[#133970] hover:bg-[#102c5d] transition cursor-pointer"
+                >
+                  Confirm
+                </button>
+              </div>
 
             </form>
           </div>

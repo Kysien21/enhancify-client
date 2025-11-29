@@ -10,20 +10,21 @@ export function useSignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [category, setCategory] = useState(""); // NEW: Category state
 
   const firstnameRef = useRef();
   const lastnameRef = useRef();
-  const mobileRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+  const categoryRef = useRef(); // NEW: Category ref
 
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    if (!firstname || !lastname || !mobile || !email || !password || !confirmPassword) {
+    if (!firstname || !lastname || !email || !password || !confirmPassword || !category) {
       alert("Please fill in all fields.");
       return;
     }
@@ -34,7 +35,7 @@ export function useSignUp() {
     }
 
     if (password.length < 10) {
-      alert("Password must be at least 6 characters long.");
+      alert("Password must be at least 10 characters long.");
       return;
     }
 
@@ -52,6 +53,7 @@ export function useSignUp() {
         Email_Address: email,
         Password: password,
         Confirm_Password: confirmPassword,
+        Category: category,
       });
 
       const { message } = response.data;
@@ -77,11 +79,14 @@ export function useSignUp() {
     setPassword,
     confirmPassword,
     setConfirmPassword,
+    category,
+    setCategory,
     firstnameRef,
     lastnameRef,
     emailRef,
     passwordRef,
     confirmPasswordRef,
+    categoryRef,
     handleSignup,
   };
 }

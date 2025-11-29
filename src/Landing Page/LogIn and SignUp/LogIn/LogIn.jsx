@@ -17,21 +17,15 @@ function LogIn({ handleModalClose }) {
     onSubmit,
   } = useLogIn();
 
-  // Local States
   const [showPassword, setShowPassword] = useState(false);
   const [showEmailPopup, setShowEmailPopup] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [activeEmail, setActiveEmail] = useState("");
 
-  // Mock Database
   const databaseEmails = ["test@gmail.com", "user@example.com", "admin@example.com"];
 
-  // Forgot Password → Show email popup
-  const handleForgotPassword = () => {
-    setShowEmailPopup(true);
-  };
+  const handleForgotPassword = () => setShowEmailPopup(true);
 
-  // Email validation callback
   const handleEmailValid = (enteredEmail) => {
     if (databaseEmails.includes(enteredEmail)) {
       setActiveEmail(enteredEmail);
@@ -45,9 +39,8 @@ function LogIn({ handleModalClose }) {
   return (
     <main>
       <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8">
-        <div className="relative w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl rounded-xl p-7 sm:p-0 sm:px-8 md:px-10 lg:px-16 md:py-6 lg:py-11 bg-[#fbf5f5]/30 backdrop-blur-md transition-all duration-500 ease-in-out">
+        <div className="relative w-full max-w-[99%] sm:max-w-lg md:max-w-lg lg:max-w-md rounded-xl p-7 sm:p-10 sm:px-8 md:px-15 lg:px-16 md:py-10 lg:py-11 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
 
-          {/* Close Button */}
           <button
             type="button"
             onClick={handleModalClose}
@@ -58,7 +51,6 @@ function LogIn({ handleModalClose }) {
 
           <div className="flex flex-col flex-1 items-center justify-center">
 
-            {/* Header */}
             <div className="text-center mb-6 sm:mb-8">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-medium text-[#133970]">
                 WELCOME BACK
@@ -68,7 +60,6 @@ function LogIn({ handleModalClose }) {
               </p>
             </div>
 
-            {/* Login Form */}
             <form onSubmit={onSubmit}>
               
               {/* Email Input */}
@@ -79,9 +70,12 @@ function LogIn({ handleModalClose }) {
                   ref={emailRef}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" && passwordRef.current?.focus()
-                  }
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      passwordRef.current?.focus();
+                    }
+                  }}
                   className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </label>
@@ -96,11 +90,15 @@ function LogIn({ handleModalClose }) {
                     ref={passwordRef}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && onSubmit(e)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        onSubmit(e);
+                      }
+                    }}
                     className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
 
-                  {/* Show / Hide Password */}
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
@@ -111,7 +109,6 @@ function LogIn({ handleModalClose }) {
                 </div>
               </label>
 
-              {/* Forgot Password */}
               <div className="flex justify-end w-full pr-5 my-2">
                 <a
                   href="#"
@@ -124,20 +121,19 @@ function LogIn({ handleModalClose }) {
                   Forgot Password?
                 </a>
               </div>
-
-              {/* Login Button */}
+              <div className="flex justify-center">
               <button
                 type="submit"
-                className="min-w-65 py-1 mt-4 text-[14px] text-white bg-[#133970] hover:bg-[#102c5d] transition cursor-pointer"
+                  className="w-30 rounded-lg py-2 mt-4 text-md text-white bg-[#133970] hover:bg-[#102c5d] transition cursor-pointer"
               >
                 {loggingIn ? "Logging in..." : "Login"}
               </button>
+              </div>
             </form>
           </div>
         </div>
       </div>
 
-      {/* Modals */}
       {showEmailPopup && <EmailPopup onEmailValid={handleEmailValid} />}
       {showNewPassword && <NewPassword email={activeEmail} />}
     </main>
