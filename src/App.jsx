@@ -15,20 +15,26 @@ import { AdminRoute } from "./Admin Page/Component/ProtectedRoute";
 import { UserProtectedRoute } from "./Dashboard Page/UserProtectedRoute";
 import UploadLoading from "./Dashboard Page/Upload/Components/UploadLoading";
 
+// ✅ ADD THESE IMPORTS
+import EmailPopup from "./Landing Page/Forgot Password/EmailPopup";
+import NewPassword from "./Landing Page/Forgot Password/NewPassword";
+
 function App() {
   return (
     <Router>
-          
       <UserProvider>
         <HistoryProvider>
           <Routes>
+            {/* Public Routes */}
             <Route index element={<Website />} />
             <Route path="/website" element={<Website />} />
             <Route path="/pro" element={<UploadLoading />} />
             
-            
+            {/* ✅ Password Reset Routes */}
+            <Route path="/forgot-password" element={<EmailPopup />} />
+            <Route path="/reset-password/:token" element={<NewPassword />} />
 
-            
+            {/* User Protected Routes */}
             <Route 
               path="/upload" 
               element={
@@ -46,6 +52,7 @@ function App() {
               } 
             />
 
+            {/* Admin Protected Routes */}
             <Route path="/home" element={<AdminRoute><HomeOverview /></AdminRoute>} />
             <Route path="/user" element={<AdminRoute><UserManagement /></AdminRoute>} />
             <Route path="/report" element={<AdminRoute><ReportAndAnalytics /></AdminRoute>} />
