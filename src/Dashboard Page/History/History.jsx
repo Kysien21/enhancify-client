@@ -21,7 +21,7 @@ function History() {
         <section>
           <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
           <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-8">
+            <div className="mb-8 px-5">
               <h1 className="text-3xl font-bold text-gray-800 mb-2">
                 Optimization History
               </h1>
@@ -44,7 +44,7 @@ function History() {
               </div>
             )}
             {historyData.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(93vh-150px)] overflow-y-auto pr-2">
+              <div className="bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(95vh-150px)] overflow-y-auto p-5 mb-5">
                 {historyData.map((entry, index) => {
                   const originalScore = entry.atsScore?.original || 0;
                   const enhancedScore = entry.atsScore?.enhanced || 0;
@@ -92,7 +92,7 @@ function History() {
                             console.log("Selected entry:", entry);
                             setSelectedHistory(entry);
                           }}
-                          className="w-full mt-3 flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition font-medium"
+                          className="w-full mt-3 flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 active:scale-95 transition font-medium cursor-pointer"
                         >
                           <Eye size={18} />
                           View Details

@@ -38,8 +38,8 @@ function LogIn({ handleModalClose }) {
 
   return (
     <main>
-      <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8">
-        <div className="relative w-full max-w-[99%] sm:max-w-lg md:max-w-lg lg:max-w-md rounded-xl p-7 sm:p-10 sm:px-8 md:px-15 lg:px-16 md:py-10 lg:py-11 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
+      <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-0">
+        <div className="relative w-full max-w-[99%] sm:max-w-lg md:max-w-lg lg:max-w-md rounded-xl p-10 sm:p-0 sm:py-5 md:py-10 lg:py-15 sm:px-8 md:px-15 lg:px-20 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
 
           <button
             type="button"
@@ -62,7 +62,6 @@ function LogIn({ handleModalClose }) {
 
             <form onSubmit={onSubmit}>
               
-              {/* Email Input */}
               <label className="flex flex-col w-full">
                 <h2 className="text-sm text-[#133970] mt-5 mb-1 ml-1">Email:</h2>
                 <input
@@ -80,7 +79,6 @@ function LogIn({ handleModalClose }) {
                 />
               </label>
 
-              {/* Password Input */}
               <label className="flex flex-col w-full">
                 <h2 className="text-sm text-[#133970] mt-5 mb-1 ml-1">Password:</h2>
 
@@ -124,7 +122,7 @@ function LogIn({ handleModalClose }) {
               <div className="flex justify-center">
               <button
                 type="submit"
-                  className="w-30 rounded-lg py-2 mt-4 text-md text-white bg-[#133970] hover:bg-[#102c5d] transition cursor-pointer"
+                  className="w-30 rounded-lg py-2 mt-4 text-md text-white bg-blue-900 hover:bg-blue-800 active:scale-95 transition cursor-pointer"
               >
                 {loggingIn ? "Logging in..." : "Login"}
               </button>

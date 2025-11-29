@@ -104,7 +104,7 @@ function HomeOverview() {
       <section>
         <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
           <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className=" p-4 sm:p-6 lg:p-12 flex justify-center items-center min-h-[60vh]">
+            <div className="bg-[#EEF3FB] p-4 sm:p-6 lg:p-12 flex justify-center items-center min-h-[60vh] rounded-2xl">
               
               {/* Conditional Rendering */}
               {loading ? (
@@ -140,8 +140,7 @@ function HomeOverview() {
                     </div>
                   </div>
 
-                  {/* RIGHT COLUMN */}
-                  <div className="flex-1 flex flex-col space-y-6">
+                  <div className="flex-1 flex flex-col space-y-6 w-full xl:w-1/2">
                     {/* Graph */}
                     <LineGraphOne
                       title="System Activity Graph"

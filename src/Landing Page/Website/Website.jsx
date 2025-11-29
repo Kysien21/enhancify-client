@@ -43,7 +43,7 @@ function Website() {
             <div className="flex justify-center lg:justify-start">
               <button
                 onClick={toggleSignup}
-                className="px-5 sm:px-[25px] py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-semibold text-white bg-[#133970] hover:bg-blue-800 active:scale-95 cursor-pointer rounded-lg transition"
+                className="px-5 sm:px-[25px] py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-semibold text-white bg-blue-900 hover:bg-blue-800 active:scale-95 cursor-pointer rounded-lg transition"
               >
                 Get Started
               </button>

@@ -32,7 +32,7 @@ function UploadButton({ onConfirmAction, disabled }) {
       <button
         onClick={handleClick}
         disabled={disabled}
-        className="active:scale-95 px-6 py-2 bg-[#133970] text-white rounded cursor-pointer hover:bg-[#3b41a8] transition disabled:opacity-50 mt-10"
+        className="text-md px-6 py-2 text-white rounded-lg cursor-pointer bg-blue-900 hover:bg-blue-800 active:scale-95 transition disabled:opacity-50 mt-10"
       >
         Upload
       </button>

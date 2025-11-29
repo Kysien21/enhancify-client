@@ -30,8 +30,8 @@ function SignUp({ handleModalClose }) {
 
   return (
     <main>
-      <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8">
-        <div className="relative w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl rounded-xl p-7 sm:p-0 sm:px-8 md:py-6 md:px-10 lg:py-7 lg:px-15 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
+      <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-0">
+        <div className="relative w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl rounded-xl p-10 sm:p-0 sm:py-5 md:py-6 lg:py-7 sm:px-8 md:px-10 lg:px-15 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
 
           {/* ❌ X CLOSE BUTTON */}
           <button
@@ -155,7 +155,7 @@ function SignUp({ handleModalClose }) {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 sm:right-3 top-8 text-[#133970] hover:text-[#102c5d] transition"
+                    className="absolute right-3 sm:right-3 top-8 cursor-pointer text-[#133970] hover:text-[#102c5d] transition"
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
@@ -180,7 +180,7 @@ function SignUp({ handleModalClose }) {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 sm:right-3 top-8 text-[#133970] hover:text-[#102c5d] transition"
+                    className="absolute right-3 sm:right-3 top-8 cursor-pointer text-[#133970] hover:text-[#102c5d] transition"
                   >
                     {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
@@ -191,7 +191,7 @@ function SignUp({ handleModalClose }) {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="w-30 rounded-lg py-2 mt-4 text-md text-white bg-[#133970] hover:bg-[#102c5d] transition cursor-pointer"
+                  className="w-30 rounded-lg py-2 mt-4 text-md text-white bg-blue-900 hover:bg-blue-800 active:scale-95 transition cursor-pointer"
                 >
                   Confirm
                 </button>

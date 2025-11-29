@@ -13,7 +13,6 @@ import SystemManagement from "./Admin Page/SystemManagement";
 
 import { AdminRoute } from "./Admin Page/Component/ProtectedRoute";
 import { UserProtectedRoute } from "./Dashboard Page/UserProtectedRoute";
-import UploadLoading from "./Dashboard Page/Upload/Components/UploadLoading";
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
           <Routes>
             <Route index element={<Website />} />
             <Route path="/website" element={<Website />} />
-            <Route path="/pro" element={<UploadLoading />} />
             
             
 

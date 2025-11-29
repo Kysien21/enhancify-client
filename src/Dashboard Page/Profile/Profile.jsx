@@ -1,5 +1,5 @@
 
-import {  X } from 'lucide-react';
+import { X } from 'lucide-react';
 import Sidebar from './Sidebar';
 
 export default function ProfileEditForm() {
