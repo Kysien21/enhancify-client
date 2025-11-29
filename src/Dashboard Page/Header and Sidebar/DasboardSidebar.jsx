@@ -1,7 +1,8 @@
 import { useState } from "react";
 import UploadIcon from "../../assets/Upload.png";
 import ResultIcon from "../../assets/Result.png";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Menu } from "lucide-react";
 
 
 function DasboardSidebar() {
@@ -10,30 +11,21 @@ function DasboardSidebar() {
   return (
     <>
       <button
-        className="md:hidden fixed top-15 left-4 z-20 bg-[#3b7ce9] p-2 rounded text-white"
+        className="md:hidden fixed top-23 left-5 z-30 bg-white p-2 rounded text-[#3b7ce9] shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="space-y-1">
-          <span className="block w-6 h-0.5 bg-white"></span>
-          <span className="block w-6 h-0.5 bg-white"></span>
-          <span className="block w-6 h-0.5 bg-white"></span>
-        </div>
+        <Menu size={24} />
       </button>
 
       <aside>
         <div
-          className={`fixed z-15
-                      bg-[#3b7ce9] text-white h-full
-                      pt-24
-                      transition-all duration-500 ease-in-out
-                      w-40 lg:w-40 xl:w-60
-
-                      ${isOpen ? "left-0" : "-left-40"}
-                      md:left-0
-                    `}
-        >
+          className={`fixed top-0 left-0 h-full z-10 bg-[#3b7ce9] text-white 
+                    w-63 sm:w-[16vw] xl:w-[16vw] pt-24
+                    transform transition-transform duration-300 ease-in-out
+                    ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+      >
           <h2
-            className="text-[20px] mb-7 font-semibold text-center
+            className="text-2xl mb-7 font-semibold text-center
                        transition-all duration-500 ease-in-out"
           >
             Dashboard
@@ -41,28 +33,46 @@ function DasboardSidebar() {
 
           <nav>
             <ul
-              className="flex flex-col gap-5 xl:gap-4 px-9 text-[15px]
+              className="flex flex-col gap-5 xl:gap-4 text-[15px]
                          transition-all duration-400 ease-in-out"
             >
-              <li>
-                <Link
-                  to="/upload"
-                  className="flex gap-2 items-center hover:opacity-80"
-                >
-                  <img src={UploadIcon} alt="Upload" className="w-5 h-5" />
-                  <span className=" md:inline">Uploads</span>
-                </Link>
-              </li>
+                <li>
+    <NavLink
+      to="/upload"
+      className={({ isActive }) =>
+        `flex gap-1 items-center text-lg py-2 font-semibold transition-all duration-200 
+         ml-[5%] rounded-md ${
+           isActive ? "bg-white text-[#3b7ce9]" : "text-white"
+         }`
+      }
+    >
+      <img
+        src={UploadIcon}
+        alt="Upload"
+        className="w-5 h-5 transition-transform duration-200 group-hover:scale-110"
+      />
+      <span className="md:inline">Uploads</span>
+    </NavLink>
+  </li>
 
-              <li>
-                <Link
-                  to="/history"
-                  className="flex gap-2 items-center hover:opacity-80"
-                >
-                  <img src={ResultIcon} alt="History" className="w-5 h-5" />
-                  <span className="md:inline">History</span>
-                </Link>
-              </li>
+  <li>
+    <NavLink
+      to="/history"
+      className={({ isActive }) =>
+        `flex gap-1 items-center text-lg py-2 font-semibold transition-all duration-200 
+         ml-[5%] rounded-md ${
+           isActive ? "bg-black text-[#3b7ce9]" : "text-white"
+         }`
+      }
+    >
+      <img
+        src={ResultIcon}
+        alt="History"
+        className="w-5 h-5 transition-transform duration-200 group-hover:scale-110"
+      />
+      <span className="md:inline">History</span>
+    </NavLink>
+  </li>
             </ul>
           </nav>
         </div>

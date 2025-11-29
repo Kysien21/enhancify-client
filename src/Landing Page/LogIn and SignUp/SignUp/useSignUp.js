@@ -7,7 +7,6 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 export function useSignUp() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,11 +25,6 @@ export function useSignUp() {
 
     if (!firstname || !lastname || !mobile || !email || !password || !confirmPassword) {
       alert("Please fill in all fields.");
-      return;
-    }
-
-    if (!mobile || mobile.length < 11 || !/^\d+$/.test(mobile)) {
-      alert("Mobile number must be 11 digits and contain only numbers.");
       return;
     }
 
@@ -55,7 +49,6 @@ export function useSignUp() {
       const response = await axios.post(URL, {
         First_name: firstname,
         Last_name: lastname,
-        Mobile_No: mobile,
         Email_Address: email,
         Password: password,
         Confirm_Password: confirmPassword,
@@ -78,8 +71,6 @@ export function useSignUp() {
     setFirstname,
     lastname,
     setLastname,
-    mobile,
-    setMobile,
     email,
     setEmail,
     password,
@@ -88,7 +79,6 @@ export function useSignUp() {
     setConfirmPassword,
     firstnameRef,
     lastnameRef,
-    mobileRef,
     emailRef,
     passwordRef,
     confirmPasswordRef,

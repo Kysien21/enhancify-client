@@ -8,8 +8,6 @@ function SignUp({ handleModalClose }) {
     setFirstname,
     lastname,
     setLastname,
-    mobile,
-    setMobile,
     email,
     setEmail,
     password,
@@ -18,7 +16,6 @@ function SignUp({ handleModalClose }) {
     setConfirmPassword,
     firstnameRef,
     lastnameRef,
-    mobileRef,
     emailRef,
     passwordRef,
     confirmPasswordRef,
@@ -81,21 +78,6 @@ function SignUp({ handleModalClose }) {
                   onKeyDown={(e) =>
                     e.key === "Enter" &&
                     (e.preventDefault(), mobileRef.current?.focus())
-                  }
-                  className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </label>
-
-              <label className="flex flex-col w-full">
-                <h2 className="text-sm text-[#133970] mb-1 ml-1">Mobile No:</h2>
-                <input
-                  type="text"
-                  ref={mobileRef}
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" &&
-                    (e.preventDefault(), emailRef.current?.focus())
                   }
                   className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />

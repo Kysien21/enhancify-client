@@ -7,6 +7,7 @@ import TooltipIcon from "../../assets/Tooltip.png";
 function DashboardHeader() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggleTooltip = () => setTooltipOpen((prev) => !prev);
+  
 
   return (
     <header>
