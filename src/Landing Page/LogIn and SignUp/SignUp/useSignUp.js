@@ -10,14 +10,14 @@ export function useSignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [category, setCategory] = useState(""); // NEW: Category state
+  const [category, setCategory] = useState("");
 
   const firstnameRef = useRef();
   const lastnameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const categoryRef = useRef(); // NEW: Category ref
+  const categoryRef = useRef();
 
   const navigate = useNavigate();
 
@@ -29,8 +29,12 @@ export function useSignUp() {
       return;
     }
 
-    if (!email.includes("@gmail.com") || email.indexOf("@gmail.com") === 0) {
-      alert("Please enter a valid Gmail address.");
+    // ✅ Allowed domains
+    const allowedDomains = ["@gmail.com", "@normi.edu.ph"];
+    const isValidDomain = allowedDomains.some((domain) => email.endsWith(domain));
+
+    if (!isValidDomain) {
+      alert("Please enter a valid Gmail (@gmail.com) or NORMAI (@normi.edu.ph) email.");
       return;
     }
 

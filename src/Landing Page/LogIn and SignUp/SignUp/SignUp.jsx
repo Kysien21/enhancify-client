@@ -91,7 +91,7 @@ function SignUp({ handleModalClose }) {
                 </label>
               </div>
 
-              {/* Category */}
+              {/* Category - ✅ FIXED: Values now match backend validation */}
               <label className="flex flex-col w-full relative">
                 <h2 className="text-sm text-blue-900 mb-1 ml-1">Category:</h2>
                 <div className="relative w-full">
@@ -108,11 +108,11 @@ function SignUp({ handleModalClose }) {
                     className="w-full h-10 pl-4 pr-10 text-sm sm:text-base border border-[#3b7ce9] bg-white/80 backdrop-blur-md shadow-md rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 appearance-none cursor-pointer hover:bg-blue-50"
                   >
                     <option value="" disabled>Select your Department</option>
-                    <option value="technology">CIT</option>
-                    <option value="health">CBA</option>
-                    <option value="finance">CTE</option>
-                    <option value="education">CAS</option>
-                    <option value="education">CCJE</option>
+                    <option value="CIT">CIT</option>
+                    <option value="CBA">CBA</option>
+                    <option value="CTE">CTE</option>
+                    <option value="CAS">CAS</option>
+                    <option value="CCJE">CCJE</option>
                   </select>
                 </div>
               </label>
