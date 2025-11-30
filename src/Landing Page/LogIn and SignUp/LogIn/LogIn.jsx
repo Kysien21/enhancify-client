@@ -48,7 +48,6 @@ function LogIn({ handleModalClose }) {
           </button>
 
           <div className="flex flex-col flex-1 items-center justify-center">
-
             <div className="text-center mb-0 md:mb-8">
               <h1 className="text-3xl md:text-4xl font-medium text-blue-900">
                 WELCOME BACK
@@ -59,27 +58,31 @@ function LogIn({ handleModalClose }) {
             </div>
 
             <form onSubmit={onSubmit}>
-              
-             <label className="flex flex-col w-full">
-  <h2 className="text-sm text-blue-900 mt-5 mb-1 ml-1">Email:</h2>
-  <input
-    type="text"
-    ref={emailRef}
-    value={email}
-    onChange={(e) => setEmail(e.target.value)}
-    onKeyDown={(e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        passwordRef.current?.focus();
-      }
-    }}
-    className="w-full h-9 px-10 sm:px-7 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-  />
-</label>
-
-
+              {/* Email */}
               <label className="flex flex-col w-full">
-                <h2 className="text-sm text-blue-900 mt-5 mb-1 ml-1">Password:</h2>
+                <h2 className="text-sm text-blue-900 mt-5 mb-1 ml-1">
+                  Email:
+                </h2>
+                <input
+                  type="text"
+                  ref={emailRef}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      passwordRef.current?.focus();
+                    }
+                  }}
+                  className="w-full h-9 px-10 sm:px-7 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </label>
+
+              {/* Password */}
+              <label className="flex flex-col w-full">
+                <h2 className="text-sm text-blue-900 mt-5 mb-1 ml-1">
+                  Password:
+                </h2>
 
                 <div className="relative">
                   <input
@@ -106,6 +109,7 @@ function LogIn({ handleModalClose }) {
                 </div>
               </label>
 
+              {/* Forgot password */}
               <div className="flex justify-end w-full pr-5 my-2">
                 <a
                   href="#"
@@ -118,13 +122,15 @@ function LogIn({ handleModalClose }) {
                   Forgot Password?
                 </a>
               </div>
+
+              {/* Login button */}
               <div className="flex justify-center">
-              <button
-                type="submit"
+                <button
+                  type="submit"
                   className="w-30 rounded-lg py-2 mt-4 text-md text-white bg-blue-900 hover:bg-blue-800 active:scale-95 transition cursor-pointer"
-              >
-                {loggingIn ? "Logging in..." : "Login"}
-              </button>
+                >
+                  {loggingIn ? "Logging in..." : "Login"}
+                </button>
               </div>
             </form>
           </div>

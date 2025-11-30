@@ -10,14 +10,14 @@ export function useSignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [category, setCategory] = useState(""); // NEW: Category state
+  const [category, setCategory] = useState("");
 
   const firstnameRef = useRef();
   const lastnameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const categoryRef = useRef(); // NEW: Category ref
+  const categoryRef = useRef();
 
   const navigate = useNavigate();
 

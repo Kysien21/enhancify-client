@@ -114,7 +114,7 @@ function SignUp({ handleModalClose }) {
                     <option value="education">CAS</option>
                     <option value="education">CCJE</option>
                   </select>
-                </div>
+                </div> 
               </label>
 
               {/* Email */}
