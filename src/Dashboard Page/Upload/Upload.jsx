@@ -52,7 +52,7 @@ function Upload() {
         <div className="pt-15 md:ml-[16%] xl:ml-[16%] min-h-screen flex items-center justify-center px-6">
           <div className="w-full max-w-6xl mx-auto">
             {!open && (
-              <div className="bg-[#eef3fb] border-2 border-[#2979ff] rounded-2xl p-10 text-center animate-fadeIn">
+              <div className="bg-blue-100 border-2 border-blue-400 rounded-2xl p-10 text-center animate-fadeIn">
                 <h1 className="text-4xl font-bold text-blue-900">
                   Welcome, {firstName}.
                 </h1>
@@ -74,7 +74,7 @@ function Upload() {
 
             {/* Upload Modal */}
             {open && (
-              <div className="bg-[#eef3fb] border-2 border-[#2979ff] rounded-2xl p-10 text-center animate-fadeIn">
+              <div className="bg-blue-100 border-2 border-blue-400 rounded-2xl p-10 text-center animate-fadeIn">
                 <div className="text-center mb-8">
                   <h1 className="text-3xl font-bold text-blue-900">
                     Job Selection & Upload

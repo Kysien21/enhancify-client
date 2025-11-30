@@ -351,14 +351,14 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
               onDownload={downloadOptimzeResume}
             />
 
-            <div className="bg-[#f5f5ff] rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.1),0_-4px_8px_rgba(0,0,0,0.05),4px_0_8px_rgba(0,0,0,0.05),-4px_0_8px_rgba(0,0,0,0.05)] overflow-hidden">
+            <div className="bg-white rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.1),0_-4px_8px_rgba(0,0,0,0.05),4px_0_8px_rgba(0,0,0,0.05),-4px_0_8px_rgba(0,0,0,0.05)] overflow-hidden">
               <div className="flex border-b">
                 <button
                   onClick={() => setActiveTab("enhanced")}
                   className={`flex-1 px-6 py-4 font-semibold transition cursor-pointer ${
                     activeTab === "enhanced"
                       ? "bg-indigo-600 text-white"
-                      : "bg-[#f5f5ff] text-gray-600 hover:bg-gray-100"
+                      : "bg-white text-gray-600 hover:bg-gray-100"
                   }`}
                 >
                   Enhanced Resume
@@ -369,7 +369,7 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
                   className={`flex-1 px-6 py-4 font-semibold transition cursor-pointer ${
                     activeTab === "original"
                       ? "bg-indigo-600 text-white"
-                      : "bg-[#f5f5ff] text-gray-600 hover:bg-gray-100"
+                      : "bg-white text-gray-600 hover:bg-gray-100"
                   }`}
                 >
                   Original Resume
@@ -380,7 +380,7 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
                   className={`flex-1 px-6 py-4 font-semibold transition cursor-pointer ${
                     activeTab === "improvements"
                       ? "bg-indigo-600 text-white"
-                      : "bg-[#f5f5ff] text-gray-600 hover:bg-gray-100"
+                      : "bg-white text-gray-600 hover:bg-gray-100"
                   }`}
                 >
                   Key Improvements

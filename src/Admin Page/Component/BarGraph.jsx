@@ -9,7 +9,7 @@ const BarGraph = () => {
     const ctx = chartRef.current.getContext("2d");
 
     const data = {
-      labels: ["HR", "MARKETING", "FINANCE", "IT", "NURSE"],
+      labels: ["CIT", "CBA", "CTE", "CAS", "CCJE", ],
       datasets: [
         {
           label: "Department Data",

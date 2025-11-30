@@ -30,14 +30,14 @@ function SignUp({ handleModalClose }) {
 
   return (
     <main>
-      <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-0">
-        <div className="relative w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl rounded-xl p-10 sm:p-0 sm:py-5 md:py-6 lg:py-7 sm:px-8 md:px-10 lg:px-15 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
+      <div className="min-h-screen w-full flex items-center justify-center p-2 sm:p-0">
+        <div className="relative w-full max-w-[99%] rounded-xl py-7 sm:py-10 md:py-10 lg:py-15 px-5 sm:px-15 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
 
           {/* ❌ X CLOSE BUTTON */}
           <button
             type="button"
             onClick={handleModalClose}
-            className="absolute top-3 right-3 text-[#133970] hover:text-[#102c5d] transition cursor-pointer"
+            className="absolute top-3 right-3 text-blue-900 hover:text-[#102c5d] transition cursor-pointer"
           >
             <X size={20} />
           </button>
@@ -45,7 +45,7 @@ function SignUp({ handleModalClose }) {
           <div className="flex flex-col flex-1 items-center justify-center">
             {/* Heading */}
             <div className="text-center mb-6 sm:mb-5">
-              <h1 className="text-2xl text-[#133970] leading-tight font-medium text-center">
+              <h1 className="text-3xl font-medium text-blue-900 text-center">
                 We're excited to have you
                 <br />
                 on Board!
@@ -57,7 +57,7 @@ function SignUp({ handleModalClose }) {
               {/* Firstname + Lastname */}
               <div className="flex flex-col sm:flex-row gap-3 w-full">
                 <label className="flex flex-col flex-1">
-                  <h2 className="text-sm text-[#133970] mb-1 ml-1">Firstname:</h2>
+                  <h2 className="text-sm text-blue-900 mb-1 ml-1">Firstname:</h2>
                   <input
                     type="text"
                     ref={firstnameRef}
@@ -69,12 +69,12 @@ function SignUp({ handleModalClose }) {
                         lastnameRef.current?.focus();
                       }
                     }}
-                    className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full h-9 px-10 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </label>
 
                 <label className="flex flex-col flex-1">
-                  <h2 className="text-sm text-[#133970] mb-1 ml-1">Lastname:</h2>
+                  <h2 className="text-sm text-blue-900 mb-1 ml-1">Lastname:</h2>
                   <input
                     type="text"
                     ref={lastnameRef}
@@ -86,14 +86,14 @@ function SignUp({ handleModalClose }) {
                         categoryRef.current?.focus();
                       }
                     }}
-                    className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full h-9 px-10 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </label>
               </div>
 
               {/* Category */}
               <label className="flex flex-col w-full relative">
-                <h2 className="text-sm text-[#133970] mb-1 ml-1">Category:</h2>
+                <h2 className="text-sm text-blue-900 mb-1 ml-1">Category:</h2>
                 <div className="relative w-full">
                   <select
                     ref={categoryRef}
@@ -107,18 +107,19 @@ function SignUp({ handleModalClose }) {
                     }}
                     className="w-full h-10 pl-4 pr-10 text-sm sm:text-base border border-[#3b7ce9] bg-white/80 backdrop-blur-md shadow-md rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 appearance-none cursor-pointer hover:bg-blue-50"
                   >
-                    <option value="" disabled>Select category</option>
-                    <option value="technology">Technology</option>
-                    <option value="health">Health</option>
-                    <option value="finance">Finance</option>
-                    <option value="education">Education</option>
+                    <option value="" disabled>Select your Department</option>
+                    <option value="technology">CIT</option>
+                    <option value="health">CBA</option>
+                    <option value="finance">CTE</option>
+                    <option value="education">CAS</option>
+                    <option value="education">CCJE</option>
                   </select>
                 </div>
               </label>
 
               {/* Email */}
               <label className="flex flex-col w-full">
-                <h2 className="text-sm text-[#133970] mb-1 ml-1">Email Address:</h2>
+                <h2 className="text-sm text-blue-900 mb-1 ml-1">Email Address:</h2>
                 <input
                   type="email"
                   ref={emailRef}
@@ -130,7 +131,7 @@ function SignUp({ handleModalClose }) {
                       passwordRef.current?.focus();
                     }
                   }}
-                  className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full h-9 px-10 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </label>
 
@@ -138,7 +139,7 @@ function SignUp({ handleModalClose }) {
               <div className="flex flex-col sm:flex-row gap-3 w-full">
                 {/* Password */}
                 <label className="flex flex-col flex-1 relative">
-                  <h2 className="text-sm text-[#133970] mb-1 ml-1">Password:</h2>
+                  <h2 className="text-sm text-blue-900 mb-1 ml-1">Password:</h2>
                   <input
                     type={showPassword ? "text" : "password"}
                     ref={passwordRef}
@@ -150,12 +151,12 @@ function SignUp({ handleModalClose }) {
                         confirmPasswordRef.current?.focus();
                       }
                     }}
-                    className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full h-9 px-10 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 sm:right-3 top-8 cursor-pointer text-[#133970] hover:text-[#102c5d] transition"
+                    className="absolute right-3 sm:right-3 top-8 cursor-pointer text-blue-900 hover:text-[#102c5d] transition"
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
@@ -163,7 +164,7 @@ function SignUp({ handleModalClose }) {
 
                 {/* Confirm Password */}
                 <label className="flex flex-col flex-1 relative">
-                  <h2 className="text-sm text-[#133970] mb-1 ml-1">Confirm Password:</h2>
+                  <h2 className="text-sm text-blue-900 mb-1 ml-1">Confirm Password:</h2>
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     ref={confirmPasswordRef}
@@ -175,12 +176,12 @@ function SignUp({ handleModalClose }) {
                         handleSignup(e);
                       }
                     }}
-                    className="w-full h-9 px-4 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full h-9 px-10 sm:px-5 text-sm sm:text-base border border-[#3b7ce9] bg-[#fbf5f5]/30 backdrop-blur-md shadow rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 sm:right-3 top-8 cursor-pointer text-[#133970] hover:text-[#102c5d] transition"
+                    className="absolute right-3 sm:right-3 top-8 cursor-pointer text-blue-900 hover:text-[#102c5d] transition"
                   >
                     {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>

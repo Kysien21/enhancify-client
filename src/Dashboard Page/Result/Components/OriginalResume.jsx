@@ -23,15 +23,17 @@ const OriginalResume = ({ originalResume, certifications }) => {
         <h2 className="text-2xl font-bold text-gray-800 mb-2">
           {originalResume.contact.name}
         </h2>
-        <div className="text-gray-600">
-          <p>{originalResume.contact.phone}</p>
-          <p>{originalResume.contact.email}</p>
+        <div className="text-gray-600 space-y-1">
+          <p>{originalResume.contact.phone} | {originalResume.contact.email}</p>
           <p>{originalResume.contact.address}</p>
         </div>
       </div>
 
       {/* Summary */}
       <div>
+        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-yellow-500 pb-2 mb-3">
+          PROFESSIONAL SUMMARY
+        </h3>
         <p className="text-gray-700 leading-relaxed">
           {originalResume.summary}
         </p>
@@ -39,7 +41,9 @@ const OriginalResume = ({ originalResume, certifications }) => {
 
       {/* Experience */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 mb-3">Experience</h3>
+        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-yellow-500 pb-2 mb-3">
+          PROFESSIONAL EXPERIENCE
+        </h3>
         {originalResume.experience.map((exp, idx) => (
           <div key={idx} className="mb-4">
             <div className="flex justify-between items-start mb-2">
@@ -59,37 +63,48 @@ const OriginalResume = ({ originalResume, certifications }) => {
       </div>
 
       {/* Education */}
-      <div>
-        <h3 className="text-lg font-bold text-gray-800 mb-3">Education</h3>
-        {originalResume.education.map((edu, idx) => (
-          <div key={idx} className="mb-2">
-            <p className="font-semibold text-gray-800">{edu.institution}</p>
-            <p className="text-gray-600 text-sm">{edu.period}</p>
-          </div>
-        ))}
+<div>
+  <h3 className="text-lg font-bold text-gray-800 border-b-2 border-yellow-500 pb-2 mb-3">
+    EDUCATION
+  </h3>
+  {originalResume.education.map((edu, idx) => (
+    <div key={idx} className="mb-3">
+      <div className="flex justify-between items-start">
+        <div>
+          <h4 className="font-bold text-gray-800">{edu.degree}</h4>
+          <p className="text-gray-600">{edu.institution}</p> 
+        </div>
+        <p className="text-gray-600 text-sm">{edu.period}</p>
       </div>
+    </div>
+  ))}
+</div>
 
       {/* Skills */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 mb-3">Skills</h3>
-        <p className="text-gray-700">{originalResume.skills.join(", ")}</p>
+        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-yellow-500 pb-2 mb-3">
+          SKILLS
+        </h3>
+        <p className="text-gray-700">{originalResume.skills.join(" • ")}</p>
       </div>
 
       {/* Languages */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 mb-3">Language</h3>
+        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-yellow-500 pb-2 mb-3">
+          LANGUAGES
+        </h3>
         <p className="text-gray-700">
-          {originalResume.languages.join(", ")}
+          {originalResume.languages.join(" • ")}
         </p>
       </div>
 
       {/* Certifications & Training */}
       {(originalResume.certifications || certifications) && (
         <div>
-          <h3 className="text-lg font-bold text-gray-800 mb-3">
-            Certifications & Training
+          <h3 className="text-lg font-bold text-gray-800 border-b-2 border-yellow-500 pb-2 mb-3">
+            CERTIFICATIONS & TRAINING
           </h3>
-          <p className="text-gray-600">
+          <p className="text-gray-600 italic">
             {originalResume.certifications || certifications}
           </p>
         </div>

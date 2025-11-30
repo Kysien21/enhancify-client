@@ -10,21 +10,25 @@ export function useLogIn() {
   const navigate = useNavigate();
   const [loggingIn, setLoggingIn] = useState(false);
 
+  const allowedDomains = ["@gmail.com", "@normi.edu.ph"];
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ VALIDATION FIRST (do NOT set loggingIn yet)
     if (!email || !password) {
       alert("Please enter email and password.");
       return;
     }
 
-    if (!email.endsWith("@gmail.com")) {
-      alert("Only @gmail.com emails are allowed.");
+    const isValidDomain = allowedDomains.some((domain) =>
+      email.endsWith(domain)
+    );
+
+    if (!isValidDomain) {
+      alert("Email must be @gmail.com or @normi.edu.ph");
       return;
     }
 
-    // ✅ Only set loading TRUE after validation success
     setLoggingIn(true);
 
     try {
@@ -48,7 +52,7 @@ export function useLogIn() {
       console.error("Login error:", error);
       alert("Login failed.");
     } finally {
-      // ✅ ALWAYS reset the loading state
+      // Reset loading state
       setLoggingIn(false);
     }
   };

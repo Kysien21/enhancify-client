@@ -44,7 +44,7 @@ function History() {
               </div>
             )}
             {historyData.length > 0 && (
-              <div className="bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(95vh-150px)] overflow-y-auto p-5 mb-5">
+              <div className="bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(93vh-150px)] overflow-y-auto p-5 mb-5">
                 {historyData.map((entry, index) => {
                   const originalScore = entry.atsScore?.original || 0;
                   const enhancedScore = entry.atsScore?.enhanced || 0;

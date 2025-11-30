@@ -96,7 +96,7 @@ function UserManagement() {
 
             {/* Loading UI */}
             {loading && (
-              <div className="flex items-center justify-center h-150">
+              <div className="bg-blue-100 rounded-2xl flex items-center justify-center h-150">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700 mx-auto mb-4"></div>
                   <p className="text-lg text-[#1E3A8A]">Loading dashboard...</p>

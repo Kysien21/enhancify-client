@@ -104,7 +104,7 @@ function HomeOverview() {
       <section>
         <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen">
           <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-[#EEF3FB] p-4 sm:p-6 lg:p-12 flex justify-center items-center min-h-[60vh] rounded-2xl">
+            <div className="bg-blue-100 p-4 sm:p-6 lg:p-12 flex justify-center items-center min-h-[60vh] rounded-2xl">
               
               {/* Conditional Rendering */}
               {loading ? (
@@ -133,7 +133,7 @@ function HomeOverview() {
                   {/* LEFT COLUMN - STAT CARDS */}
                   <div className="w-full xl:w-60">
                     <h1 className="text-[#133970] text-2xl mb-2 font-semibold">Overview</h1>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-10 px-10 sm:px-0">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-10 px-3 sm:px-0">
                       <StatCard value={stats.totalUsers} label="Total Users" storageKey="totalUsers" />
                       <StatCard value={stats.totalResumes} label="Total Resumes" storageKey="totalResumes" />
                       <StatCard value={stats.averageMatchScore} label="Average Match Score" storageKey="averageMatchScore" />
