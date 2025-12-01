@@ -29,8 +29,12 @@ export function useSignUp() {
       return;
     }
 
-    if (!email.includes("@gmail.com") || email.indexOf("@gmail.com") === 0) {
-      alert("Please enter a valid Gmail address.");
+    // ✅ Allowed domains
+    const allowedDomains = ["@gmail.com", "@normi.edu.ph"];
+    const isValidDomain = allowedDomains.some((domain) => email.endsWith(domain));
+
+    if (!isValidDomain) {
+      alert("Please enter a valid Gmail (@gmail.com) or NORMAI (@normi.edu.ph) email.");
       return;
     }
 

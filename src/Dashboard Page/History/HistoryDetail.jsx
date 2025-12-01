@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Download, CheckCircle, TrendingUp, ArrowLeft } from "lucide-react";
 import {
   Document,
   Packer,

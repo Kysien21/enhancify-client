@@ -16,23 +16,32 @@ function Upload() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get("/api/v1/auth/me");
-        if (response.data) {
-          setFirstName(response.data.name);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-        if (error.response?.status === 401) {
-          navigate("/");
-        }
-      }
-    };
+useEffect(() => {
+  const cachedUser = sessionStorage.getItem("currentUser");
 
-    fetchUser();
-  }, [navigate]);
+  if (cachedUser) {
+    setFirstName(JSON.parse(cachedUser).name);
+    return; // prevent re-fetch
+  }
+
+  const fetchUser = async () => {
+    try {
+      const response = await axiosInstance.get("/api/v1/auth/me");
+      if (response.data) {
+        setFirstName(response.data.name);
+        sessionStorage.setItem("currentUser", JSON.stringify(response.data));
+      }
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+      if (error.response?.status === 401) {
+        navigate("/");
+      }
+    }
+  };
+
+  fetchUser();
+}, [navigate]);
+
 
   if (analysisData) {
     return (

@@ -47,7 +47,7 @@ function DashboardHeader() {
                       </Link>
                     </li>
                     <li className="hover:text-[#8c9bf0]">
-                      <Link to="/website" onClick={() => setTooltipOpen(false)}>
+                      <Link to="/" onClick={() => setTooltipOpen(false)}>
                         Logout
                       </Link>
                     </li>

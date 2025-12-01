@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 
 
-function Sidebar() {
+function ProfileSidebar() {
 
   return (
     <>
@@ -39,4 +39,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default ProfileSidebar;

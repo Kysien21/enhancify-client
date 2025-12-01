@@ -1,73 +1,75 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import UploadIcon from "../../assets/Upload.png";
-import ResultIcon from "../../assets/Result.png";
-import { Menu } from "lucide-react";
+import { Menu, Home, Users, LogOut } from "lucide-react";
 
-function DasboardSidebar() {
+function DashboardSidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
+      {/* Mobile Menu Toggle */}
       <button
-        className="md:hidden fixed top-23 left-5 z-30 bg-white p-2 rounded text-[#3b7ce9] shadow-lg"
+        className="md:hidden fixed top-6 left-4 z-50 bg-white p-2 rounded-full shadow-lg text-[#3b7ce9] hover:scale-105 transition-transform"
         onClick={() => setIsOpen(!isOpen)}
       >
         <Menu size={24} />
       </button>
 
-      <aside>
+      {/* Mobile Overlay */}
+      {isOpen && (
         <div
-          className={`fixed top-0 left-0 h-full z-10 bg-[#3b7ce9] text-white 
-                      w-63 sm:w-[16vw] xl:w-[16vw] pt-24
-                      transform transition-transform duration-300 ease-in-out
-                      ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+<aside>
+  <div
+    className={`fixed top-0 left-0 h-full z-10 bg-[#3b7ce9] text-white
+                w-64 sm:w-[16vw] xl:w-[16vw] pt-24
+                transform transition-transform duration-300 ease-in-out
+                ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
+                flex flex-col justify-between`}
+  >
+    {/* Top Section: Header + Nav */}
+    <div>
+      <h2 className="text-xl font-bold text-center mb-8">Dashboard</h2>
+
+      <nav className="flex flex-col space-y-2">
+        <Link
+          to="/upload"
+          className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all"
         >
-          <h2
-            className="text-xl mb-7 font-semibold text-center
-                       transition-all duration-500 ease-in-out"
-          >
-            Dashboard
-          </h2>
+          <Home size={18} />
+          Upload
+        </Link>
 
-          <nav>
-            <ul
-              className="flex flex-col text-[15px]
-                         transition-all duration-400 ease-in-out mx-3"
-            >
-              <li>
-                <Link
-                  to="/upload"
-                  className="flex gap-1 items-center text-md py-2 font-normal transition-all duration-200 ml-[5%] rounded-md text-white"
-                >
-                  <img
-                    src={UploadIcon}
-                    alt="Upload"
-                    className="w-5 h-5 transition-transform duration-200 group-hover:scale-110"
-                  />
-                  Uploads
-                </Link>
-              </li>
+        <Link
+          to="/history"
+          className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all"
+        >
+          <Users size={18} />
+          History
+        </Link>
+      </nav>
+    </div>
 
-              <li>
-                <Link
-                  to="/history"
-                  className="flex gap-1 items-center text-md py-2 font-normal transition-all duration-200 ml-[5%] rounded-md text-white"
-                >
-                  <img
-                    src={ResultIcon}
-                    alt="History"
-                    className="w-5 h-5 transition-transform duration-200 group-hover:scale-110"
-                  />
-                  History
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </aside>
+    {/* Logout at Bottom */}
+    <div className="mb-6">
+      <Link
+        to="/"
+        className="flex items-center gap-1 px-3 py-2 hover:bg-red-600 hover:bg-opacity-80 transition-all"
+      >
+        <LogOut size={18} />
+        Logout
+      </Link>
+    </div>
+  </div>
+</aside>
+
     </>
   );
 }
 
-export default DasboardSidebar;
+export default DashboardSidebar;

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Home, Users, FileText, LogOut } from "lucide-react";
+import { Menu, Home, Users, LogOut } from "lucide-react";
 
-function AdminSidebar() {
+function SuperAdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -34,31 +34,23 @@ function AdminSidebar() {
   >
     {/* Top Section: Header + Nav */}
     <div>
-      <h2 className="text-xl font-bold text-center mb-8">Admin Dashboard</h2>
+      <h2 className="text-xl font-bold text-center mb-8">Super Dashboard</h2>
 
       <nav className="flex flex-col space-y-2">
         <Link
-          to="/home"
+          to="/man"
           className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all"
         >
           <Home size={18} />
-          Overview
+          User Management
         </Link>
 
         <Link
-          to="/user"
+          to="/system"
           className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all"
         >
           <Users size={18} />
-          User Monitoring
-        </Link>
-
-        <Link
-          to="/report"
-          className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all"
-        >
-          <FileText size={18} />
-          Reports
+          Admin Management
         </Link>
       </nav>
     </div>
@@ -80,4 +72,4 @@ function AdminSidebar() {
   );
 }
 
-export default AdminSidebar;
+export default SuperAdminSidebar;

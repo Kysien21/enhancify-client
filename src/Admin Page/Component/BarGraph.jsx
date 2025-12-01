@@ -1,19 +1,20 @@
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const BarGraph = () => {
+const BarGraph = ({ title, labels, data }) => {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
 
   useEffect(() => {
     const ctx = chartRef.current.getContext("2d");
 
-    const data = {
-      labels: ["CIT", "CBA", "CTE", "CAS", "CCJE", ],
+    // ✅ Use props instead of hardcoded data
+    const chartData = {
+      labels: labels || ["CIT", "CBA", "CTE", "CAS", "CCJE"],
       datasets: [
         {
           label: "Department Data",
-          data: [290, 450, 410, 580, 530],
+          data: data || [0, 0, 0, 0, 0], // ✅ Use data prop
           backgroundColor: "#3b5998",
           borderColor: "#3b5998",
           borderWidth: 0,
@@ -23,9 +24,13 @@ const BarGraph = () => {
       ],
     };
 
+    // ✅ Calculate dynamic max value
+    const maxValue = Math.max(...(data || [0]));
+    const yAxisMax = maxValue > 0 ? Math.ceil(maxValue * 1.2) : 10;
+
     const config = {
       type: "bar",
-      data,
+      data: chartData,
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -43,8 +48,13 @@ const BarGraph = () => {
         scales: {
           y: {
             beginAtZero: true,
-            max: 600,
-            ticks: { stepSize: 100, color: "#4a4a4a", font: { size: 11 } },
+            max: yAxisMax, // ✅ Dynamic max
+            ticks: { 
+              stepSize: Math.ceil(yAxisMax / 5), // ✅ Dynamic step size
+              color: "#4a4a4a", 
+              font: { size: 11 },
+              precision: 0 // ✅ No decimals for user counts
+            },
             grid: { color: "#9a9a9a", lineWidth: 1 },
             border: { display: false },
           },
@@ -57,17 +67,27 @@ const BarGraph = () => {
       },
     };
 
-    if (chartInstanceRef.current) chartInstanceRef.current.destroy();
+    // Destroy existing chart before creating new one
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
 
     chartInstanceRef.current = new Chart(ctx, config);
 
     return () => {
-      if (chartInstanceRef.current) chartInstanceRef.current.destroy();
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.destroy();
+      }
     };
-  }, []);
+  }, [labels, data]); // ✅ Re-render when data changes
 
   return (
     <div className="bg-[#DCDCDC] p-8 rounded-lg w-full h-[300px]">
+      {title && (
+        <h3 className="text-center text-lg font-semibold text-[#1E3A8A] mb-4">
+          {title}
+        </h3>
+      )}
       <canvas ref={chartRef}></canvas>
     </div>
   );

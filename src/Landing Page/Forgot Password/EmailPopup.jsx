@@ -52,6 +52,10 @@ function EmailPopup() {
     }
   };
 
+    const goToHome = () => {
+    navigate("/");
+  };
+
   // Success message popup
   if (success) {
     return (
@@ -80,19 +84,19 @@ function EmailPopup() {
               We've sent a password reset link to <strong>{email}</strong>. 
               Please check your inbox and follow the instructions to reset your password.
             </p>
-            <button
-              onClick={() => navigate("/")}
-              className="w-full bg-blue-900 text-white py-3 rounded-lg font-medium hover:bg-blue-800 transition-colors"
-            >
-              Back to Home
-            </button>
+<button
+  onClick={goToHome}
+  className="w-full bg-blue-900 text-white py-3 rounded-lg font-medium hover:bg-blue-800 transition-colors cursor-pointer"
+>
+  Back to Homepage
+</button>
+
           </div>
         </div>
       </div>
     );
   }
-
-  // Main form
+  
   return (
     <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center pt-20 z-15 bg-[#2979FF]">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto relative animate-fadeIn">
