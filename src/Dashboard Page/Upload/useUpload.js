@@ -23,13 +23,12 @@ export function useUpload() {
     }
 
     const allowedFormats = [
-      "application/pdf",
       "application/msword",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     ];
 
     if (!allowedFormats.includes(file.type)) {
-      alert("Invalid file type. Only PDF, DOC, or DOCX files are allowed.");
+      alert("Invalid file type. Only DOC, or DOCX files are allowed.");
       e.target.value = null;
       return;
     }

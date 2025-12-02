@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eye } from "lucide-react";
+import { Eye, Clock } from "lucide-react";
 import useGetHistory from "../../hooks/useGetHistory";
 import HistoryDetail from "./HistoryDetail";
 import DashboardHeader from "../Header and Sidebar/DashboardHeader";
@@ -8,6 +8,7 @@ import DasboardSidebar from "../Header and Sidebar/DasboardSidebar";
 function History() {
   const { isLoading, data: historyData = [] } = useGetHistory();
   const [selectedHistory, setSelectedHistory] = useState(null);
+  
   return (
     <>
       <DashboardHeader />
@@ -43,6 +44,7 @@ function History() {
                   </p>
                 </div>
               )}
+              
               {historyData.length > 0 && (
                 <div className="bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(93vh-150px)] overflow-y-auto p-5 mb-5">
                   {historyData.map((entry, index) => {
@@ -50,22 +52,42 @@ function History() {
                     const enhancedScore = entry.atsScore?.enhanced || 0;
                     const improvement = enhancedScore - originalScore;
 
+                    // Format date and time
+                    // Try timestamp first, fallback to createdAt
+                    const entryDate = new Date(entry.timestamp || entry.createdAt);
+                    const formattedDate = entryDate.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    });
+                    const formattedTime = entryDate.toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    });
+
+                    // Debug log to check data
+                    console.log('Entry:', {
+                      timestamp: entry.timestamp,
+                      createdAt: entry.createdAt,
+                      formattedDate,
+                      formattedTime
+                    });
+
                     return (
                       <div
                         key={index}
-                        className="bg-white rounded-lg overflow-hidden"
+                        className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                       >
                         <div className="bg-[#3b7ce9] p-3 text-white">
-                          <h3 className="font-semibold text-lg truncate">
-                            {new Date(entry.createdAt).toLocaleDateString(
-                              "en-US",
-                              {
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              }
-                            )}
+                          <h3 className="font-semibold text-lg">
+                            {formattedDate}
                           </h3>
+                          {/* ✅ Added Time Display with Icon */}
+                          <div className="flex items-center gap-1 mt-1 text-sm opacity-90">
+                            <Clock size={14} />
+                            <span>{formattedTime}</span>
+                          </div>
                         </div>
 
                         <div className="p-4 space-y-4">
