@@ -1,42 +1,27 @@
-import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import axiosInstance from "../utils/axios";
-
+import { useUser } from "../hooks/useUser";
 export function UserProtectedRoute({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axiosInstance.get('/api/v1/auth/me');
-        setIsAuthenticated(response.data.authenticated);
-      } catch (error) {
-        console.error('Auth check failed:', error);
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-    checkAuth();
-  }, []);
-
-  if (loading) {
+  const { data, isPending, isError } = useUser();
+  
+  if (isPending) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh'
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         Loading...
       </div>
     );
   }
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace state={{ showLogin: true }} />;
-  }
-  
+
+  if (isError) <Navigate to="/" replace state={{ showLogin: true }} />;
+
   return children;
 }

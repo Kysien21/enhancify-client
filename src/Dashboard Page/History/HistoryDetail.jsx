@@ -288,7 +288,7 @@ const HistoryDetail = ({ historyData, setHistoryData }) => {
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
         <ATSScoreComparisonHistory
           atsScore={atsScore}
-          onBack={() => setAnalysisData(null)}
+          onBack={() => setHistoryData(null)}
           onDownload={downloadOptimzeResume}
         />
 

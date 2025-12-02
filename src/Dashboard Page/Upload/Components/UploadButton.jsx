@@ -2,7 +2,7 @@ import { useState } from "react";
 import UploadConfirmation from "./UploadConfirmation";
 import UploadLoading from "./UploadLoading";
 
-function UploadButton({ onConfirmAction, disabled }) {
+function UploadButton({ onConfirmAction, disabled, isLoading }) {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
 
@@ -14,13 +14,15 @@ function UploadButton({ onConfirmAction, disabled }) {
     setShowConfirmation(false);
     setShowLoader(true);
 
-    try {
-      await onConfirmAction();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setShowLoader(false);
-    }
+    onConfirmAction();
+
+    // try {
+    //   await onConfirmAction();
+    // } catch (error) {
+    //   console.error(error);
+    // } finally {
+    //   setShowLoader(false);
+    // }
   };
 
   const handleCancel = () => {
@@ -41,7 +43,7 @@ function UploadButton({ onConfirmAction, disabled }) {
         <UploadConfirmation onConfirm={handleConfirm} onCancel={handleCancel} />
       )}
 
-      {showLoader && <UploadLoading />}
+      {isLoading && <UploadLoading />}
     </>
   );
 }

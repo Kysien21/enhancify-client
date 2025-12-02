@@ -20,45 +20,62 @@ import Profile from "./Dashboard Page/Profile/Profile";
 
 function App() {
   return (
+
     <Router>
-      <UserProvider>
-        <HistoryProvider>
-          <Routes>
-            {/* Public Routes */}
-            <Route index element={<Website />} />
-            <Route path="/" element={<Website />} />
-            
-            {/* ✅ Password Reset Routes */}
-            <Route path="/forgot-password" element={<EmailPopup />} />
-            <Route path="/reset-password/:token" element={<NewPassword />} />
-            <Route path="/pro" element={<Profile />} />
+      <Routes>
+        {/* Public Routes */}
+        <Route index element={<Website />} />
+        <Route path="/" element={<Website />} />
 
-            {/* User Protected Routes */}
-            <Route 
-              path="/upload" 
-              element={
-                <UserProtectedRoute>
-                  <Upload />
-                </UserProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/history" 
-              element={
-                <UserProtectedRoute>
-                  <History />
-                </UserProtectedRoute>
-              } 
-            />
+        {/* ✅ Password Reset Routes */}
+        <Route path="/forgot-password" element={<EmailPopup />} />
+        <Route path="/reset-password/:token" element={<NewPassword />} />
+        <Route path="/pro" element={<Profile />} />
 
-            {/* Admin Protected Routes */}
-            <Route path="/home" element={<AdminRoute><Overview /></AdminRoute>} />
-            <Route path="/user" element={<AdminRoute><UserManagement /></AdminRoute>} />
-            <Route path="/report" element={<AdminRoute><Reports /></AdminRoute>} />
+        {/* User Protected Routes */}
+        <Route
+          path="/upload"
+          element={
+            <UserProtectedRoute>
+              <Upload />
+            </UserProtectedRoute>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <UserProtectedRoute>
+              <History />
+            </UserProtectedRoute>
+          }
+        />
 
-          </Routes>
-        </HistoryProvider>
-      </UserProvider>
+        {/* Admin Protected Routes */}
+        <Route
+          path="/home"
+          element={
+            <AdminRoute>
+              <Overview />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/user"
+          element={
+            <AdminRoute>
+              <UserManagement />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/report"
+          element={
+            <AdminRoute>
+              <Reports />
+            </AdminRoute>
+          }
+        />
+      </Routes>
     </Router>
   );
 }

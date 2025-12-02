@@ -1,7 +1,9 @@
 import { useState, useRef } from "react";
 import axios from "axios";
 
+
 export function useUpload() {
+
   const [resumeFile, setResumeFile] = useState(null);
   const [jobDescription, setJobDescription] = useState(""); // ✅ This is for the textarea value
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +50,7 @@ export function useUpload() {
 
     const formData = new FormData();
     formData.append("resume", resumeFile);
-    
+
     // ✅ Only append job description if it has content
     if (jobDescription.trim()) {
       formData.append("jobDescription", jobDescription);
@@ -92,9 +94,9 @@ export function useUpload() {
         createdAt: new Date().toISOString(),
       };
 
-      const history = JSON.parse(localStorage.getItem("history") || "[]");
-      history.push(newEntry);
-      localStorage.setItem("history", JSON.stringify(history));
+      // const history = JSON.parse(localStorage.getItem("history") || "[]");
+      // history.push(newEntry);
+      // localStorage.setItem("history", JSON.stringify(history));
 
       return analysis.analysis;
     } catch (error) {

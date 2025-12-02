@@ -1,7 +1,9 @@
 import { useUpload } from "../useUpload";
 import UploadButton from "./UploadButton";
-
+import { useQueryClient } from "@tanstack/react-query";
+import { useOptimizeResume } from "../../../hooks/useOptimizeResume";
 function UploadForm({ setAnalysisData, setOpen }) {
+  const queryClient = useQueryClient();
   const {
     resumeFile,
     jobDescription,
@@ -10,12 +12,28 @@ function UploadForm({ setAnalysisData, setOpen }) {
     resumeFileUpload,
     submitResumeUpload,
     fileInputRef,
-    isLoading,
+    // isLoading,
   } = useUpload();
+  const { mutate: handleOptimize, isPending: isLoading } = useOptimizeResume({
+    onSuccess: (result) => {
+      console.log("BEFORE INVALIDATING QUERY");
+      queryClient.invalidateQueries({ queryKey: ["history"] });
+      console.log("AFTER INVALIDATING QUERY");
+      setAnalysisData(result);
+      setOpen(false);
+    },
+    onError: (error) => {
+      console.log("ERROR:", error);
+      if (error.response?.data) {
+        alert(error.response.data.message || "Upload Failed, Server Error");
+      } else {
+        alert("Upload Failed, Server Error");
+      }
+    },
+  });
 
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto text-center animate-fadeIn">
-
       {/* Resume Upload Label */}
       <h5 className="text-blue-900 mt-5 mb-2 text-sm font-semibold tracking-wide">
         Upload Your Resume
@@ -58,13 +76,16 @@ function UploadForm({ setAnalysisData, setOpen }) {
       <div className="mt-0 w-full">
         <UploadButton
           disabled={isLoading || !resumeFile}
-          onConfirmAction={async () => {
-            const result = await submitResumeUpload();
-            if (result) {
-              setAnalysisData(result);
-              setOpen(false);
-            }
-          }}
+          // onConfirmAction={async () => {
+          //   const result = await submitResumeUpload();
+          //   if (result) {
+          //     await queryClient.invalidateQueries({ queryKey: ["history"] });
+          //     setAnalysisData(result);
+          //     setOpen(false);
+          //   }
+          // }}
+          onConfirmAction={() => handleOptimize({ resumeFile, jobDescription })}
+          isLoading={isLoading}
         />
       </div>
     </div>
