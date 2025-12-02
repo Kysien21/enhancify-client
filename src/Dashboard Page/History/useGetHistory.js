@@ -12,16 +12,11 @@ export default function useGetHistory() {
     try {
       setIsLoading(true);
       setError(null);
-
       const URL = `${API_URL}/api/v1/user/resume-optimize-history`;
-      const { data } = await axios.get(URL, { withCredentials: true });
-
-      const history = data.history || [];
-
-      // Save to cache
-      sessionStorage.setItem("resumeHistory", JSON.stringify(history));
-
-      setHistoryData(history);
+      const { data } = await axios.get(URL, {
+        withCredentials: true,
+      });
+      setHistoryData(data.history || []);
     } catch (error) {
       console.error("Error fetching history:", error);
       setError(error.message || "Failed to fetch history");
@@ -32,14 +27,6 @@ export default function useGetHistory() {
   };
 
   useEffect(() => {
-    // Check cache first
-    const cached = sessionStorage.getItem("resumeHistory");
-
-    if (cached) {
-      setHistoryData(JSON.parse(cached));
-      return; // Prevent fetching again
-    }
-
     handleGetHistory();
   }, []);
 

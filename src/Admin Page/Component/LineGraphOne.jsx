@@ -81,7 +81,7 @@ function LineGraphOne({
   }, [labels, data, borderColor]);
 
   return (
-    <div className="bg-[#DCDCDC] p-3 sm:p-4 md:p-6 rounded-lg w-full">
+    <div className="bg-[#DCDCDC] p-3 sm:p-4 md:p-5 rounded-lg w-full">
       <h2 className="text-[#5b7fa6] mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg lg:text-xl font-normal">
         {title}
       </h2>

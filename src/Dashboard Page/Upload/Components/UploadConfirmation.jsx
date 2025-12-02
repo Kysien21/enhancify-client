@@ -21,7 +21,7 @@ function UploadConfirmation({ onConfirm, onCancel }) {
                        hover:bg-[#3b41a8] active:scale-95 transition 
                        shadow-sm text-sm md:text-base"
           >
-            Yes, Continue
+            Continue
           </button>
 
           <button

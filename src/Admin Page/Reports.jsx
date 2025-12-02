@@ -6,7 +6,7 @@ import AdminSidebar from "./Header and Sidebar/AdminSidebar";
 import StatCard from "./Component/StatCard";
 import LineGraphTwo from "./Component/LineGraphTwo";
 
-function ReportAndAnalytics() {
+function Reports() {
   const [stats, setStats] = useState({
     totalAnalysis: 0,
     avgImprovement: 0,
@@ -14,8 +14,6 @@ function ReportAndAnalytics() {
   });
   const [usageData, setUsageData] = useState([]);
   const [departmentData, setDepartmentData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchAllData();
@@ -87,59 +85,26 @@ function ReportAndAnalytics() {
             <div className="bg-blue-100 rounded-2xl p-4 sm:p-6 lg:p-5">
               
               <h1 className="text-2xl sm:text-3xl md:text-4xl text-[#1E3A8A] font-semibold underline mb-6 md:mb-8 lg:mb-12 text-center">
-                Reports and Analytics
+                Reports
               </h1>
 
-              {loading ? (
-                <div className="flex items-center justify-center h-96">
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700 mx-auto mb-4"></div>
-                    <p className="text-lg text-[#1E3A8A]">Loading analytics...</p>
-                  </div>
+                   {/* Stats Cards */}
+              <div className="flex flex-col sm:flex-row w-full gap-4 md:gap-6 lg:gap-8 items-center justify-center mb-8 md:mb-9 px-3 sm:px-0 xl:px-30">
+
+                <div className="w-full sm:w-auto sm:flex-1">
+                  <StatCard value="1,500" label="Total Analysis" />
                 </div>
-              ) : error ? (
-                <div className="flex items-center justify-center h-96">
-                  <div className="text-center">
-                    <div className="text-red-500 text-6xl mb-4">⚠️</div>
-                    <h2 className="text-2xl text-red-600 mb-2">Error Loading Analytics</h2>
-                    <p className="text-gray-600 mb-4">{error}</p>
-                    <button
-                      onClick={fetchAllData}
-                      className="bg-blue-700 hover:bg-blue-800 text-white py-2 px-6 rounded-lg transition duration-200"
-                    >
-                      Retry
-                    </button>
-                  </div>
+
+                <div className="w-full sm:w-auto sm:flex-1">
+                  <StatCard value="1,500" label="AVG Improvement" />
                 </div>
-              ) : (
-                <>
-                  {/* Stats Cards */}
-                  <div className="flex flex-col sm:flex-row w-full gap-4 md:gap-6 lg:gap-8 items-center justify-center mb-8 md:mb-9 px-3 sm:px-0 xl:px-30">
-                    <div className="w-full sm:w-auto sm:flex-1">
-                      <StatCard 
-                        value={stats.totalAnalysis} 
-                        label="Total Analysis" 
-                        storageKey="totalAnalysis" 
-                      />
-                    </div>
 
-                    <div className="w-full sm:w-auto sm:flex-1">
-                      <StatCard 
-                        value={stats.avgImprovement} 
-                        label="AVG Improvement" 
-                        storageKey="avgImprovement" 
-                      />
-                    </div>
+                <div className="w-full sm:w-auto sm:flex-1">
+                  <StatCard value="1,500" label="Active Users" />
+                </div>
 
-                    <div className="w-full sm:w-auto sm:flex-1">
-                      <StatCard 
-                        value={stats.activeUsers} 
-                        label="Active Users" 
-                        storageKey="activeUsers" 
-                      />
-                    </div>
-                  </div>
-
+              </div>
+                
                   {/* Graphs */}
                   <div className="w-full flex flex-col lg:flex-row gap-6 lg:gap-8">
                     {/* Line Graph - System Usage Over Time */}
@@ -160,9 +125,6 @@ function ReportAndAnalytics() {
                       />
                     </div>
                   </div>
-                </>
-              )}
-
             </div>
           </div>
         </div>
@@ -171,4 +133,4 @@ function ReportAndAnalytics() {
   );
 }
 
-export default ReportAndAnalytics;
+export default Reports;

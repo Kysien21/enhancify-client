@@ -91,10 +91,9 @@ function AdminManagement() {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-300">
-                    <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Username</th>
-                    <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Department</th>
-                    <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Resume Upload</th>
-                    <th className="text-center px-6 py-4 text-blue-900 font-semibold text-sm">Average Score</th>
+                    <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Name</th>
+                    <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Email</th>
+                    <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Password</th>
                     <th className="text-center px-6 py-4 text-blue-900 font-semibold text-sm">Actions</th>
                   </tr>
                 </thead>

@@ -25,7 +25,6 @@ export function useSignUp() {
     e.preventDefault();
 
     if (!firstname || !lastname || !email || !password || !confirmPassword || !category) {
-      alert("Please fill in all fields.");
       return;
     }
 
@@ -34,17 +33,10 @@ export function useSignUp() {
     const isValidDomain = allowedDomains.some((domain) => email.endsWith(domain));
 
     if (!isValidDomain) {
-      alert("Please enter a valid Gmail (@gmail.com) or NORMAI (@normi.edu.ph) email.");
       return;
     }
 
     if (password.length < 10) {
-      alert("Password must be at least 10 characters long.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
       return;
     }
 

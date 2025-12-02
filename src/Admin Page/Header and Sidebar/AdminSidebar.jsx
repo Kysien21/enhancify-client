@@ -50,7 +50,7 @@ function AdminSidebar() {
           className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all"
         >
           <Users size={18} />
-          User Monitoring
+          User Management
         </Link>
 
         <Link

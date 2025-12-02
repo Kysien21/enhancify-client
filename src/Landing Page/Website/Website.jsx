@@ -7,36 +7,37 @@ function Website() {
   const { signup, login, toggleSignup, toggleLogin, handleModalClose } = useWebsiteHeader();
 
   return (
-    <main>
-       <WebsiteHeader
+    <main className="flex flex-col min-h-screen">
+      {/* Header */}
+      <WebsiteHeader
         signup={signup}
-        login={login}   
+        login={login}
         toggleSignup={toggleSignup}
         toggleLogin={toggleLogin}
         handleModalClose={handleModalClose}
-      />  
+      />
 
-      <section className="relative">
+      {/* Hero Section */}
+      <section className="relative flex-1">
+        {/* Background Image */}
         <img
           src={Background1}
           alt="background"
-          className="absolute -z-1 w-full h-full object-cover"
+          className="absolute inset-0 -z-10 w-full h-full object-cover"
         />
 
-        <div className="w-full min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:h-[800px] relative flex flex-col lg:flex-row justify-around items-center px-4 sm:px-8 lg:px-16 py-8 lg:py-0 gap-8 lg:gap-0">
-          <div className="space-y-3 sm:space-y-4 md:space-y-5 max-w-full lg:max-w-none">
-            <h1 className="text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-bold text-[#ffff] leading-tight lg:leading-13 tracking-wide text-center lg:text-left pt-15 md:pt-15 lg:pt-0">
+        <div className="w-full min-h-[500px] sm:min-h-[600px] md:min-h-[680px] flex flex-col lg:flex-row justify-around items-center px-4 sm:px-8 lg:px-16 py-8 gap-8 lg:gap-0">
+          {/* Text */}
+          <div className="space-y-4 max-w-full lg:max-w-lg text-center lg:text-left pt-10">
+            <h1 className="text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-bold text-white leading-tight tracking-wide">
               AI-Powered Resume<br />Optimization
             </h1>
 
-            <p className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] font-light text-[#ffff] leading-relaxed lg:leading-6 tracking-wide text-center lg:text-left">
-              In todays fast-paced job market, a well-optimized resume is your ticket to<br />
-              success. Resume Optimizer analyzes, enhances, and refines your resume<br />
-              using cutting-edge AI and Machine Learning to help you stand out from the<br />
-              competition
+            <p className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] font-light text-white leading-relaxed">
+              In today's fast-paced job market, a well-optimized resume is your ticket to success. Resume Optimizer analyzes, enhances, and refines your resume using cutting-edge AI and Machine Learning to help you stand out from the competition.
             </p>
 
-            <p className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] font-light text-[#ffff] tracking-wide text-center lg:text-left">
+            <p className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] font-light text-white">
               Upload Resume & Optimize Now!
             </p>
 
@@ -50,15 +51,21 @@ function Website() {
             </div>
           </div>
 
+          {/* Image */}
           <img
             src={Websiteicon1}
-            alt="background"
-            className="w-[280px] sm:w-[350px] md:w-[420px] lg:w-[500px]"
+            alt="illustration"
+            className="w-[200px] sm:w-[280px] md:w-[350px] lg:w-[500px] object-contain pt-10"
           />
         </div>
       </section>
 
-      <footer></footer>
+      {/* Footer Warning */}
+      <footer className="bg-white w-full p-3 flex justify-center items-center text-center">
+        <p className="text-xs sm:text-sm md:text-base text-yellow-800">
+          ⚠️ AI suggestions are generated automatically. They may contain mistakes or inaccuracies. Please review your resume carefully before submitting.
+        </p>
+      </footer>
     </main>
   );
 }

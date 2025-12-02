@@ -49,7 +49,7 @@ function UploadForm({ setAnalysisData, setOpen }) {
         <textarea
           value={jobDescription}
           onChange={(e) => setJobDescription(e.target.value)}
-          className="w-full h-full text-center resize-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white rounded-xl focus:outline-none text-xs xl:text-sm placeholder:italic placeholder:text-[#999] hover:shadow-md pt-8 xl:pt-7 transition-all duration-100"
+          className="w-full h-full text-center resize-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white rounded-xl focus:outline-none text-xs xl:text-sm placeholder:italic placeholder:text-[#999] hover:shadow-md pt-8 xl:pt-7 transition-all duration-300"
           placeholder="Paste job description here"
         />
       </div>

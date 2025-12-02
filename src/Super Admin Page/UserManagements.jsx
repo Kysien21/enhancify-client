@@ -15,12 +15,7 @@ function UserManagement() {
   const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
-    const cachedUsers = sessionStorage.getItem("users");
-    if (cachedUsers) {
-      setUsers(JSON.parse(cachedUsers));
-    } else {
-      fetchUsers();
-    }
+    fetchUsers(); // always fetch fresh data on mount
   }, []);
 
   const fetchUsers = async () => {
@@ -31,7 +26,6 @@ function UserManagement() {
 
       if (response.data.success) {
         setUsers(response.data.data);
-        sessionStorage.setItem("users", JSON.stringify(response.data.data));
       }
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -53,12 +47,9 @@ function UserManagement() {
       );
 
       if (response.data.success) {
-        // Update the users list
         const updatedUsers = users.filter((user) => user._id !== selectedUserId);
         setUsers(updatedUsers);
-        sessionStorage.setItem("users", JSON.stringify(updatedUsers));
 
-        // Close delete popup and show success popup
         setShowDeletePopup(false);
         setShowSuccessPopup(true);
       }
@@ -118,7 +109,7 @@ function UserManagement() {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-300">
-                    <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Username</th>
+                    <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Full Name</th>
                     <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Email</th>
                     <th className="text-left px-6 py-4 text-blue-900 font-semibold text-sm">Date Joined</th>
                     <th className="text-center px-6 py-4 text-blue-900 font-semibold text-sm">Total Analysis</th>
