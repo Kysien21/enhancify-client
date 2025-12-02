@@ -3,7 +3,7 @@ function UploadLoading() {
     <div className="fixed inset-0 flex items-center justify-center z-50 md:pl-[16%]">
       <div className="absolute inset-0"></div>
       <div className="relative w-32 h-32 flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full backdrop-blur-xl bg-blue-300 border-2 border-blue-500"></div>
+        <div className="absolute inset-0 rounded-full backdrop-blur-xl bg-blue-100 border-2 border-blue-500"></div>
         <div className="absolute inset-0 animate-spin">
           <svg className="w-full h-full" viewBox="0 0 100 100">
             <defs>

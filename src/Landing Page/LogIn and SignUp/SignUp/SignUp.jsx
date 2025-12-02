@@ -92,8 +92,8 @@ function SignUp({ handleModalClose }) {
 
   return (
     <main>
-      <div className="min-h-screen w-full flex items-center justify-center p-2 sm:p-0">
-        <div className="relative w-full max-w-[99%] rounded-xl py-7 sm:py-10 md:py-10 lg:py-15 px-5 sm:px-15 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
+      <div className="min-h-screen w-full flex items-center justify-center p-2 sm:p-0 mb-0 sm:mb-13">
+        <div className="relative w-full max-w-[90%] rounded-xl py-7 sm:py-10 md:py-10 lg:py-15 px-5 sm:px-15 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
 
           {/* ❌ Close button */}
           <button
@@ -105,11 +105,11 @@ function SignUp({ handleModalClose }) {
           </button>
 
           <div className="flex flex-col flex-1 items-center justify-center">
-            <div className="text-center mb-6 sm:mb-5">
-              <h1 className="text-3xl font-medium text-blue-900 text-center">
+            <div className="text-center mb-0 sm:mb-5">
+              <h1 className="lg:text-3xl text-xl font-medium text-blue-900 text-center">
                 We're excited to have you
                 <br />
-                on Board!
+                on board!
               </h1>
             </div>
 
@@ -117,7 +117,7 @@ function SignUp({ handleModalClose }) {
               {/* Firstname + Lastname */}
               <div className="flex flex-col sm:flex-row gap-3 w-full">
                 <label className="flex flex-col flex-1">
-                  <h2 className="text-sm text-blue-900 mb-1 ml-1">Firstname:</h2>
+                  <h2 className="text-sm text-blue-900 mb-1 ml-1">First Name:</h2>
                   <input
                     type="text"
                     ref={firstnameRef}
@@ -134,7 +134,7 @@ function SignUp({ handleModalClose }) {
                 </label>
 
                 <label className="flex flex-col flex-1">
-                  <h2 className="text-sm text-blue-900 mb-1 ml-1">Lastname:</h2>
+                  <h2 className="text-sm text-blue-900 mb-1 ml-1">Last Name:</h2>
                   <input
                     type="text"
                     ref={lastnameRef}
@@ -153,7 +153,7 @@ function SignUp({ handleModalClose }) {
 
               {/* Category */}
               <label className="flex flex-col w-full relative">
-                <h2 className="text-sm text-blue-900 mb-1 ml-1">Category:</h2>
+                <h2 className="text-sm text-blue-900 mb-1 ml-1">Department:</h2>
                 <select
                   ref={categoryRef}
                   value={category}

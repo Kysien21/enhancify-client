@@ -32,7 +32,6 @@ const ATSScoreComparison = ({ atsScore, onBack, onDownload }) => {
           <div className="text-4xl font-bold text-red-700">
             {atsScore.original}%
           </div>
-          <div className="text-sm text-red-600 mt-1">Needs Improvement</div>
         </div>
         <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
           <div className="text-green-600 font-semibold mb-2">
@@ -41,7 +40,6 @@ const ATSScoreComparison = ({ atsScore, onBack, onDownload }) => {
           <div className="text-4xl font-bold text-green-700">
             {atsScore.enhanced}%
           </div>
-          <div className="text-sm text-green-600 mt-1">Excellent Match</div>
         </div>
       </div>
 

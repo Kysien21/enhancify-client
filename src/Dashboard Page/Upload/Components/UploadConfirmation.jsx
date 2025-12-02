@@ -6,11 +6,11 @@ function UploadConfirmation({ onConfirm, onCancel }) {
                    animate-scaleIn"
       >
         <h2 className="text-xl font-semibold text-center text-gray-800">
-          Continue Upload?
+          This process may take a while.
         </h2>
 
         <p className="text-center text-gray-600 mt-2 text-sm">
-          Please confirm if you want to proceed.
+          Please confirm to proceed.
         </p>
 
         {/* Buttons */}

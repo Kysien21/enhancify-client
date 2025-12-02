@@ -77,10 +77,10 @@ function Upload() {
               <div className="bg-blue-100 border-2 border-blue-400 rounded-2xl p-10 text-center animate-fadeIn">
                 <div className="text-center mb-8">
                   <h1 className="text-3xl font-bold text-blue-900">
-                    Job Selection & Upload
+                    Resume Upload and Job Description
                   </h1>
                   <p className="mt-2 text-blue-700/70 text-lg">
-                    Select the job you're applying for and upload your resume.
+           Upload your resume. You may also add a job description if you want.
                   </p>
                 </div>
 

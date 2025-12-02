@@ -59,7 +59,7 @@ const handleSubmit = async (e) => {
 
   return (
     <main>
-      <div className="min-h-screen w-full flex items-center justify-center p-2 sm:p-0">
+      <div className="min-h-screen w-full flex items-center justify-center p-2 sm:p-0 mb-0 sm:mb-11">
         <div className="relative w-full max-w-[99%] sm:max-w-lg md:max-w-lg lg:max-w-md rounded-xl py-7 sm:py-10 md:py-10 lg:py-15 px-15 sm:px-15 md:px-15 lg:px-20 bg-[#ffff]/60 backdrop-blur-md transition-all duration-500 ease-in-out">
 
           {/* Close button */}
@@ -74,7 +74,7 @@ const handleSubmit = async (e) => {
           <div className="flex flex-col flex-1 items-center justify-center">
             {/* Header */}
             <div className="text-center mb-0 md:mb-8">
-              <h1 className="text-3xl md:text-4xl font-medium text-blue-900">WELCOME</h1>
+              <h1 className="text-3xl md:text-4xl font-medium text-blue-900">Welcome</h1>
               <p className="text-sm sm:text-base text-gray-600">
                 Sign in to access your dashboard
               </p>

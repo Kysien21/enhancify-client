@@ -61,10 +61,7 @@ function Website() {
       </section>
 
       {/* Footer Warning */}
-      <footer className="bg-white w-full p-3 flex justify-center items-center text-center">
-        <p className="text-xs sm:text-sm md:text-base text-yellow-800">
-          ⚠️ AI suggestions are generated automatically. They may contain mistakes or inaccuracies. Please review your resume carefully before submitting.
-        </p>
+      <footer className="bg-white w-full h-12  flex justify-center items-center text-center">
       </footer>
     </main>
   );
