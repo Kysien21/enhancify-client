@@ -3,14 +3,16 @@ import { CheckCircle } from "lucide-react";
 const OptimizedResume = ({ enhancedResume }) => {
   return (
     <div className="space-y-6">
+
+      {/* Success Banner */}
       <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
         <div className="flex items-start">
           <CheckCircle className="text-green-600 mr-3 mt-1" size={24} />
           <div>
-            <h3 className="font-semibold text-green-800">
+            <h3 className="font-semibold text-green-800 text-sm">
               ATS-Optimized Resume
             </h3>
-            <p className="text-green-700 text-sm mt-1">
+            <p className="text-green-700 text-xs mt-1">
               This version includes enhanced keywords, action verbs, and proper
               formatting for maximum ATS compatibility.
             </p>
@@ -20,43 +22,47 @@ const OptimizedResume = ({ enhancedResume }) => {
 
       {/* Contact */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+        <h2 className="text-lg font-bold text-gray-800 mb-2">
           {enhancedResume.contact.name}
         </h2>
-        <div className="text-gray-600 space-y-1">
+        <div className="text-sm text-gray-600 space-y-1">
           <p>
             {enhancedResume.contact.phone} | {enhancedResume.contact.email}
           </p>
           <p>{enhancedResume.contact.location}</p>
-          <p className="text-indigo-600">{enhancedResume.contact.linkedin}</p>
+          <p className="text-indigo-600 text-sm">
+            {enhancedResume.contact.linkedin}
+          </p>
         </div>
       </div>
 
       {/* Professional Summary */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
+        <h3 className="text-md font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
           PROFESSIONAL SUMMARY
         </h3>
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-sm text-gray-700 leading-relaxed">
           {enhancedResume.summary}
         </p>
       </div>
 
       {/* Experience */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
+        <h3 className="text-md font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
           PROFESSIONAL EXPERIENCE
         </h3>
         {enhancedResume.experience.map((exp, idx) => (
           <div key={idx} className="mb-4">
             <div className="flex justify-between items-start mb-2">
               <div>
-                <h4 className="font-bold text-gray-800">{exp.position}</h4>
-                <p className="text-gray-600">{exp.company}</p>
+                <h4 className="text-md font-bold text-gray-800">
+                  {exp.position}
+                </h4>
+                <p className="text-sm text-gray-600">{exp.company}</p>
               </div>
-              <p className="text-gray-600 text-sm">{exp.period}</p>
+              <p className="text-gray-600 text-xs">{exp.period}</p>
             </div>
-            <ul className="list-disc list-inside space-y-1 text-gray-700">
+            <ul className="text-sm list-disc list-inside space-y-1 text-gray-700">
               {exp.responsibilities.map((resp, i) => (
                 <li key={i}>{resp}</li>
               ))}
@@ -67,20 +73,24 @@ const OptimizedResume = ({ enhancedResume }) => {
 
       {/* Education */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
+        <h3 className="text-md font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
           EDUCATION
         </h3>
         {enhancedResume.education.map((edu, idx) => (
           <div key={idx} className="mb-3">
             <div className="flex justify-between items-start">
               <div>
-                <h4 className="font-bold text-gray-800">{edu.degree}</h4>
-                <p className="text-gray-600">{edu.institution}</p>
+                <h4 className="text-sm font-bold text-gray-800">
+                  {edu.degree}
+                </h4>
+                <p className="text-sm text-gray-600">{edu.institution}</p>
                 {edu.relevant && (
-                  <p className="text-gray-600 text-sm italic">{edu.relevant}</p>
+                  <p className="text-sm text-gray-600 italic">
+                    {edu.relevant}
+                  </p>
                 )}
               </div>
-              <p className="text-gray-600 text-sm">{edu.period}</p>
+              <p className="text-gray-600 text-xs">{edu.period}</p>
             </div>
           </div>
         ))}
@@ -88,18 +98,24 @@ const OptimizedResume = ({ enhancedResume }) => {
 
       {/* Skills */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
+        <h3 className="text-md font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
           SKILLS
         </h3>
+
         <div className="mb-3">
-          <h4 className="font-semibold text-gray-800 mb-2">Technical Skills</h4>
-          <p className="text-gray-700">
+          <h4 className="font-semibold text-gray-800 text-sm mb-2">
+            Technical Skills
+          </h4>
+          <p className="text-gray-700 text-sm">
             {enhancedResume.skills.technical.join(" • ")}
           </p>
         </div>
+
         <div>
-          <h4 className="font-semibold text-gray-800 mb-2">Soft Skills</h4>
-          <p className="text-gray-700">
+          <h4 className="font-semibold text-gray-800 text-sm mb-2">
+            Soft Skills
+          </h4>
+          <p className="text-gray-700 text-sm">
             {enhancedResume.skills.soft.join(" • ")}
           </p>
         </div>
@@ -107,21 +123,22 @@ const OptimizedResume = ({ enhancedResume }) => {
 
       {/* Languages */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
+        <h3 className="text-md font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
           LANGUAGES
         </h3>
-        <p className="text-gray-700">
+        <p className="text-sm text-gray-700">
           {enhancedResume.languages.join(" • ")}
         </p>
       </div>
 
       {/* Certifications */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
+        <h3 className="text-md font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3">
           CERTIFICATIONS & TRAINING
         </h3>
-        
-        <p className="text-gray-600 italic">{enhancedResume.certifications}</p>
+        <p className="text-sm text-gray-600 italic">
+          {enhancedResume.certifications}
+        </p>
       </div>
     </div>
   );

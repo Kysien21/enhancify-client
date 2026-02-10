@@ -9,8 +9,6 @@ import {
 } from "docx";
 
 import DashboardHeader from "../Header and Sidebar/DashboardHeader";
-import DasboardSidebar from "../Header and Sidebar/DasboardSidebar";
-
 import ATSScoreComparison from "./Components/ATSScoreComparison";
 import OptimizedResume from "./Components/OptimizedResume";
 import OriginalResume from "./Components/OriginalResume";
@@ -120,12 +118,7 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
             new TextRun({ text: exp.period }),
           ],
           spacing: { after: 50 },
-          tabStops: [
-            {
-              type: "right",
-              position: convertInchesToTwip(5.5),
-            },
-          ],
+          tabStops: [{ type: "right", position: convertInchesToTwip(5.5) }],
         })
       );
 
@@ -178,12 +171,7 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
             new TextRun({ text: edu.period }),
           ],
           spacing: { after: 50 },
-          tabStops: [
-            {
-              type: "right",
-              position: convertInchesToTwip(5.5),
-            },
-          ],
+          tabStops: [{ type: "right", position: convertInchesToTwip(5.5) }],
         })
       );
 
@@ -205,12 +193,7 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
           })
         );
       } else {
-        sections.push(
-          new Paragraph({
-            text: "",
-            spacing: { after: 150 },
-          })
-        );
+        sections.push(new Paragraph({ text: "", spacing: { after: 150 } }));
       }
     });
 
@@ -303,7 +286,6 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
       })
     );
 
-
     sections.push(
       new Paragraph({
         text: enhancedResume.certifications,
@@ -339,71 +321,59 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
   return (
     <main>
       <DashboardHeader />
-      <DasboardSidebar />
 
-      <section>
-        <div className="pt-16 sm:pt-20 xl:pt-24 md:ml-[16%] xl:ml-[15%] 2xl:ml-[16%] min-h-screen mb-9">
+      <section className="flex justify-center">
+        <div className="pt-16 sm:pt-20 xl:pt-24 min-h-screen mb-9 w-full">
           <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
 
+            {/* ATS SCORE */}
             <ATSScoreComparison
-              atsScore={atsScore} 
+              atsScore={atsScore}
               onBack={() => setAnalysisData(null)}
               onDownload={downloadOptimzeResume}
             />
 
+            {/* SIDE-BY-SIDE RESUMES */}
             <div className="bg-white rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.1),0_-4px_8px_rgba(0,0,0,0.05),4px_0_8px_rgba(0,0,0,0.05),-4px_0_8px_rgba(0,0,0,0.05)] overflow-hidden">
-              <div className="flex border-b">
-                <button
-                  onClick={() => setActiveTab("enhanced")}
-                  className={`flex-1 px-6 py-4 font-semibold transition cursor-pointer ${
-                    activeTab === "enhanced"
-                      ? "bg-indigo-600 text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
-                  Enhanced Resume
-                </button>
 
-                <button
-                  onClick={() => setActiveTab("original")}
-                  className={`flex-1 px-6 py-4 font-semibold transition cursor-pointer ${
-                    activeTab === "original"
-                      ? "bg-indigo-600 text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
+              {/* HEADERS */}
+              <div className="grid grid-cols-1 md:grid-cols-2 border-b">
+                {/* ORIGINAL LEFT */}
+                <div className="px-6 py-4 font-semibold text-center bg-yellow-100 text-yellow-800">
                   Original Resume
-                </button>
+                </div>
 
-                <button
-                  onClick={() => setActiveTab("improvements")}
-                  className={`flex-1 px-6 py-4 font-semibold transition cursor-pointer ${
-                    activeTab === "improvements"
-                      ? "bg-indigo-600 text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
-                  Key Improvements
-                </button>
+                {/* ENHANCED RIGHT */}
+                <div className="px-6 py-4 font-semibold text-center bg-indigo-600 text-white">
+                  Enhanced Resume
+                </div>
               </div>
 
-              <div className="p-6">
-                {activeTab === "enhanced" && (
+              {/* CONTENT */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+                {/* ORIGINAL LEFT */}
+                <div className="border rounded-lg p-4">
+                  <OriginalResume
+                    originalResume={originalResume}
+                    certifications={enhancedResume.certifications}
+                  />
+                </div>
+
+                {/* ENHANCED RIGHT */}
+                <div className="border rounded-lg p-4">
                   <OptimizedResume enhancedResume={enhancedResume} />
-                )}
-
-                {activeTab === "original" && (
-  <OriginalResume 
-    originalResume={originalResume}
-    certifications={enhancedResume.certifications}
-  />
-)}
-
-                {activeTab === "improvements" && (
-                  <KeyImprovements improvements={improvements} />
-                )}
+                </div>
               </div>
             </div>
+
+            {/* KEY IMPROVEMENTS */}
+            <div className="mt-8 bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-lg font-semibold mb-4 text-center">
+                Key Improvements
+              </h3>
+              <KeyImprovements improvements={improvements} />
+            </div>
+
           </div>
         </div>
       </section>

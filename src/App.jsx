@@ -16,7 +16,6 @@ import { UserProtectedRoute } from "./Dashboard Page/UserProtectedRoute";
 // ✅ ADD THESE IMPORTS
 import EmailPopup from "./Landing Page/Forgot Password/EmailPopup";
 import NewPassword from "./Landing Page/Forgot Password/NewPassword";
-import Profile from "./Dashboard Page/Profile/Profile";
 
 function App() {
   return (
@@ -30,7 +29,6 @@ function App() {
         {/* ✅ Password Reset Routes */}
         <Route path="/forgot-password" element={<EmailPopup />} />
         <Route path="/reset-password/:token" element={<NewPassword />} />
-        <Route path="/pro" element={<Profile />} />
 
         {/* User Protected Routes */}
         <Route

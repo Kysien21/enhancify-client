@@ -1,8 +1,8 @@
 function UploadConfirmation({ onConfirm, onCancel }) {
   return (
-       <div className="fixed inset-0 flex items-center justify-center z-50 md:pl-[16%] ">
+       <div className="fixed inset-0 flex items-center justify-center z-50 md:pl-[16%] mt-15">
       <div
-        className="bg-white rounded-2xl shadow-xl w-[90%] max-w-[420px] p-6
+        className="bg-white rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.1),0_-4px_8px_rgba(0,0,0,0.05),4px_0_8px_rgba(0,0,0,0.05),-4px_0_8px_rgba(0,0,0,0.05)] w-[90%] max-w-[420px] p-6
                    animate-scaleIn"
       >
         <h2 className="text-xl font-semibold text-center text-gray-800">

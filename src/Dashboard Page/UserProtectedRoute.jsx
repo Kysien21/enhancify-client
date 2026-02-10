@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import axiosInstance from "../utils/axios";
 import { useUser } from "../hooks/useUser";
-export function UserProtectedRoute({ children }) {
 
-  const { data, isPending, isError } = useUser();
-  
+export function UserProtectedRoute({ children }) {
+  const { data, isPending, isError } = useUser(); // Fetch user data
+
+  // Show loading spinner while fetching user
   if (isPending) {
     return (
       <div
@@ -21,7 +20,9 @@ export function UserProtectedRoute({ children }) {
     );
   }
 
-  if (isError) <Navigate to="/" replace state={{ showLogin: true }} />;
+  // Redirect to login if error occurs (unauthenticated)
+  if (isError) return <Navigate to="/" replace state={{ showLogin: true }} />;
 
+  // If authenticated, render the protected content
   return children;
 }

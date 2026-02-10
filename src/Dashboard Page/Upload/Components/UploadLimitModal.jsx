@@ -1,6 +1,6 @@
-import { Clock, AlertTriangle, X } from "lucide-react";
+import { Clock, AlertTriangle,} from "lucide-react";
 
-function UploadLimitModal({ isOpen, onClose, resetAt, hoursLeft }) {
+function UploadLimitModal({ isOpen, onClose, resetAt, }) {
   if (!isOpen) return null;
 
   const formatResetTime = (isoString) => {
@@ -17,19 +17,13 @@ function UploadLimitModal({ isOpen, onClose, resetAt, hoursLeft }) {
 
   return (
     <div 
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
+      className="fixed inset-0 flex items-center justify-center z-50 px-5 md:pl-[17%] mt-15"
       onClick={onClose}
     >
       <div 
         className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
-        >
-          <X className="w-6 h-6" />
-        </button>
 
         <div className="flex justify-center mb-4">
           <div className="bg-yellow-100 p-4 rounded-full">
@@ -50,9 +44,10 @@ function UploadLimitModal({ isOpen, onClose, resetAt, hoursLeft }) {
             <Clock className="w-5 h-5" />
             <span className="font-semibold">Reset Time</span>
           </div>
-          <p className="text-blue-700 text-sm">
-            You can upload again in <strong>{hoursLeft || 24} hour(s)</strong>
-          </p>
+<p className="text-blue-700 text-sm">
+  You can upload again in <strong>1 week</strong>
+</p>
+
           {resetAt && (
             <p className="text-blue-600 text-xs mt-1">
               Available at: {formatResetTime(resetAt)}

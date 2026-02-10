@@ -1,19 +1,18 @@
 import { useState, useRef } from "react";
 import axios from "axios";
 
-
 export function useUpload() {
-
+  // State for selected resume and optional job description
   const [resumeFile, setResumeFile] = useState(null);
-  const [jobDescription, setJobDescription] = useState(""); // ✅ This is for the textarea value
+  const [jobDescription, setJobDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const fileInputRef = useRef(null);
-
+  const fileInputRef = useRef(null); // For programmatic file input click
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
+  // Handle file selection
   const resumeFileSelection = (e) => {
-    const file = e.target?.files?.[0] || null;
+    const file = e.target?.files?.[0] || null; 
     if (!file) return;
 
     if (file.size === 0) {
@@ -22,25 +21,14 @@ export function useUpload() {
       return;
     }
 
-    const allowedFormats = [
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ];
-
-    if (!allowedFormats.includes(file.type)) {
-      alert("Invalid file type. Only DOC, or DOCX files are allowed.");
-      e.target.value = null;
-      return;
-    }
-
     setResumeFile(file);
-    e.target.value = null;
+    e.target.value = null; // Reset input so same file can be re-selected
   };
 
-  const resumeFileUpload = () => {
-    fileInputRef.current?.click();
-  };
+  // Open file input programmatically
+  const resumeFileUpload = () => fileInputRef.current?.click();
 
+  // Submit resume and analyze
   const submitResumeUpload = async () => {
     if (!resumeFile) {
       alert("Please select a resume file");
@@ -50,22 +38,16 @@ export function useUpload() {
     const formData = new FormData();
     formData.append("resume", resumeFile);
 
-    // ✅ Only append job description if it has content
-    if (jobDescription.trim()) {
-      formData.append("jobDescription", jobDescription);
-    }
+    if (jobDescription.trim()) formData.append("jobDescription", jobDescription);
 
     try {
       setIsLoading(true);
 
-      const { data: uploadData } = await axios.post(
-        `${API_URL}/api/upload`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          withCredentials: true,
-        }
-      );
+      // Upload resume to backend
+      const { data: uploadData } = await axios.post(`${API_URL}/api/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      });
 
       const { success, message, resumeText } = uploadData;
 
@@ -74,39 +56,18 @@ export function useUpload() {
         return null;
       }
 
-      // ✅ Only analyze with job description if provided
+      // Send resume (and optional job description) for analysis
       const analysisPayload = { resumeText };
-      if (jobDescription.trim()) {
-        analysisPayload.jobDescription = jobDescription;
-      }
+      if (jobDescription.trim()) analysisPayload.jobDescription = jobDescription;
 
-      const { data: analysis } = await axios.post(
-        `${API_URL}/api/analyze`,
-        analysisPayload,
-        { withCredentials: true }
-      );
+      const { data: analysis } = await axios.post(`${API_URL}/api/analyze`, analysisPayload, {
+        withCredentials: true,
+      });
 
-      const newEntry = {
-        resumeText,
-        jobDescription: jobDescription.trim() || null,
-        overallScore: analysis.overallScore || 0,
-        createdAt: new Date().toISOString(),
-      };
-
-      // const history = JSON.parse(localStorage.getItem("history") || "[]");
-      // history.push(newEntry);
-      // localStorage.setItem("history", JSON.stringify(history));
-
-      return analysis.analysis;
+      return analysis.analysis; // Return analysis result
     } catch (error) {
       console.error("Upload Failed:", error);
-
-      if (error.response?.data) {
-        alert(error.response.data.message || "Upload Failed, Server Error");
-      } else {
-        alert("Upload Failed, Server Error");
-      }
-
+      alert(error.response?.data?.message || "Upload Failed, Server Error");
       return null;
     } finally {
       setIsLoading(false);

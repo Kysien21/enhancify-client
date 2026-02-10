@@ -2,22 +2,35 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axios";
 
+/**
+ * EmailPopup
+ *
+ * Component to allow users to request a password reset link via email.
+ * Handles validation, sending request, and showing success/error messages.
+ */
 function EmailPopup() {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const navigate = useNavigate();
+  // State variables
+  const [email, setEmail] = useState("");       // User input email
+  const [error, setError] = useState("");       // Error message
+  const [isLoading, setIsLoading] = useState(false); // Loading state for request
+  const [success, setSuccess] = useState(false);     // Indicates if email was sent successfully
 
+  const navigate = useNavigate(); // React Router hook for navigation
+
+  /**
+   * handleSend
+   * Validate email and send password reset request to backend.
+   */
   const handleSend = async () => {
     setError("");
-    
+
+    // Check if email is provided
     if (!email) {
       setError("Please enter your email");
       return;
     }
 
-    // Basic email validation
+    // Basic email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Please enter a valid email address");
@@ -28,9 +41,9 @@ function EmailPopup() {
 
     try {
       console.log("📧 Sending password reset request for:", email);
-      
+
       const response = await axiosInstance.post("/api/v1/auth/forgot-password", {
-        email: email.trim()
+        email: email.trim(),
       });
 
       console.log("✅ Response:", response.data);
@@ -41,7 +54,7 @@ function EmailPopup() {
       }
     } catch (err) {
       console.error("❌ Forgot password error:", err);
-      
+
       if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else {
@@ -52,11 +65,15 @@ function EmailPopup() {
     }
   };
 
-    const goToHome = () => {
+  /**
+   * goToHome
+   * Redirect user to homepage
+   */
+  const goToHome = () => {
     navigate("/");
   };
 
-  // Success message popup
+  // ✅ Render success message after email is sent
   if (success) {
     return (
       <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center pt-20 z-15 bg-[#2979FF]">
@@ -69,34 +86,26 @@ function EmailPopup() {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-2xl font-semibold text-blue-900 mb-3">
-              Email Sent!
-            </h2>
+            <h2 className="text-2xl font-semibold text-blue-900 mb-3">Email Sent!</h2>
             <p className="text-sm sm:text-md text-blue-900 mb-6">
-              We've sent a password reset link to <strong>{email}</strong>. 
-              Please check your inbox and follow the instructions to reset your password.
+              We've sent a password reset link to <strong>{email}</strong>.
             </p>
-<button
-  onClick={goToHome}
-  className="w-full bg-blue-900 text-white py-3 rounded-lg font-medium hover:bg-blue-800 transition-colors cursor-pointer"
->
-  Back to Homepage
-</button>
-
+            <button
+              onClick={goToHome}
+              className="w-full bg-blue-900 text-white py-3 rounded-lg font-medium hover:bg-blue-800 transition-colors cursor-pointer"
+            >
+              Back to Homepage
+            </button>
           </div>
         </div>
       </div>
     );
   }
-  
+
+  // ✅ Render email input form
   return (
     <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center pt-20 z-15 bg-[#2979FF]">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto relative animate-fadeIn">
@@ -107,9 +116,7 @@ function EmailPopup() {
           </p>
 
           <div className="mb-6">
-            <label htmlFor="email" className="block text-sm font-medium text-blue-900 mb-2">
-              Email Address:
-            </label>
+            <label htmlFor="email" className="block text-sm font-medium text-blue-900 mb-2">Email Address:</label>
             <input
               type="email"
               id="email"

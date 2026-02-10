@@ -122,7 +122,7 @@ const OptimizedResumeHistory = ({ enhancedResume }) => {
         </h3>
         
         <p className="text-gray-600 italic">{enhancedResume.certifications}</p>
-        <div className="text-lg font-bold text-gray-800 border-b-2 border-indigo-600 pb-2 mb-3"></div>
+
       </div>
     </div>
   );

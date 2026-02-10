@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, Home, Users, LogOut } from "lucide-react";
+import { Menu, Upload, History, LogOut } from "lucide-react";
+
 import { useQueryClient } from "@tanstack/react-query"; // ✅ ADD THIS
 import axios from "axios";
 
@@ -80,19 +81,19 @@ function DashboardSidebar() {
             <nav className="flex flex-col space-y-2">
               <Link
                 to="/upload"
-                className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all"
+                className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all cursor-pointer"
                 onClick={() => setIsOpen(false)}
               >
-                <Home size={18} />
+                <Upload size={18} />
                 Upload
               </Link>
 
               <Link
                 to="/history"
-                className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all"
+                className="flex items-center gap-1 px-3 py-2 hover:bg-blue-700 hover:bg-opacity-80 transition-all cursor-pointer"
                 onClick={() => setIsOpen(false)}
               >
-                <Users size={18} />
+                <History size={18} />
                 History
               </Link>
             </nav>
@@ -102,7 +103,7 @@ function DashboardSidebar() {
           <div className="mb-6">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-1 px-3 py-2 hover:bg-red-600 hover:bg-opacity-80 transition-all text-left"
+              className="w-full flex items-center gap-1 px-3 py-2 hover:bg-red-600 hover:bg-opacity-80 transition-all cursor-pointer text-left"
             >
               <LogOut size={18} />
               Logout

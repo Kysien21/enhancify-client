@@ -1,10 +1,13 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
+/**
+ * Custom hook to manage SignUp form state and handle signup API call.
+ */
 export function useSignUp() {
+  // Form state
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -12,6 +15,7 @@ export function useSignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [category, setCategory] = useState("");
 
+  // Refs for input focus control
   const firstnameRef = useRef();
   const lastnameRef = useRef();
   const emailRef = useRef();
@@ -19,27 +23,11 @@ export function useSignUp() {
   const confirmPasswordRef = useRef();
   const categoryRef = useRef();
 
-  const navigate = useNavigate();
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-
-    if (!firstname || !lastname || !email || !password || !confirmPassword || !category) {
-      return;
-    }
-
-    // ✅ Allowed domains
-    const allowedDomains = ["@gmail.com", "@normi.edu.ph"];
-    const isValidDomain = allowedDomains.some((domain) => email.endsWith(domain));
-
-    if (!isValidDomain) {
-      return;
-    }
-
-    if (password.length < 10) {
-      return;
-    }
-
+  /**
+   * Handles the signup API request.
+   * Sends user data to the backend and returns success or error message.
+   */
+  const handleSignup = async () => {
     try {
       const URL = `${API_URL}/api/v1/auth/signup`;
 
@@ -52,37 +40,24 @@ export function useSignUp() {
         Category: category,
       });
 
-      const { message } = response.data;
-
-      if (message) {
-        alert(message);
-        navigate("/", { state: { showLogin: true } });
-      }
+      return { success: true, data: response.data };
     } catch (error) {
-      console.error("Signup Failed.", error);
-      alert(error?.response?.data?.message || "Signup Failed. Try again");
+      return {
+        success: false,
+        message: error?.response?.data?.message || "Signup failed. Try again",
+      };
     }
   };
 
   return {
-    firstname,
-    setFirstname,
-    lastname,
-    setLastname,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    confirmPassword,
-    setConfirmPassword,
-    category,
-    setCategory,
-    firstnameRef,
-    lastnameRef,
-    emailRef,
-    passwordRef,
-    confirmPasswordRef,
-    categoryRef,
+    firstname, setFirstname,
+    lastname, setLastname,
+    email, setEmail,
+    password, setPassword,
+    confirmPassword, setConfirmPassword,
+    category, setCategory,
+    firstnameRef, lastnameRef, emailRef,
+    passwordRef, confirmPasswordRef, categoryRef,
     handleSignup,
   };
 }

@@ -1,8 +1,8 @@
 import { AlertTriangle } from "lucide-react";
 
-function ErrorPopup({ message, onClose }) {
+function UploadErrorPopup({ message, onClose }) {
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 px-5">
+    <div className="fixed inset-0 flex items-center justify-center z-50 px-5 md:pl-[17%] mt-15">
       <div className="bg-white rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.1),0_-4px_8px_rgba(0,0,0,0.05),4px_0_8px_rgba(0,0,0,0.05),-4px_0_8px_rgba(0,0,0,0.05)] w-full max-w-sm mx-auto relative animate-fadeIn p-10">
         {/* Warning Icon */}
         <div className="flex justify-center mb-4">
@@ -33,4 +33,4 @@ function ErrorPopup({ message, onClose }) {
   );
 }
 
-export default ErrorPopup;
+export default UploadErrorPopup;
