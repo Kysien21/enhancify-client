@@ -24,24 +24,24 @@ function UploadForm({ setAnalysisData, setOpen }) {
     fileInputRef,
   } = useUpload();
 
-  const MAX_SIZE = 1 * 1024 * 1024; // 1 MB
+  const MAX_SIZE = 1 * 1024 * 1024;
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const allowedFormats = [
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ];
+const allowedFormats = [
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
 
-    // File type validation
-    if (!allowedFormats.includes(file.type)) {
-      setErrorMessage("Invalid file type. Only DOCX file are allowed.");
-      setShowErrorPopup(true);
-      e.target.value = null;
-      return;
-    }
+// File type validation
+if (!allowedFormats.includes(file.type)) {
+  setErrorMessage("Invalid file type. Only PDF files are allowed.");
+  setShowErrorPopup(true);
+  e.target.value = null;
+  return;
+}
+
 
     // File size validation
     if (file.size > MAX_SIZE) {

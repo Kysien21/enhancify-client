@@ -2,7 +2,9 @@ import { Download, ArrowLeft, TrendingUp } from "lucide-react";
 
 const ATSScoreComparison = ({ atsScore, onBack, onDownload }) => {
   return (
-    <div className="bg-white rounded-lg  shadow-[0_4px_8px_rgba(0,0,0,0.1),0_-4px_8px_rgba(0,0,0,0.05),4px_0_8px_rgba(0,0,0,0.05),-4px_0_8px_rgba(0,0,0,0.05)] p-6 mb-6">
+    <div className="bg-white rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.1),0_-4px_8px_rgba(0,0,0,0.05),4px_0_8px_rgba(0,0,0,0.05),-4px_0_8px_rgba(0,0,0,0.05)] p-6 mb-6">
+      
+      {/* Header Buttons */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
           <button
@@ -44,26 +46,40 @@ const ATSScoreComparison = ({ atsScore, onBack, onDownload }) => {
       </div>
 
       {/* Score Breakdown */}
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-4">
         {atsScore.categories.map((cat, idx) => (
           <div key={idx} className="flex items-center gap-4">
+            
             <div className="w-32 text-sm font-medium text-gray-700">
               {cat.name}
             </div>
-            <div className="flex-1 flex gap-2 items-center">
-              <div className="flex-1 bg-gray-200 rounded-full h-3">
+
+            <div className="flex-1 flex items-center gap-3">
+
+              {/* ORIGINAL */}
+              <div className="flex-1 relative bg-gray-200 rounded-full h-3">
                 <div
                   className="bg-red-500 h-3 rounded-full"
                   style={{ width: `${cat.original}%` }}
-                ></div>
+                />
+                <span className="absolute right-0 -top-5 text-xs text-red-600 font-semibold">
+                  {cat.original}%
+                </span>
               </div>
-              <TrendingUp className="text-green-600" size={20} />
-              <div className="flex-1 bg-gray-200 rounded-full h-3">
+
+              <TrendingUp className="text-green-600" size={18} />
+
+              {/* ENHANCED */}
+              <div className="flex-1 relative bg-gray-200 rounded-full h-3">
                 <div
                   className="bg-green-500 h-3 rounded-full"
                   style={{ width: `${cat.enhanced}%` }}
-                ></div>
+                />
+                <span className="absolute right-0 -top-5 text-xs text-green-600 font-semibold">
+                  {cat.enhanced}%
+                </span>
               </div>
+
             </div>
           </div>
         ))}

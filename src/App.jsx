@@ -1,7 +1,5 @@
 // src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { UserProvider } from "./Dashboard Page/Context/UserContext";
-import { HistoryProvider } from "./Dashboard Page/Context/HistoryContext";
 
 import Website from "./Landing Page/Website/Website";
 import Upload from "./Dashboard Page/Upload/Upload";
