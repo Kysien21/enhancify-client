@@ -3,10 +3,6 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-/**
- * submitResumeUpload
- * Handles uploading a resume and optionally analyzing it against a job description.
- */
 const submitResumeUpload = async (resumeFile, jobDescription) => {
   if (!resumeFile) {
     alert("Please select a resume file");
@@ -26,28 +22,28 @@ const submitResumeUpload = async (resumeFile, jobDescription) => {
     withCredentials: true,
   });
 
-  const { success, message, resumeText } = uploadData;
+  const { success, message, resumeText, resumeId } = uploadData; // ✅ extract resumeId
 
   if (!success) {
     alert(message || "Upload Failed");
     return null;
   }
 
-  // Analyze resume
-  const analysisPayload = { resumeText };
+  // Analyze resume — now includes resumeId so backend can build fileUrl
+  const analysisPayload = {
+    resumeText,
+    resumeId, // ✅ forward resumeId to analyze
+  };
+
   if (jobDescription.trim()) analysisPayload.jobDescription = jobDescription;
 
   const { data: analysis } = await axios.post(`${API_URL}/api/analyze`, analysisPayload, {
     withCredentials: true,
   });
 
-  return analysis.analysis; // Return analyzed resume data
+  return analysis.analysis;
 };
 
-/**
- * useOptimizeResume
- * React Query mutation hook to upload and analyze a resume.
- */
 export const useOptimizeResume = (option = {}) => {
   return useMutation({
     mutationFn: (data) => submitResumeUpload(data.resumeFile, data.jobDescription),
