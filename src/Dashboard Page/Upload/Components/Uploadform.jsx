@@ -9,7 +9,6 @@ import UploadErrorPopup from "./UploadErrorPopup";
 function UploadForm({ setAnalysisData, setOpen }) {
   const [showLimitModal, setShowLimitModal] = useState(false);
   const [limitError, setLimitError] = useState(null);
-
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -24,67 +23,59 @@ function UploadForm({ setAnalysisData, setOpen }) {
     fileInputRef,
   } = useUpload();
 
-  const MAX_SIZE = 1 * 1024 * 1024;
+  const MAX_SIZE = 1 * 1024 * 1024; // 1MB
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-const allowedFormats = [
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-];
-
-// File type validation
-if (!allowedFormats.includes(file.type)) {
-  setErrorMessage("Invalid file type. Only PDF files are allowed.");
-  setShowErrorPopup(true);
-  e.target.value = null;
-  return;
-}
-
-
-    // File size validation
-    if (file.size > MAX_SIZE) {
-      setErrorMessage("File size exceeds 1 MB limit. Please upload a smaller resume.");
+    // ✅ PDF validation
+    if (file.type !== "application/pdf") {
+      setErrorMessage("Only PDF files are allowed.");
       setShowErrorPopup(true);
       e.target.value = null;
       return;
     }
 
-    resumeFileSelection(e); // Continue normal flow
+    // ✅ File size validation
+    if (file.size > MAX_SIZE) {
+      setErrorMessage("File size exceeds 1 MB limit. Please upload a smaller PDF.");
+      setShowErrorPopup(true);
+      e.target.value = null;
+      return;
+    }
+
+    resumeFileSelection(e);
   };
 
-  const { mutate: handleOptimize, isPending: isLoading } = useOptimizeResume({
-    onSuccess: (result) => {
-      queryClient.invalidateQueries({ queryKey: ["history"] });
-      setAnalysisData(result);
-      setOpen(false);
-    },
-    onError: (error) => {
-      if (error.response?.status === 429) {
-        const errorData = error.response.data;
-        const newLimitError = {
-          message: errorData.message,
-          resetAt: errorData.resetAt,
-          hoursLeft: errorData.hoursUntilReset
-        };
-        setLimitError(newLimitError);
-        setShowLimitModal(true);
-      } else if (error.response?.status === 400) {
-        // Backend file size or validation error
-        setErrorMessage(error.response.data.message || "File upload failed.");
-        setShowErrorPopup(true);
-      } else {
-        // Fallback error
-        setErrorMessage(error.response?.data?.message || "Upload Failed, Server Error");
-        setShowErrorPopup(true);
-      }
-    },
-  });
+  const { mutate: handleOptimize, isPending: isLoading } =
+    useOptimizeResume({
+      onSuccess: (result) => {
+        queryClient.invalidateQueries({ queryKey: ["history"] });
+        setAnalysisData(result);
+        setOpen(false);
+      },
+      onError: (error) => {
+        if (error.response?.status === 429) {
+          const errorData = error.response.data;
+          setLimitError({
+            message: errorData.message,
+            resetAt: errorData.resetAt,
+            hoursLeft: errorData.hoursUntilReset,
+          });
+          setShowLimitModal(true);
+        } else {
+          setErrorMessage(
+            error.response?.data?.message ||
+              "Upload failed. Please try again."
+          );
+          setShowErrorPopup(true);
+        }
+      },
+    });
 
   return (
     <>
-      {/* ❗ or */}
       {showErrorPopup && (
         <UploadErrorPopup
           message={errorMessage}
@@ -92,7 +83,6 @@ if (!allowedFormats.includes(file.type)) {
         />
       )}
 
-      {/* Rate Limit Modal */}
       <UploadLimitModal
         isOpen={showLimitModal}
         onClose={() => {
@@ -104,8 +94,9 @@ if (!allowedFormats.includes(file.type)) {
       />
 
       <div className="flex flex-col items-center w-full max-w-md mx-auto text-center animate-fadeIn">
+
         <h5 className="text-blue-900 mt-5 mb-2 text-sm font-semibold tracking-wide">
-          Upload Your Resume
+          Upload Your Resume (PDF Only)
         </h5>
 
         <div
@@ -114,13 +105,13 @@ if (!allowedFormats.includes(file.type)) {
         >
           <input
             type="file"
-            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            accept="application/pdf"
             ref={fileInputRef}
             hidden
-            onChange={handleFileSelect} 
+            onChange={handleFileSelect}
           />
           <p className="text-sm italic text-gray-500 px-4">
-            {resumeFile ? resumeFile.name : "Click to upload your resume"}
+            {resumeFile ? resumeFile.name : "Click to upload your PDF resume"}
           </p>
         </div>
 
@@ -137,15 +128,15 @@ if (!allowedFormats.includes(file.type)) {
           />
         </div>
 
-  <div className="mt-2 w-full">
-    <UploadButton
-      disabled={isLoading || !resumeFile || !jobDescription.trim()}
-      onConfirmAction={() =>
-        handleOptimize({ resumeFile, jobDescription })
-      }
-      isLoading={isLoading}
-    />
-  </div>
+        <div className="mt-2 w-full">
+          <UploadButton
+            disabled={isLoading || !resumeFile || !jobDescription.trim()}
+            onConfirmAction={() =>
+              handleOptimize({ resumeFile, jobDescription })
+            }
+            isLoading={isLoading}
+          />
+        </div>
       </div>
     </>
   );
