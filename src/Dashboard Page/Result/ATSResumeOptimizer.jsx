@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Document,
-  Packer,
-  Paragraph,
-  TextRun,
-  AlignmentType,
-  convertInchesToTwip,
-} from "docx";
+import jsPDF from "jspdf";
 
 import DashboardHeader from "../Header and Sidebar/DashboardHeader";
 import ATSScoreComparison from "./Components/ATSScoreComparison";
@@ -22,300 +15,184 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
   const improvements = analysisData.improvements;
   const atsScore = analysisData.atsScore;
 
-  const downloadOptimzeResume = async () => {
-    const sections = [];
+  const downloadOptimzeResume = () => {
+    const doc = new jsPDF({ unit: "pt", format: "letter" });
 
-    // Name
-    sections.push(
-      new Paragraph({
-        text: enhancedResume.contact.name,
-        bold: true,
-        size: 32,
-        alignment: AlignmentType.LEFT,
-        spacing: { after: 100 },
-      })
-    );
+    const marginLeft = 72;
+    const marginRight = 72;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const contentWidth = pageWidth - marginLeft - marginRight;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const marginBottom = 72;
 
-    // Contact Information
-    sections.push(
-      new Paragraph({
-        text: `${enhancedResume.contact.phone} | ${enhancedResume.contact.email}`,
-        size: 22,
-        alignment: AlignmentType.LEFT,
-        spacing: { after: 50 },
-      })
-    );
+    let y = 72;
 
-    sections.push(
-      new Paragraph({
-        text: enhancedResume.contact.location,
-        size: 22,
-        alignment: AlignmentType.LEFT,
-        spacing: { after: 50 },
-      })
-    );
+    // ── helpers ──────────────────────────────────────────────────────────────
 
-    sections.push(
-      new Paragraph({
-        text: enhancedResume.contact.linkedin,
-        size: 22,
-        alignment: AlignmentType.LEFT,
-        spacing: { after: 200 },
-        color: "4338CA",
-      })
-    );
+    const checkPageBreak = (neededHeight = 20) => {
+      if (y + neededHeight > pageHeight - marginBottom) {
+        doc.addPage();
+        y = 72;
+      }
+    };
 
-    // Summary
-    sections.push(
-      new Paragraph({
-        text: "PROFESSIONAL SUMMARY",
-        bold: true,
-        size: 24,
-        border: {
-          bottom: {
-            color: "4338CA",
-            space: 1,
-            style: "single",
-            size: 6,
-          },
-        },
-        spacing: { after: 200 },
-      })
-    );
+    const addSectionHeader = (title) => {
+      checkPageBreak(30);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.setTextColor(67, 56, 0); // indigo-700
+      doc.text(title, marginLeft, y);
+      // underline
+      const textWidth = doc.getTextWidth(title);
+      doc.setDrawColor(67, 56, 202);
+      doc.setLineWidth(0.75);
+      doc.line(marginLeft, y + 2, marginLeft + contentWidth, y + 2);
+      y += 16;
+      doc.setTextColor(0, 0, 0);
+    };
 
-    sections.push(
-      new Paragraph({
-        text: enhancedResume.summary,
-        spacing: { after: 300 },
-        alignment: AlignmentType.JUSTIFIED,
-      })
-    );
+    const addWrappedText = (text, fontSize, isBold = false, color = [0, 0, 0], indent = 0) => {
+      doc.setFont("helvetica", isBold ? "bold" : "normal");
+      doc.setFontSize(fontSize);
+      doc.setTextColor(...color);
+      const lines = doc.splitTextToSize(text, contentWidth - indent);
+      lines.forEach((line) => {
+        checkPageBreak(fontSize + 4);
+        doc.text(line, marginLeft + indent, y);
+        y += fontSize + 4;
+      });
+      doc.setTextColor(0, 0, 0);
+    };
 
-    // Experience
-    sections.push(
-      new Paragraph({
-        text: "PROFESSIONAL EXPERIENCE",
-        bold: true,
-        size: 24,
-        border: {
-          bottom: {
-            color: "4338CA",
-            space: 1,
-            style: "single",
-            size: 6,
-          },
-        },
-        spacing: { after: 200 },
-      })
-    );
+    // ── Name ─────────────────────────────────────────────────────────────────
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text(enhancedResume.contact.name, marginLeft, y);
+    y += 26;
+
+    // ── Contact info ─────────────────────────────────────────────────────────
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(80, 80, 80);
+    const contactLine = `${enhancedResume.contact.phone}  |  ${enhancedResume.contact.email}`;
+    doc.text(contactLine, marginLeft, y);
+    y += 13;
+    doc.text(enhancedResume.contact.location, marginLeft, y);
+    y += 13;
+    doc.setTextColor(67, 56, 202);
+    doc.text(enhancedResume.contact.linkedin, marginLeft, y);
+    y += 20;
+    doc.setTextColor(0, 0, 0);
+
+    // ── Professional Summary ──────────────────────────────────────────────────
+    addSectionHeader("PROFESSIONAL SUMMARY");
+    addWrappedText(enhancedResume.summary, 9.5);
+    y += 10;
+
+    // ── Experience ───────────────────────────────────────────────────────────
+    addSectionHeader("PROFESSIONAL EXPERIENCE");
 
     enhancedResume.experience.forEach((exp) => {
-      sections.push(
-        new Paragraph({
-          children: [
-            new TextRun({ text: exp.position, bold: true }),
-            new TextRun({ text: "\t" }),
-            new TextRun({ text: exp.period }),
-          ],
-          spacing: { after: 50 },
-          tabStops: [{ type: "right", position: convertInchesToTwip(5.5) }],
-        })
-      );
+      checkPageBreak(40);
 
-      sections.push(
-        new Paragraph({
-          text: exp.company,
-          size: 22,
-          spacing: { after: 150 },
-        })
-      );
+      // Position (bold, left) + Period (right)
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.text(exp.position, marginLeft, y);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      const periodWidth = doc.getTextWidth(exp.period);
+      doc.text(exp.period, pageWidth - marginRight - periodWidth, y);
+      y += 14;
 
+      // Company
+      doc.setFont("helvetica", "italic");
+      doc.setFontSize(9);
+      doc.setTextColor(80, 80, 80);
+      doc.text(exp.company, marginLeft, y);
+      doc.setTextColor(0, 0, 0);
+      y += 13;
+
+      // Responsibilities
       exp.responsibilities.forEach((resp) => {
-        sections.push(
-          new Paragraph({
-            text: resp,
-            spacing: { after: 100 },
-            indent: { left: convertInchesToTwip(0.25) },
-            bullet: { level: 0 },
-          })
-        );
+        const bulletIndent = 14;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        const bulletLines = doc.splitTextToSize(`• ${resp}`, contentWidth - bulletIndent);
+        bulletLines.forEach((line, i) => {
+          checkPageBreak(13);
+          doc.text(line, marginLeft + (i === 0 ? 0 : bulletIndent), y);
+          y += 13;
+        });
       });
+      y += 6;
     });
 
-    sections.push(new Paragraph({ text: "", spacing: { after: 150 } }));
-
-    // Education
-    sections.push(
-      new Paragraph({
-        text: "EDUCATION",
-        bold: true,
-        size: 24,
-        border: {
-          bottom: {
-            color: "4338CA",
-            space: 1,
-            style: "single",
-            size: 6,
-          },
-        },
-        spacing: { after: 200 },
-      })
-    );
+    // ── Education ────────────────────────────────────────────────────────────
+    addSectionHeader("EDUCATION");
 
     enhancedResume.education.forEach((edu) => {
-      sections.push(
-        new Paragraph({
-          children: [
-            new TextRun({ text: edu.degree, bold: true }),
-            new TextRun({ text: "\t" }),
-            new TextRun({ text: edu.period }),
-          ],
-          spacing: { after: 50 },
-          tabStops: [{ type: "right", position: convertInchesToTwip(5.5) }],
-        })
-      );
+      checkPageBreak(40);
 
-      sections.push(
-        new Paragraph({
-          text: edu.institution,
-          size: 22,
-          spacing: { after: 50 },
-        })
-      );
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.text(edu.degree, marginLeft, y);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      const periodWidth = doc.getTextWidth(edu.period);
+      doc.text(edu.period, pageWidth - marginRight - periodWidth, y);
+      y += 14;
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(80, 80, 80);
+      doc.text(edu.institution, marginLeft, y);
+      y += 13;
 
       if (edu.relevant) {
-        sections.push(
-          new Paragraph({
-            text: edu.relevant,
-            size: 22,
-            italics: true,
-            spacing: { after: 150 },
-          })
-        );
-      } else {
-        sections.push(new Paragraph({ text: "", spacing: { after: 150 } }));
+        doc.setFont("helvetica", "italic");
+        doc.text(edu.relevant, marginLeft, y);
+        y += 13;
       }
+      doc.setTextColor(0, 0, 0);
+      y += 4;
     });
 
-    // Skills
-    sections.push(
-      new Paragraph({
-        text: "SKILLS",
-        bold: true,
-        size: 24,
-        border: {
-          bottom: {
-            color: "4338CA",
-            space: 1,
-            style: "single",
-            size: 6,
-          },
-        },
-        spacing: { after: 200 },
-      })
-    );
+    // ── Skills ───────────────────────────────────────────────────────────────
+    addSectionHeader("SKILLS");
 
-    sections.push(
-      new Paragraph({
-        children: [new TextRun({ text: "Technical Skills", bold: true })],
-        spacing: { after: 100 },
-      })
-    );
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9.5);
+    doc.text("Technical Skills", marginLeft, y);
+    y += 13;
+    addWrappedText(enhancedResume.skills.technical.join(" • "), 9);
+    y += 6;
 
-    sections.push(
-      new Paragraph({
-        text: enhancedResume.skills.technical.join(" • "),
-        spacing: { after: 150 },
-      })
-    );
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9.5);
+    doc.text("Soft Skills", marginLeft, y);
+    y += 13;
+    addWrappedText(enhancedResume.skills.soft.join(" • "), 9);
+    y += 10;
 
-    sections.push(
-      new Paragraph({
-        children: [new TextRun({ text: "Soft Skills", bold: true })],
-        spacing: { after: 100 },
-      })
-    );
+    // ── Languages ────────────────────────────────────────────────────────────
+    addSectionHeader("LANGUAGES");
+    addWrappedText(enhancedResume.languages.join(" • "), 9);
+    y += 10;
 
-    sections.push(
-      new Paragraph({
-        text: enhancedResume.skills.soft.join(" • "),
-        spacing: { after: 300 },
-      })
-    );
-
-    // Languages
-    sections.push(
-      new Paragraph({
-        text: "LANGUAGES",
-        bold: true,
-        size: 24,
-        border: {
-          bottom: {
-            color: "4338CA",
-            space: 1,
-            style: "single",
-            size: 6,
-          },
-        },
-        spacing: { after: 200 },
-      })
-    );
-
-    sections.push(
-      new Paragraph({
-        text: enhancedResume.languages.join(" • "),
-        spacing: { after: 300 },
-      })
-    );
-
-    // Certifications
-    sections.push(
-      new Paragraph({
-        text: "CERTIFICATIONS & TRAINING",
-        bold: true,
-        size: 24,
-        border: {
-          bottom: {
-            color: "4338CA",
-            space: 1,
-            style: "single",
-            size: 6,
-          },
-        },
-        spacing: { after: 200 },
-      })
-    );
-
-    sections.push(
-      new Paragraph({
-        text: enhancedResume.certifications,
-        italics: true,
-        spacing: { after: 0 },
-      })
-    );
-
-    const doc = new Document({
-      sections: [
-        {
-          children: sections,
-          margins: {
-            top: convertInchesToTwip(1),
-            bottom: convertInchesToTwip(1),
-            left: convertInchesToTwip(1),
-            right: convertInchesToTwip(1),
-          },
-        },
-      ],
+    // ── Certifications ───────────────────────────────────────────────────────
+    addSectionHeader("CERTIFICATIONS & TRAINING");
+    doc.setFont("helvetica", "italic");
+    doc.setFontSize(9);
+    const certLines = doc.splitTextToSize(enhancedResume.certifications, contentWidth);
+    certLines.forEach((line) => {
+      checkPageBreak(13);
+      doc.text(line, marginLeft, y);
+      y += 13;
     });
 
-    Packer.toBlob(doc).then((blob) => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${enhancedResume.contact.name}-resume.docx`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
+    // ── Save ─────────────────────────────────────────────────────────────────
+    doc.save(`${enhancedResume.contact.name}-resume.pdf`);
   };
 
   return (
@@ -339,12 +216,12 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
               {/* HEADERS */}
               <div className="grid grid-cols-1 md:grid-cols-2 border-b">
                 {/* ORIGINAL LEFT */}
-                <div className="px-6 py-4 font-semibold text-center bg-yellow-100 text-yellow-800">
+                <div className="px-6 py-4 font-semibold text-center bg-red-500 text-white">
                   Original Resume
                 </div>
 
                 {/* ENHANCED RIGHT */}
-                <div className="px-6 py-4 font-semibold text-center bg-indigo-600 text-white">
+                <div className="px-6 py-4 font-semibold text-center bg-green-500 text-white">
                   Enhanced Resume
                 </div>
               </div>
