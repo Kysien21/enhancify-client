@@ -7,6 +7,8 @@ import OptimizedResume from "./Components/OptimizedResume";
 import OriginalResume from "./Components/OriginalResume";
 import KeyImprovements from "./Components/KeyImprovements";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
   const [activeTab, setActiveTab] = useState("enhanced");
 
@@ -15,7 +17,8 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
   const improvements = analysisData.improvements;
   const atsScore = analysisData.atsScore;
 
-  const downloadOptimzeResume = () => {
+  // ✅ changed to async to allow delete call after download
+  const downloadOptimzeResume = async () => {
     const doc = new jsPDF({ unit: "pt", format: "letter" });
 
     const marginLeft = 72;
@@ -26,8 +29,6 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
     const marginBottom = 72;
 
     let y = 72;
-
-    // ── helpers ──────────────────────────────────────────────────────────────
 
     const checkPageBreak = (neededHeight = 20) => {
       if (y + neededHeight > pageHeight - marginBottom) {
@@ -40,9 +41,8 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
       checkPageBreak(30);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(11);
-      doc.setTextColor(67, 56, 0); // indigo-700
+      doc.setTextColor(67, 56, 0);
       doc.text(title, marginLeft, y);
-      // underline
       const textWidth = doc.getTextWidth(title);
       doc.setDrawColor(67, 56, 202);
       doc.setLineWidth(0.75);
@@ -64,13 +64,13 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
       doc.setTextColor(0, 0, 0);
     };
 
-    // ── Name ─────────────────────────────────────────────────────────────────
+    // Name
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
     doc.text(enhancedResume.contact.name, marginLeft, y);
     y += 26;
 
-    // ── Contact info ─────────────────────────────────────────────────────────
+    // Contact info
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
     doc.setTextColor(80, 80, 80);
@@ -84,18 +84,15 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
     y += 20;
     doc.setTextColor(0, 0, 0);
 
-    // ── Professional Summary ──────────────────────────────────────────────────
+    // Professional Summary
     addSectionHeader("PROFESSIONAL SUMMARY");
     addWrappedText(enhancedResume.summary, 9.5);
     y += 10;
 
-    // ── Experience ───────────────────────────────────────────────────────────
+    // Experience
     addSectionHeader("PROFESSIONAL EXPERIENCE");
-
     enhancedResume.experience.forEach((exp) => {
       checkPageBreak(40);
-
-      // Position (bold, left) + Period (right)
       doc.setFont("helvetica", "bold");
       doc.setFontSize(10);
       doc.text(exp.position, marginLeft, y);
@@ -104,16 +101,12 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
       const periodWidth = doc.getTextWidth(exp.period);
       doc.text(exp.period, pageWidth - marginRight - periodWidth, y);
       y += 14;
-
-      // Company
       doc.setFont("helvetica", "italic");
       doc.setFontSize(9);
       doc.setTextColor(80, 80, 80);
       doc.text(exp.company, marginLeft, y);
       doc.setTextColor(0, 0, 0);
       y += 13;
-
-      // Responsibilities
       exp.responsibilities.forEach((resp) => {
         const bulletIndent = 14;
         doc.setFont("helvetica", "normal");
@@ -128,12 +121,10 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
       y += 6;
     });
 
-    // ── Education ────────────────────────────────────────────────────────────
+    // Education
     addSectionHeader("EDUCATION");
-
     enhancedResume.education.forEach((edu) => {
       checkPageBreak(40);
-
       doc.setFont("helvetica", "bold");
       doc.setFontSize(10);
       doc.text(edu.degree, marginLeft, y);
@@ -142,13 +133,11 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
       const periodWidth = doc.getTextWidth(edu.period);
       doc.text(edu.period, pageWidth - marginRight - periodWidth, y);
       y += 14;
-
       doc.setFont("helvetica", "normal");
       doc.setFontSize(9);
       doc.setTextColor(80, 80, 80);
       doc.text(edu.institution, marginLeft, y);
       y += 13;
-
       if (edu.relevant) {
         doc.setFont("helvetica", "italic");
         doc.text(edu.relevant, marginLeft, y);
@@ -158,16 +147,14 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
       y += 4;
     });
 
-    // ── Skills ───────────────────────────────────────────────────────────────
+    // Skills
     addSectionHeader("SKILLS");
-
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9.5);
     doc.text("Technical Skills", marginLeft, y);
     y += 13;
     addWrappedText(enhancedResume.skills.technical.join(" • "), 9);
     y += 6;
-
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9.5);
     doc.text("Soft Skills", marginLeft, y);
@@ -175,12 +162,12 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
     addWrappedText(enhancedResume.skills.soft.join(" • "), 9);
     y += 10;
 
-    // ── Languages ────────────────────────────────────────────────────────────
+    // Languages
     addSectionHeader("LANGUAGES");
     addWrappedText(enhancedResume.languages.join(" • "), 9);
     y += 10;
 
-    // ── Certifications ───────────────────────────────────────────────────────
+    // Certifications
     addSectionHeader("CERTIFICATIONS & TRAINING");
     doc.setFont("helvetica", "italic");
     doc.setFontSize(9);
@@ -191,8 +178,22 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
       y += 13;
     });
 
-    // ── Save ─────────────────────────────────────────────────────────────────
+    // ✅ Save the PDF to user's computer
     doc.save(`${enhancedResume.contact.name}-resume.pdf`);
+
+    // ✅ After download, delete the original uploaded PDF from server
+    if (originalResume?.fileUrl) {
+      const resumeId = originalResume.fileUrl.split('/').pop();
+      try {
+        await fetch(`${API_URL}/api/original-pdf/${resumeId}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+        console.log('🗑️ Original PDF deleted after download');
+      } catch (err) {
+        console.error('❌ Failed to delete original PDF:', err);
+      }
+    }
   };
 
   return (
@@ -215,12 +216,9 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
 
               {/* HEADERS */}
               <div className="grid grid-cols-1 md:grid-cols-2 border-b">
-                {/* ORIGINAL LEFT */}
                 <div className="px-6 py-4 font-semibold text-center bg-red-500 text-white">
                   Original Resume
                 </div>
-
-                {/* ENHANCED RIGHT */}
                 <div className="px-6 py-4 font-semibold text-center bg-green-500 text-white">
                   Enhanced Resume
                 </div>
@@ -228,15 +226,12 @@ const ATSResumeOptimizer = ({ analysisData, setAnalysisData }) => {
 
               {/* CONTENT */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-                {/* ORIGINAL LEFT */}
                 <div className="border rounded-lg p-4">
                   <OriginalResume
                     originalResume={originalResume}
                     certifications={enhancedResume.certifications}
                   />
                 </div>
-
-                {/* ENHANCED RIGHT */}
                 <div className="border rounded-lg p-4">
                   <OptimizedResume enhancedResume={enhancedResume} />
                 </div>
